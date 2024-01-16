@@ -14,7 +14,7 @@ public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab
     ) where ItemID == InternalTabItemID {
         self.init(
             tab: tab,
-            reservedItemID: .reserved,
+            firstItemID: .first,
             scrollItemID: .constant(nil),
             scrollUnitPoint: .constant(.top),
             content: content
@@ -23,19 +23,19 @@ public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab
 
     public init(
         tab: Tab,
-        reservedItemID: ItemID,
+        firstItemID: ItemID,
         scrollItemID: Binding<ItemID?>,
         scrollUnitPoint: Binding<UnitPoint>,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.tab = tab
-        self.reservedItemID = reservedItemID
+        self.firstItemID = firstItemID
         _scrollItemID = scrollItemID
         _scrollUnitPoint = scrollUnitPoint
         _scrollModel = StateObject(
             wrappedValue: ScrollModel(
                 tab: tab,
-                reservedItemID: reservedItemID
+                firstItemID: firstItemID
             )
         )
         self.content = content
@@ -46,7 +46,7 @@ public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab
     // MARK: - Variables
 
     private let tab: Tab
-    private let reservedItemID: ItemID
+    private let firstItemID: ItemID
     @State private var coordinateSpaceName = UUID()
     @Binding private var scrollItemID: ItemID?
     @Binding private var scrollUnitPoint: UnitPoint
@@ -59,21 +59,23 @@ public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab
     public var body: some View {
         ZStack {
             ScrollView {
-                Color.clear
-                    .frame(height: tabsModel.data.headerHeight - scrollModel.scrollViewSpacing)
-                    .background {
-                        GeometryReader { proxy in
-                            Color.clear.preference(
-                                key: ScrollOffsetPreferenceKey.self,
-                                value: proxy.frame(in: .named(coordinateSpaceName)).origin.y
-                            )
+                VStack(spacing: 0) {
+                    Color.clear
+                        .frame(height: tabsModel.data.headerHeight)
+                        .background {
+                            GeometryReader { proxy in
+                                Color.clear.preference(
+                                    key: ScrollOffsetPreferenceKey.self,
+                                    value: proxy.frame(in: .named(coordinateSpaceName)).origin.y
+                                )
+                            }
                         }
-                    }
-                    .onPreferenceChange(ScrollOffsetPreferenceKey.self) { offset in
-                        scrollModel.contentOffsetChanged(offset)
-                    }
-                    .id(reservedItemID)
-                content()
+                        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { offset in
+                            scrollModel.contentOffsetChanged(offset)
+                        }
+                        .id(firstItemID)
+                    content()
+                }
             }
             .coordinateSpace(name: coordinateSpaceName)
             .scrollPosition(id: $scrollModel.scrollItemID, anchor: scrollModel.scrollUnitPoint)

@@ -5,5 +5,5 @@
 import Foundation
 
 public enum InternalTabItemID: Hashable {
-    case reserved
+    case first
 }

@@ -10,14 +10,16 @@
 		2243648D2B547D1B00563396 /* MaterialTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2243647D2B547D1B00563396 /* MaterialTabs.swift */; };
 		2243648E2B547D1B00563396 /* InternalTabItemID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2243647F2B547D1B00563396 /* InternalTabItemID.swift */; };
 		2243648F2B547D1B00563396 /* ScrollModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364802B547D1B00563396 /* ScrollModel.swift */; };
-		224364902B547D1B00563396 /* OffsetHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364812B547D1B00563396 /* OffsetHeader.swift */; };
+		224364902B547D1B00563396 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364812B547D1B00563396 /* HeaderView.swift */; };
 		224364912B547D1B00563396 /* TabsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364822B547D1B00563396 /* TabsModel.swift */; };
 		224364922B547D1B00563396 /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364842B547D1B00563396 /* ScrollOffsetPreferenceKey.swift */; };
-		224364932B547D1B00563396 /* HeaderMinHeightPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364852B547D1B00563396 /* HeaderMinHeightPreferenceKey.swift */; };
-		224364942B547D1B00563396 /* HeaderHeightPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364862B547D1B00563396 /* HeaderHeightPreferenceKey.swift */; };
+		224364932B547D1B00563396 /* TabBarHeightPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364852B547D1B00563396 /* TabBarHeightPreferenceKey.swift */; };
+		224364942B547D1B00563396 /* TitleHeightPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364862B547D1B00563396 /* TitleHeightPreferenceKey.swift */; };
 		224364952B547D1B00563396 /* MaterialTabsItemModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364872B547D1B00563396 /* MaterialTabsItemModifier.swift */; };
 		224364962B547D1B00563396 /* MaterialTabsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364882B547D1B00563396 /* MaterialTabsScrollView.swift */; };
 		224364972B547D1B00563396 /* HeaderContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364892B547D1B00563396 /* HeaderContext.swift */; };
+		22549DC72B55FFD8005E3E21 /* ShrinkHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22549DC62B55FFD8005E3E21 /* ShrinkHeader.swift */; };
+		22549DC92B560011005E3E21 /* HeaderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22549DC82B560011005E3E21 /* HeaderStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,15 +27,17 @@
 		2243647D2B547D1B00563396 /* MaterialTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialTabs.swift; sourceTree = "<group>"; };
 		2243647F2B547D1B00563396 /* InternalTabItemID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternalTabItemID.swift; sourceTree = "<group>"; };
 		224364802B547D1B00563396 /* ScrollModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollModel.swift; sourceTree = "<group>"; };
-		224364812B547D1B00563396 /* OffsetHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetHeader.swift; sourceTree = "<group>"; };
+		224364812B547D1B00563396 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		224364822B547D1B00563396 /* TabsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsModel.swift; sourceTree = "<group>"; };
 		224364842B547D1B00563396 /* ScrollOffsetPreferenceKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollOffsetPreferenceKey.swift; sourceTree = "<group>"; };
-		224364852B547D1B00563396 /* HeaderMinHeightPreferenceKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderMinHeightPreferenceKey.swift; sourceTree = "<group>"; };
-		224364862B547D1B00563396 /* HeaderHeightPreferenceKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderHeightPreferenceKey.swift; sourceTree = "<group>"; };
+		224364852B547D1B00563396 /* TabBarHeightPreferenceKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarHeightPreferenceKey.swift; sourceTree = "<group>"; };
+		224364862B547D1B00563396 /* TitleHeightPreferenceKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleHeightPreferenceKey.swift; sourceTree = "<group>"; };
 		224364872B547D1B00563396 /* MaterialTabsItemModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialTabsItemModifier.swift; sourceTree = "<group>"; };
 		224364882B547D1B00563396 /* MaterialTabsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialTabsScrollView.swift; sourceTree = "<group>"; };
 		224364892B547D1B00563396 /* HeaderContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderContext.swift; sourceTree = "<group>"; };
 		2243648C2B547D1B00563396 /* SwiftUIMaterialTabsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIMaterialTabsTests.swift; sourceTree = "<group>"; };
+		22549DC62B55FFD8005E3E21 /* ShrinkHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShrinkHeader.swift; sourceTree = "<group>"; };
+		22549DC82B560011005E3E21 /* HeaderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,7 @@
 		2243647C2B547D1B00563396 /* SwiftUIMaterialTabs */ = {
 			isa = PBXGroup;
 			children = (
+				22549DC82B560011005E3E21 /* HeaderStyle.swift */,
 				2243647D2B547D1B00563396 /* MaterialTabs.swift */,
 				224364882B547D1B00563396 /* MaterialTabsScrollView.swift */,
 				224364892B547D1B00563396 /* HeaderContext.swift */,
@@ -88,8 +93,9 @@
 			isa = PBXGroup;
 			children = (
 				2243647F2B547D1B00563396 /* InternalTabItemID.swift */,
-				224364812B547D1B00563396 /* OffsetHeader.swift */,
+				224364812B547D1B00563396 /* HeaderView.swift */,
 				224364802B547D1B00563396 /* ScrollModel.swift */,
+				22549DC62B55FFD8005E3E21 /* ShrinkHeader.swift */,
 				224364822B547D1B00563396 /* TabsModel.swift */,
 				224364832B547D1B00563396 /* PreferenceKeys */,
 			);
@@ -99,8 +105,8 @@
 		224364832B547D1B00563396 /* PreferenceKeys */ = {
 			isa = PBXGroup;
 			children = (
-				224364862B547D1B00563396 /* HeaderHeightPreferenceKey.swift */,
-				224364852B547D1B00563396 /* HeaderMinHeightPreferenceKey.swift */,
+				224364862B547D1B00563396 /* TitleHeightPreferenceKey.swift */,
+				224364852B547D1B00563396 /* TabBarHeightPreferenceKey.swift */,
 				224364842B547D1B00563396 /* ScrollOffsetPreferenceKey.swift */,
 			);
 			path = PreferenceKeys;
@@ -202,16 +208,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				2243648F2B547D1B00563396 /* ScrollModel.swift in Sources */,
+				22549DC72B55FFD8005E3E21 /* ShrinkHeader.swift in Sources */,
 				224364962B547D1B00563396 /* MaterialTabsScrollView.swift in Sources */,
-				224364942B547D1B00563396 /* HeaderHeightPreferenceKey.swift in Sources */,
-				224364902B547D1B00563396 /* OffsetHeader.swift in Sources */,
+				22549DC92B560011005E3E21 /* HeaderStyle.swift in Sources */,
+				224364942B547D1B00563396 /* TitleHeightPreferenceKey.swift in Sources */,
+				224364902B547D1B00563396 /* HeaderView.swift in Sources */,
 				224364972B547D1B00563396 /* HeaderContext.swift in Sources */,
 				2243648E2B547D1B00563396 /* InternalTabItemID.swift in Sources */,
 				224364952B547D1B00563396 /* MaterialTabsItemModifier.swift in Sources */,
 				224364922B547D1B00563396 /* ScrollOffsetPreferenceKey.swift in Sources */,
 				224364912B547D1B00563396 /* TabsModel.swift in Sources */,
 				2243648D2B547D1B00563396 /* MaterialTabs.swift in Sources */,
-				224364932B547D1B00563396 /* HeaderMinHeightPreferenceKey.swift in Sources */,
+				224364932B547D1B00563396 /* TabBarHeightPreferenceKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

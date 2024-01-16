@@ -18,7 +18,7 @@ struct DemoHeaderBackgroundView: View {
     // MARK: - Body
 
     var body: some View {
-        Color.black
+        Rectangle().fill(context.selectedTab.headerBackground)
     }
 }
 

@@ -20,6 +20,7 @@ struct DemoView: View {
     var body: some View {
         MaterialTabs(
             selectedTab: $selectedTab,
+            headerStyle: .shrink,
             headerTitle: { context in
                 DemoTitleView(context: context)
             },
@@ -32,19 +33,19 @@ struct DemoView: View {
             content: {
                 DemoTabExternalScrollingView(
                     tab: .one,
-                    name: "One",
+                    name: DemoTab.one.name,
                     color: .green.opacity(0.1)
                 )
                 .materialTabsitem(itemID: DemoTab.one)
                 DemoTabExternalScrollingView(
                     tab: .two,
-                    name: "Two",
+                    name: DemoTab.two.name,
                     color: .green.opacity(0.1)
                 )
                 .materialTabsitem(itemID: DemoTab.two)
                 DemoTabExternalScrollingView(
                     tab: .three,
-                    name: "Three",
+                    name: DemoTab.three.name,
                     color: .green.opacity(0.1)
                 )
                 .materialTabsitem(itemID: DemoTab.three)

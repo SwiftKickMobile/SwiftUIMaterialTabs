@@ -11,43 +11,40 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
 
     public init(
         selectedTab: Binding<Tab>,
+        headerStyle: HeaderStyle = .offset,
         @ViewBuilder headerTitle: @escaping (HeaderContext<Tab>) -> HeaderTitle,
         @ViewBuilder headerTabBar: @escaping (HeaderContext<Tab>) -> HeaderTabBar,
         @ViewBuilder content: @escaping () -> Content
     ) where HeaderBackground == EmptyView {
-        _selectedTab = selectedTab
-        self.header = { context in
-            OffsetHeader(
-                context: context,
-                top: headerTitle,
-                tabBar: headerTabBar,
-                background: { _ in EmptyView() }
-            )
-        }
-        self.content = content
-        _tabsModel = StateObject(wrappedValue: TabsModel(initialTab: selectedTab.wrappedValue))
+        self.init(
+            selectedTab: selectedTab,
+            headerStyle: headerStyle,
+            headerTitle: headerTitle,
+            headerTabBar: headerTabBar,
+            headerBackground: { _ in EmptyView() },
+            content: content
+        )
     }
 
     public init(
         selectedTab: Binding<Tab>,
+        headerStyle: HeaderStyle = .offset,
         @ViewBuilder headerTabBar: @escaping (HeaderContext<Tab>) -> HeaderTabBar,
         @ViewBuilder content: @escaping () -> Content
     ) where HeaderTitle == EmptyView, HeaderBackground == EmptyView {
-        _selectedTab = selectedTab
-        self.header = { context in
-            OffsetHeader(
-                context: context,
-                top: { _ in EmptyView() },
-                tabBar: headerTabBar,
-                background: { _ in EmptyView() }
-            )
-        }
-        self.content = content
-        _tabsModel = StateObject(wrappedValue: TabsModel(initialTab: selectedTab.wrappedValue))
+        self.init(
+            selectedTab: selectedTab,
+            headerStyle: headerStyle,
+            headerTitle:  { _ in EmptyView() },
+            headerTabBar: headerTabBar,
+            headerBackground: { _ in EmptyView() },
+            content: content
+        )
     }
 
     public init(
         selectedTab: Binding<Tab>,
+        headerStyle: HeaderStyle = .offset,
         @ViewBuilder headerTitle: @escaping (HeaderContext<Tab>) -> HeaderTitle,
         @ViewBuilder headerTabBar: @escaping (HeaderContext<Tab>) -> HeaderTabBar,
         @ViewBuilder headerBackground: @escaping (HeaderContext<Tab>) -> HeaderBackground,
@@ -55,9 +52,10 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     ) {
         _selectedTab = selectedTab
         self.header = { context in
-            OffsetHeader(
+            HeaderView(
                 context: context,
-                top: headerTitle,
+                style: headerStyle,
+                title: headerTitle,
                 tabBar: headerTabBar,
                 background: headerBackground
             )
@@ -71,7 +69,7 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     // MARK: - Variables
 
     @Binding private var selectedTab: Tab
-    @ViewBuilder private let header: (HeaderContext<Tab>) -> OffsetHeader<HeaderTitle, HeaderTabBar, HeaderBackground, Tab>
+    @ViewBuilder private let header: (HeaderContext<Tab>) -> HeaderView<HeaderTitle, HeaderTabBar, HeaderBackground, Tab>
     @ViewBuilder private let content: () -> Content
     @StateObject private var tabsModel: TabsModel
 
@@ -84,19 +82,19 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                     content()
                 }
                 .ignoresSafeArea(edges: .bottom)
+                .ignoresSafeArea(edges: .top)
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .toolbar(.hidden, for: .tabBar)
                 .onChange(of: proxy.size.height, initial: true) {
                     tabsModel.heightChanged(proxy.size.height)
                 }
                 header(HeaderContext(selectedTab: $selectedTab, offset: tabsModel.data.headerOffset))
-                    .offset(CGSize(width: 0, height: -tabsModel.data.headerOffset))
             }
         }
         .animation(.default, value: selectedTab)
         .environmentObject(tabsModel as TabsModel)
-        .onPreferenceChange(HeaderHeightPreferenceKey.self, perform: tabsModel.headerHeightChanged(_:))
-        .onPreferenceChange(HeaderMinHeightPreferenceKey.self, perform: tabsModel.headerMinHeightChanged(_:))
+        .onPreferenceChange(TitleHeightPreferenceKey.self, perform: tabsModel.titleHeightChanged(_:))
+        .onPreferenceChange(TabBarHeightPreferenceKey.self, perform: tabsModel.tabBarHeightChanged(_:))
         .onChange(of: selectedTab) {
             tabsModel.selected(tab: selectedTab)
         }

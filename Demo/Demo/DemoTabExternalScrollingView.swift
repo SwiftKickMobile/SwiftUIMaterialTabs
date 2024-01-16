@@ -25,19 +25,19 @@ struct DemoTabExternalScrollingView: View {
     var body: some View {
         MaterialTabsScrollView(
             tab: tab,
-            reservedItemID: -1,
+            firstItemID: 0,
             scrollItemID: $scrollItem,
             scrollUnitPoint: $scrollUnitPoint
         ) {
             LazyVStack(spacing: 0) {
                 ForEach(0..<100) { index in
-                    DemoRowView(name: name, index: index)
+                    DemoRowView(tab: tab, name: name, index: index)
                         .id(index)
                 }
             }
             .scrollTargetLayout()
         }
-        .background(color)
+        .background(tab.contentBackground)
         .scrollPosition(id: $scrollItem, anchor: scrollUnitPoint)
     }
 }

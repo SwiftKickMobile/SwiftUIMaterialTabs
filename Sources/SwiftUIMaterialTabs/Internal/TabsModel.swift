@@ -22,14 +22,16 @@ class TabsModel: ObservableObject {
     // MARK: - API
 
     struct Data: Equatable {
-        var headerHeight: CGFloat = 0
-        var minHeaderHeight: CGFloat = 0
+        var titleHeight: CGFloat = 0
+        var tabBarHeight: CGFloat = 0
         var totalHeight: CGFloat = 0
         var headerOffset: CGFloat = 0
 
+        var headerHeight: CGFloat { titleHeight + tabBarHeight }
         var scrollViewHeight: CGFloat { totalHeight - headerHeight }
+        var offsetPercentage: CGFloat { (titleHeight - headerOffset) / titleHeight }
 
-        var maxOffset: CGFloat { headerHeight - minHeaderHeight }
+        var maxOffset: CGFloat { headerHeight - tabBarHeight }
     }
 
     @Published fileprivate(set) var data: Data = Data()
@@ -43,12 +45,12 @@ class TabsModel: ObservableObject {
         data.totalHeight = height
     }
 
-    func headerHeightChanged(_ height: CGFloat) {
-        data.headerHeight = height
+    func titleHeightChanged(_ height: CGFloat) {
+        data.titleHeight = height
     }
 
-    func headerMinHeightChanged(_ height: CGFloat) {
-        data.minHeaderHeight = height
+    func tabBarHeightChanged(_ height: CGFloat) {
+        data.tabBarHeight = height
     }
 
     func selected(tab: any Hashable) {

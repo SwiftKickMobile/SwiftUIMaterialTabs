@@ -24,17 +24,17 @@ struct DemoTabBar: View {
     var body: some View {
         HStack() {
             Spacer()
-            Button("Zero") { selectedTab = .one }
-                .foregroundColor(selectedTab == .one ? .yellow : .yellow.opacity(0.4))
+            Button(DemoTab.one.name.uppercased()) { selectedTab = .one }
+                .foregroundStyle(selectedTab.headerForeground).opacity(selectedTab == .one ? 1 : 0.4)
             Spacer()
-            Button("One") { selectedTab = .two }
-                .foregroundColor(selectedTab == .two ? .yellow : .yellow.opacity(0.4))
+            Button(DemoTab.two.name.uppercased()) { selectedTab = .two }
+                .foregroundStyle(selectedTab.headerForeground).opacity(selectedTab == .two ? 1 : 0.4)
             Spacer()
-            Button("Two") { selectedTab = .three }
-                .foregroundColor(selectedTab == .three ? .yellow : .yellow.opacity(0.4))
+            Button(DemoTab.three.name.uppercased()) { selectedTab = .three }
+                .foregroundStyle(selectedTab.headerForeground).opacity(selectedTab == .three ? 1 : 0.4)
             Spacer()
         }
-        .font(.title)
+        .font(.system(size: 16, weight: .bold))
         .padding()
         .frame(height: 50)
     }

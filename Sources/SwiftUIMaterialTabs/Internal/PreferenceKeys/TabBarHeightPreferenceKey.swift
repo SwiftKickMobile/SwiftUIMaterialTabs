@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct HeaderHeightPreferenceKey: PreferenceKey {
+struct TabBarHeightPreferenceKey: PreferenceKey {
     static var defaultValue: CGFloat = 0
 
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {

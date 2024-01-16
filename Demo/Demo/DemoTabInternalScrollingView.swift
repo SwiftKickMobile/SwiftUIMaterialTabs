@@ -25,7 +25,7 @@ struct DemoTabInternalScrollingView: View {
         ) {
             LazyVStack(spacing: 0) {
                 ForEach(0..<100) { index in
-                    DemoRowView(name: name, index: index)
+                    DemoRowView(tab: tab, name: name, index: index)
                         .id(index)
                 }
             }

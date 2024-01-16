@@ -18,12 +18,12 @@ struct DemoTitleView: View {
     // MARK: - Body
 
     var body: some View {
-        Text("Material Tabs Demo")
+        Text("Material Tabs")
             .multilineTextAlignment(.center)
-            .font(.largeTitle)
+            .font(.largeTitle.weight(.black))
             .bold()
-            .foregroundColor(.yellow)
-            .padding(50)
+            .foregroundStyle(context.selectedTab.headerForeground)
+            .padding(30)
     }
 }
 

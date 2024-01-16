@@ -13,8 +13,6 @@ class ScrollModel<ItemID>: ObservableObject where ItemID: Hashable {
     @Published var scrollUnitPoint: UnitPoint = .top
     @Published private(set) var appeared = false
 
-    let scrollViewSpacing: CGFloat = 10
-
     func contentOffsetChanged(_ offset: CGFloat) {
         let oldContentOffset = contentOffset
         contentOffset = -offset
@@ -49,10 +47,10 @@ class ScrollModel<ItemID>: ObservableObject where ItemID: Hashable {
 
     init(
         tab: any Hashable,
-        reservedItemID: ItemID
+        firstItemID: ItemID
     ) {
         self.tab = AnyHashable(tab)
-        self.reservedItemID = reservedItemID
+        self.firstItemID = firstItemID
     }
 
     // MARK: - Constants
@@ -60,7 +58,7 @@ class ScrollModel<ItemID>: ObservableObject where ItemID: Hashable {
     // MARK: - Variables
 
     private let tab: AnyHashable
-    private let reservedItemID: ItemID
+    private let firstItemID: ItemID
     private var cachedTabsData: TabsModel.Data?
     private weak var tabsModel: TabsModel?
 
@@ -102,10 +100,10 @@ class ScrollModel<ItemID>: ObservableObject where ItemID: Hashable {
         }
         cachedTabsData = tabsModel.data
         contentOffset = contentOffset + delta
-        scrollItemID = reservedItemID
+        scrollItemID = firstItemID
         scrollUnitPoint = UnitPoint(
             x: UnitPoint.top.x,
-            y: -contentOffset / (tabsModel.data.scrollViewHeight + scrollViewSpacing)
+            y: -contentOffset / tabsModel.data.scrollViewHeight
         )
         // It is essential to set the scroll item back to `nil` so that we can make
         // future scroll adjustments. Placing this in a task is sufficient for the

@@ -98,6 +98,7 @@
 			children = (
 				224364412B547A6600563396 /* Info.plist */,
 				22034C352B5477E3008147F0 /* DemoApp.swift */,
+				22034C3B2B5477E4008147F0 /* DemoTab.swift */,
 				22034C372B5477E3008147F0 /* DemoView.swift */,
 				22034C362B5477E3008147F0 /* DemoTitleView.swift */,
 				22034C3D2B5477E4008147F0 /* DemoTabBar.swift */,
@@ -105,7 +106,6 @@
 				22034C382B5477E3008147F0 /* DemoTabExternalScrollingView.swift */,
 				22034C392B5477E3008147F0 /* DemoTabInternalScrollingView.swift */,
 				22034C3E2B5477E4008147F0 /* DemoRowView.swift */,
-				22034C3B2B5477E4008147F0 /* DemoTab.swift */,
 				22034C172B54777D008147F0 /* Assets.xcassets */,
 				22034C192B54777D008147F0 /* Preview Content */,
 			);
