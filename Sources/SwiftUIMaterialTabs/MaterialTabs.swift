@@ -11,14 +11,12 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
 
     public init(
         selectedTab: Binding<Tab>,
-        headerStyle: HeaderStyle = .offset,
         @ViewBuilder headerTitle: @escaping (HeaderContext<Tab>) -> HeaderTitle,
         @ViewBuilder headerTabBar: @escaping (HeaderContext<Tab>) -> HeaderTabBar,
         @ViewBuilder content: @escaping () -> Content
     ) where HeaderBackground == EmptyView {
         self.init(
             selectedTab: selectedTab,
-            headerStyle: headerStyle,
             headerTitle: headerTitle,
             headerTabBar: headerTabBar,
             headerBackground: { _ in EmptyView() },
@@ -28,13 +26,11 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
 
     public init(
         selectedTab: Binding<Tab>,
-        headerStyle: HeaderStyle = .offset,
         @ViewBuilder headerTabBar: @escaping (HeaderContext<Tab>) -> HeaderTabBar,
         @ViewBuilder content: @escaping () -> Content
     ) where HeaderTitle == EmptyView, HeaderBackground == EmptyView {
         self.init(
             selectedTab: selectedTab,
-            headerStyle: headerStyle,
             headerTitle:  { _ in EmptyView() },
             headerTabBar: headerTabBar,
             headerBackground: { _ in EmptyView() },
@@ -43,8 +39,20 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     }
 
     public init(
+        @ViewBuilder headerTitle: @escaping (HeaderContext<Tab>) -> HeaderTitle,
+        @ViewBuilder content: @escaping () -> Content
+    ) where HeaderBackground == EmptyView, HeaderTabBar == EmptyView, Tab == Int {
+        self.init(
+            selectedTab: .constant(0),
+            headerTitle: headerTitle,
+            headerTabBar: { _ in EmptyView() },
+            headerBackground: { _ in EmptyView() },
+            content: content
+        )
+    }
+
+    public init(
         selectedTab: Binding<Tab>,
-        headerStyle: HeaderStyle = .offset,
         @ViewBuilder headerTitle: @escaping (HeaderContext<Tab>) -> HeaderTitle,
         @ViewBuilder headerTabBar: @escaping (HeaderContext<Tab>) -> HeaderTabBar,
         @ViewBuilder headerBackground: @escaping (HeaderContext<Tab>) -> HeaderBackground,
@@ -54,7 +62,6 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
         self.header = { context in
             HeaderView(
                 context: context,
-                style: headerStyle,
                 title: headerTitle,
                 tabBar: headerTabBar,
                 background: headerBackground
@@ -88,13 +95,20 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                 .onChange(of: proxy.size.height, initial: true) {
                     tabsModel.heightChanged(proxy.size.height)
                 }
-                header(HeaderContext(selectedTab: $selectedTab, offset: tabsModel.data.headerOffset))
+                header(
+                    HeaderContext(
+                        selectedTab: $selectedTab,
+                        offset: tabsModel.data.headerOffset,
+                        maxOffset: tabsModel.data.titleHeight
+                    )
+                )
             }
         }
         .animation(.default, value: selectedTab)
         .environmentObject(tabsModel as TabsModel)
         .onPreferenceChange(TitleHeightPreferenceKey.self, perform: tabsModel.titleHeightChanged(_:))
         .onPreferenceChange(TabBarHeightPreferenceKey.self, perform: tabsModel.tabBarHeightChanged(_:))
+        .onPreferenceChange(MinTitleHeightPreferenceKey.self, perform: tabsModel.minTitleHeightChanged(_:))
         .onChange(of: selectedTab) {
             tabsModel.selected(tab: selectedTab)
         }

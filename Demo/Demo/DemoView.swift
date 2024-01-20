@@ -20,7 +20,6 @@ struct DemoView: View {
     var body: some View {
         MaterialTabs(
             selectedTab: $selectedTab,
-            headerStyle: .shrink,
             headerTitle: { context in
                 DemoTitleView(context: context)
             },

@@ -10,13 +10,11 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
 
     init(
         context: HeaderContext<Tab>,
-        style: HeaderStyle,
         @ViewBuilder title: @escaping (HeaderContext<Tab>) -> Title,
         @ViewBuilder tabBar: @escaping (HeaderContext<Tab>) -> TabBar,
         @ViewBuilder background: @escaping (HeaderContext<Tab>) -> Background
     ) {
         self.context = context
-        self.style = style
         self.title = title
         self.tabBar = tabBar
         self.background = background
@@ -27,7 +25,6 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
     // MARK: - Variables
 
     private let context: HeaderContext<Tab>
-    private let style: HeaderStyle
     @ViewBuilder private let title: (HeaderContext<Tab>) -> Title
     @ViewBuilder private let tabBar: (HeaderContext<Tab>) -> TabBar
     @ViewBuilder private let background: (HeaderContext<Tab>) -> Background
@@ -36,31 +33,18 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
     // MARK: - Body
 
     var body: some View {
-        switch style {
-        case .offset: makeOffsetHeader()
-        case .shrink: makeShrinkHeader()
-        }
-    }
-
-    @ViewBuilder private func makeOffsetHeader() -> some View {
         VStack(spacing: 0) {
             makeTitleView()
+                .frame(
+                    height: tabsModel.data.headerOffset < 0
+                        ? tabsModel.data.titleHeight * tabsModel.data.unitOffset
+                        : nil
+                )
             makeTabBarView()
         }
         .frame(maxWidth: .infinity)
-        .frame(height: tabsModel.data.headerOffset < 0 ? tabsModel.data.titleHeight * tabsModel.data.offsetPercentage : nil)
         .background { background(context).ignoresSafeArea(edges: .top) }
         .offset(CGSize(width: 0, height: -max(tabsModel.data.headerOffset, 0)))
-    }
-
-    @ViewBuilder private func makeShrinkHeader() -> some View {
-        VStack(spacing: 0) {
-            makeTitleView()
-            makeTabBarView()
-        }
-        .frame(maxWidth: .infinity)
-        .frame(height: tabsModel.data.headerOffset < 0 ? tabsModel.data.titleHeight * tabsModel.data.offsetPercentage : nil)
-        .background { background(context).ignoresSafeArea(edges: .top) }
     }
 
     @ViewBuilder private func makeTitleView() -> some View {
@@ -83,7 +67,7 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
                     Color.clear
                         .preference(
                             key: TabBarHeightPreferenceKey.self,
-                            value: proxy.size.height
+                            value: 40//proxy.size.height
                         )
                 }
             }

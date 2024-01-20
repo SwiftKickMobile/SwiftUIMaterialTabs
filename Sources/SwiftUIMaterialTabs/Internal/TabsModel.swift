@@ -23,15 +23,23 @@ class TabsModel: ObservableObject {
 
     struct Data: Equatable {
         var titleHeight: CGFloat = 0
+        var minTitleDimension: MinTitleHeightPreferenceKey.Dimension = MinTitleHeightPreferenceKey.defaultValue
         var tabBarHeight: CGFloat = 0
         var totalHeight: CGFloat = 0
         var headerOffset: CGFloat = 0
 
         var headerHeight: CGFloat { titleHeight + tabBarHeight }
         var scrollViewHeight: CGFloat { totalHeight - headerHeight }
-        var offsetPercentage: CGFloat { (titleHeight - headerOffset) / titleHeight }
+        var unitOffset: CGFloat { (titleHeight - headerOffset) / titleHeight }
 
-        var maxOffset: CGFloat { headerHeight - tabBarHeight }
+        var maxOffset: CGFloat { headerHeight - tabBarHeight - minTitleHeight }
+
+        var minTitleHeight: CGFloat {
+            switch minTitleDimension {
+            case .absolute(let dimension): dimension
+            case .relative(let percent): titleHeight * percent
+            }
+        }
     }
 
     @Published fileprivate(set) var data: Data = Data()
@@ -47,6 +55,10 @@ class TabsModel: ObservableObject {
 
     func titleHeightChanged(_ height: CGFloat) {
         data.titleHeight = height
+    }
+
+    func minTitleHeightChanged(_ dimension: MinTitleHeightPreferenceKey.Dimension) {
+        data.minTitleDimension = dimension
     }
 
     func tabBarHeightChanged(_ height: CGFloat) {

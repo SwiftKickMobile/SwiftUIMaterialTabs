@@ -18,8 +18,13 @@
 		224364952B547D1B00563396 /* MaterialTabsItemModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364872B547D1B00563396 /* MaterialTabsItemModifier.swift */; };
 		224364962B547D1B00563396 /* MaterialTabsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364882B547D1B00563396 /* MaterialTabsScrollView.swift */; };
 		224364972B547D1B00563396 /* HeaderContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364892B547D1B00563396 /* HeaderContext.swift */; };
-		22549DC72B55FFD8005E3E21 /* ShrinkHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22549DC62B55FFD8005E3E21 /* ShrinkHeader.swift */; };
-		22549DC92B560011005E3E21 /* HeaderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22549DC82B560011005E3E21 /* HeaderStyle.swift */; };
+		226DFD882B5C3301008AFFF2 /* TitleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226DFD872B5C3301008AFFF2 /* TitleStyle.swift */; };
+		226DFD8A2B5C3546008AFFF2 /* TitleStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226DFD892B5C3546008AFFF2 /* TitleStyleModifier.swift */; };
+		226DFD8D2B5C37B1008AFFF2 /* ShrinkTitleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226DFD8C2B5C37B1008AFFF2 /* ShrinkTitleStyle.swift */; };
+		226DFD8F2B5C4410008AFFF2 /* ParallaxTitleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226DFD8E2B5C4410008AFFF2 /* ParallaxTitleStyle.swift */; };
+		226DFD912B5C455E008AFFF2 /* OffsetTitleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226DFD902B5C455E008AFFF2 /* OffsetTitleStyle.swift */; };
+		226DFD942B5C462C008AFFF2 /* MinTitleHeightPreferernceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226DFD932B5C462C008AFFF2 /* MinTitleHeightPreferernceKey.swift */; };
+		226DFD962B5C4B75008AFFF2 /* MinTitleHeightModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226DFD952B5C4B75008AFFF2 /* MinTitleHeightModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,8 +41,13 @@
 		224364882B547D1B00563396 /* MaterialTabsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialTabsScrollView.swift; sourceTree = "<group>"; };
 		224364892B547D1B00563396 /* HeaderContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderContext.swift; sourceTree = "<group>"; };
 		2243648C2B547D1B00563396 /* SwiftUIMaterialTabsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIMaterialTabsTests.swift; sourceTree = "<group>"; };
-		22549DC62B55FFD8005E3E21 /* ShrinkHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShrinkHeader.swift; sourceTree = "<group>"; };
-		22549DC82B560011005E3E21 /* HeaderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderStyle.swift; sourceTree = "<group>"; };
+		226DFD872B5C3301008AFFF2 /* TitleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleStyle.swift; sourceTree = "<group>"; };
+		226DFD892B5C3546008AFFF2 /* TitleStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleStyleModifier.swift; sourceTree = "<group>"; };
+		226DFD8C2B5C37B1008AFFF2 /* ShrinkTitleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShrinkTitleStyle.swift; sourceTree = "<group>"; };
+		226DFD8E2B5C4410008AFFF2 /* ParallaxTitleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxTitleStyle.swift; sourceTree = "<group>"; };
+		226DFD902B5C455E008AFFF2 /* OffsetTitleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetTitleStyle.swift; sourceTree = "<group>"; };
+		226DFD932B5C462C008AFFF2 /* MinTitleHeightPreferernceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinTitleHeightPreferernceKey.swift; sourceTree = "<group>"; };
+		226DFD952B5C4B75008AFFF2 /* MinTitleHeightModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinTitleHeightModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,11 +89,11 @@
 		2243647C2B547D1B00563396 /* SwiftUIMaterialTabs */ = {
 			isa = PBXGroup;
 			children = (
-				22549DC82B560011005E3E21 /* HeaderStyle.swift */,
 				2243647D2B547D1B00563396 /* MaterialTabs.swift */,
+				224364872B547D1B00563396 /* MaterialTabsItemModifier.swift */,
 				224364882B547D1B00563396 /* MaterialTabsScrollView.swift */,
 				224364892B547D1B00563396 /* HeaderContext.swift */,
-				224364872B547D1B00563396 /* MaterialTabsItemModifier.swift */,
+				226DFD8B2B5C3795008AFFF2 /* TitleStyle */,
 				2243647E2B547D1B00563396 /* Internal */,
 			);
 			path = SwiftUIMaterialTabs;
@@ -95,7 +105,6 @@
 				2243647F2B547D1B00563396 /* InternalTabItemID.swift */,
 				224364812B547D1B00563396 /* HeaderView.swift */,
 				224364802B547D1B00563396 /* ScrollModel.swift */,
-				22549DC62B55FFD8005E3E21 /* ShrinkHeader.swift */,
 				224364822B547D1B00563396 /* TabsModel.swift */,
 				224364832B547D1B00563396 /* PreferenceKeys */,
 			);
@@ -105,9 +114,10 @@
 		224364832B547D1B00563396 /* PreferenceKeys */ = {
 			isa = PBXGroup;
 			children = (
-				224364862B547D1B00563396 /* TitleHeightPreferenceKey.swift */,
-				224364852B547D1B00563396 /* TabBarHeightPreferenceKey.swift */,
+				226DFD932B5C462C008AFFF2 /* MinTitleHeightPreferernceKey.swift */,
 				224364842B547D1B00563396 /* ScrollOffsetPreferenceKey.swift */,
+				224364852B547D1B00563396 /* TabBarHeightPreferenceKey.swift */,
+				224364862B547D1B00563396 /* TitleHeightPreferenceKey.swift */,
 			);
 			path = PreferenceKeys;
 			sourceTree = "<group>";
@@ -126,6 +136,19 @@
 				2243648C2B547D1B00563396 /* SwiftUIMaterialTabsTests.swift */,
 			);
 			path = SwiftUIMaterialTabsTests;
+			sourceTree = "<group>";
+		};
+		226DFD8B2B5C3795008AFFF2 /* TitleStyle */ = {
+			isa = PBXGroup;
+			children = (
+				226DFD892B5C3546008AFFF2 /* TitleStyleModifier.swift */,
+				226DFD902B5C455E008AFFF2 /* OffsetTitleStyle.swift */,
+				226DFD8E2B5C4410008AFFF2 /* ParallaxTitleStyle.swift */,
+				226DFD8C2B5C37B1008AFFF2 /* ShrinkTitleStyle.swift */,
+				226DFD872B5C3301008AFFF2 /* TitleStyle.swift */,
+				226DFD952B5C4B75008AFFF2 /* MinTitleHeightModifier.swift */,
+			);
+			path = TitleStyle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,7 +190,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1510;
-				LastUpgradeCheck = 1510;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					224364632B547D0300563396 = {
 						CreatedOnToolsVersion = 15.1;
@@ -207,18 +230,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				226DFD8D2B5C37B1008AFFF2 /* ShrinkTitleStyle.swift in Sources */,
 				2243648F2B547D1B00563396 /* ScrollModel.swift in Sources */,
-				22549DC72B55FFD8005E3E21 /* ShrinkHeader.swift in Sources */,
 				224364962B547D1B00563396 /* MaterialTabsScrollView.swift in Sources */,
-				22549DC92B560011005E3E21 /* HeaderStyle.swift in Sources */,
 				224364942B547D1B00563396 /* TitleHeightPreferenceKey.swift in Sources */,
 				224364902B547D1B00563396 /* HeaderView.swift in Sources */,
+				226DFD962B5C4B75008AFFF2 /* MinTitleHeightModifier.swift in Sources */,
 				224364972B547D1B00563396 /* HeaderContext.swift in Sources */,
 				2243648E2B547D1B00563396 /* InternalTabItemID.swift in Sources */,
 				224364952B547D1B00563396 /* MaterialTabsItemModifier.swift in Sources */,
+				226DFD882B5C3301008AFFF2 /* TitleStyle.swift in Sources */,
+				226DFD8A2B5C3546008AFFF2 /* TitleStyleModifier.swift in Sources */,
+				226DFD942B5C462C008AFFF2 /* MinTitleHeightPreferernceKey.swift in Sources */,
 				224364922B547D1B00563396 /* ScrollOffsetPreferenceKey.swift in Sources */,
+				226DFD912B5C455E008AFFF2 /* OffsetTitleStyle.swift in Sources */,
 				224364912B547D1B00563396 /* TabsModel.swift in Sources */,
 				2243648D2B547D1B00563396 /* MaterialTabs.swift in Sources */,
+				226DFD8F2B5C4410008AFFF2 /* ParallaxTitleStyle.swift in Sources */,
 				224364932B547D1B00563396 /* TabBarHeightPreferenceKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,6 +376,7 @@
 		224364762B547D0300563396 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -380,6 +409,7 @@
 		224364772B547D0300563396 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
