@@ -50,9 +50,9 @@ public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab
     @State private var coordinateSpaceName = UUID()
     @Binding private var scrollItemID: ItemID?
     @Binding private var scrollUnitPoint: UnitPoint
-    @StateObject private var scrollModel: ScrollModel<ItemID>
+    @StateObject private var scrollModel: ScrollModel<ItemID, Tab>
     @ViewBuilder private var content: () -> Content
-    @EnvironmentObject private var tabsModel: TabsModel
+    @EnvironmentObject private var tabsModel: TabsModel<Tab>
 
     // MARK: - Body
 
@@ -61,7 +61,7 @@ public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab
             ScrollView {
                 VStack(spacing: 0) {
                     Color.clear
-                        .frame(height: tabsModel.data.headerHeight)
+                        .frame(height: tabsModel.state.headerContext.totalHeight)
                         .background {
                             GeometryReader { proxy in
                                 Color.clear.preference(
@@ -87,7 +87,7 @@ public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab
                 scrollModel.appeared(tabsModel: tabsModel)
             }
         }
-        .onChange(of: tabsModel.selectedTab, initial: true) {
+        .onChange(of: tabsModel.state.headerContext.selectedTab, initial: true) {
             scrollModel.selectedTabChanged()
         }
         .onChange(of: scrollItemID, initial: true) {

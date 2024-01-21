@@ -8,12 +8,14 @@ struct MinTitleHeightPreferenceKey: PreferenceKey {
 
     enum Dimension: Equatable {
         case absolute(CGFloat)
-        case relative(CGFloat)
+        case unit(CGFloat)
     }
 
     static var defaultValue: Dimension = .absolute(0)
 
     static func reduce(value: inout Dimension, nextValue: () -> Dimension) {
-        value = nextValue()
+        let next = nextValue()
+        guard next != defaultValue else { return }
+        value = next
     }
 }

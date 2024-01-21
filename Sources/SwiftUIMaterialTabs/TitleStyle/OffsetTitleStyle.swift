@@ -22,6 +22,6 @@ public struct OffsetTitleStyle<Tab>: TitleStyle where Tab: Hashable {
 
     public func makeBody(context: HeaderContext<Tab>, title: Title) -> some View {
         title
-            .opacity(fade ? 1 - context.unitOffset : 1)
+            .opacity(fade ? (1 - context.unitOffset).clamped01() : 1)
     }
 }

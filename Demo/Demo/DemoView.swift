@@ -24,7 +24,8 @@ struct DemoView: View {
                 DemoTitleView(context: context)
             },
             headerTabBar: { context in
-                DemoTabBar(context: context)
+                MaterialTabBar<DemoTab>(selectedTab: $selectedTab, context: context)
+                    .foregroundStyle(context.selectedTab.headerForeground)
             },
             headerBackground: { context in
                 DemoHeaderBackgroundView(context: context)
@@ -32,22 +33,19 @@ struct DemoView: View {
             content: {
                 DemoTabExternalScrollingView(
                     tab: .one,
-                    name: DemoTab.one.name,
-                    color: .green.opacity(0.1)
+                    name: DemoTab.one.name
                 )
-                .materialTabsitem(itemID: DemoTab.one)
+                .materialTabItem(tab: DemoTab.one, title: DemoTab.one.name.uppercased())
                 DemoTabExternalScrollingView(
                     tab: .two,
-                    name: DemoTab.two.name,
-                    color: .green.opacity(0.1)
+                    name: DemoTab.two.name
                 )
-                .materialTabsitem(itemID: DemoTab.two)
+                .materialTabItem(tab: DemoTab.two, title: DemoTab.two.name.uppercased())
                 DemoTabExternalScrollingView(
                     tab: .three,
-                    name: DemoTab.three.name,
-                    color: .green.opacity(0.1)
+                    name: DemoTab.three.name
                 )
-                .materialTabsitem(itemID: DemoTab.three)
+                .materialTabItem(tab: DemoTab.three, title: DemoTab.three.name.uppercased())
             }
         )
     }

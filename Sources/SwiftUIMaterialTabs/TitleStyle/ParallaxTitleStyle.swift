@@ -25,6 +25,6 @@ public struct ParallaxTitleStyle<Tab>: TitleStyle where Tab: Hashable {
     public func makeBody(context: HeaderContext<Tab>, title: Title) -> some View {
         title
             .offset(CGSize(width: 0, height: context.offset * amount))
-            .opacity(fade ? 1 - context.unitOffset : 1)
+            .opacity(fade ? (1 - context.unitOffset).clamped01() : 1)
     }
 }

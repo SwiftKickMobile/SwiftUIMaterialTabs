@@ -68,7 +68,7 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
             )
         }
         self.content = content
-        _tabsModel = StateObject(wrappedValue: TabsModel(initialTab: selectedTab.wrappedValue))
+        _tabsModel = StateObject(wrappedValue: TabsModel(selectedTab: selectedTab.wrappedValue))
     }
 
     // MARK: - Constants
@@ -78,7 +78,8 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     @Binding private var selectedTab: Tab
     @ViewBuilder private let header: (HeaderContext<Tab>) -> HeaderView<HeaderTitle, HeaderTabBar, HeaderBackground, Tab>
     @ViewBuilder private let content: () -> Content
-    @StateObject private var tabsModel: TabsModel
+    @StateObject private var tabsModel: TabsModel<Tab>
+    @StateObject private var tabBarModel = TabBarModel<Tab>()
 
     // MARK: - Body
 
@@ -95,17 +96,12 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                 .onChange(of: proxy.size.height, initial: true) {
                     tabsModel.heightChanged(proxy.size.height)
                 }
-                header(
-                    HeaderContext(
-                        selectedTab: $selectedTab,
-                        offset: tabsModel.data.headerOffset,
-                        maxOffset: tabsModel.data.titleHeight
-                    )
-                )
+                header(tabsModel.state.headerContext)
             }
         }
         .animation(.default, value: selectedTab)
-        .environmentObject(tabsModel as TabsModel)
+        .environmentObject(tabsModel)
+        .environmentObject(tabBarModel)
         .onPreferenceChange(TitleHeightPreferenceKey.self, perform: tabsModel.titleHeightChanged(_:))
         .onPreferenceChange(TabBarHeightPreferenceKey.self, perform: tabsModel.tabBarHeightChanged(_:))
         .onPreferenceChange(MinTitleHeightPreferenceKey.self, perform: tabsModel.minTitleHeightChanged(_:))
@@ -114,10 +110,3 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
         }
     }
 }
-//
-//#Preview {
-//    MaterialTabs(selectedTab: .constant(1)) {
-//        Text("Tab1").tag(1)
-//        Text("Tab2").tag(2)
-//    }
-//}

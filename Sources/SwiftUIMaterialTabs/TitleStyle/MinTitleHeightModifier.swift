@@ -29,21 +29,23 @@ public struct MinTitleHeightModifier: ViewModifier {
     // MARK: - Body
 
     public func body(content: Content) -> some View {
-        switch dimension {
-        case .absolute(let value):
-            content
-                .preference(key: MinTitleHeightPreferenceKey.self, value: .absolute(value))
-        case .relative(let value):
-            content
-                .preference(key: MinTitleHeightPreferenceKey.self, value: .relative(value))
-        case .content:
-            content
-                .background {
-                    GeometryReader { proxy in
-                        Color.clear
-                            .preference(key: MinTitleHeightPreferenceKey.self, value: .absolute(proxy.size.height))
+        Group {
+            switch dimension {
+            case .absolute(let value):
+                content
+                    .preference(key: MinTitleHeightPreferenceKey.self, value: .absolute(value))
+            case .relative(let value):
+                content
+                    .preference(key: MinTitleHeightPreferenceKey.self, value: .unit(value))
+            case .content:
+                content
+                    .background {
+                        GeometryReader { proxy in
+                            Color.clear
+                                .preference(key: MinTitleHeightPreferenceKey.self, value: .absolute(proxy.size.height))
+                        }
                     }
-                }
+            }
         }
     }
 }

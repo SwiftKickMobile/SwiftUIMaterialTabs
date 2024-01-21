@@ -11,7 +11,6 @@ struct DemoTabExternalScrollingView: View {
 
     let tab: DemoTab
     let name: String
-    let color: Color
 
     // MARK: - Constants
 

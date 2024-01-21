@@ -20,6 +20,6 @@ public struct ShrinkTitleStyle<Tab>: TitleStyle where Tab: Hashable {
         title
             .scaleEffect(pow(1 - context.unitOffset, 0.35), anchor: .center)
             .offset(CGSize(width: 0, height: context.offset * 0.5))
-            .opacity(1 - context.unitOffset)
+            .opacity((1 - context.unitOffset).clamped01())
     }
 }

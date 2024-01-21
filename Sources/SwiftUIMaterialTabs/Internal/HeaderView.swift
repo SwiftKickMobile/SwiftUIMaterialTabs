@@ -28,7 +28,7 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
     @ViewBuilder private let title: (HeaderContext<Tab>) -> Title
     @ViewBuilder private let tabBar: (HeaderContext<Tab>) -> TabBar
     @ViewBuilder private let background: (HeaderContext<Tab>) -> Background
-    @EnvironmentObject private var tabsModel: TabsModel
+    @EnvironmentObject private var tabsModel: TabsModel<Tab>
 
     // MARK: - Body
 
@@ -36,15 +36,15 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
         VStack(spacing: 0) {
             makeTitleView()
                 .frame(
-                    height: tabsModel.data.headerOffset < 0
-                        ? tabsModel.data.titleHeight * tabsModel.data.unitOffset
+                    height: tabsModel.state.headerContext.offset < 0
+                        ? tabsModel.state.headerContext.titleHeight * (1 - tabsModel.state.headerContext.unitOffset)
                         : nil
                 )
             makeTabBarView()
         }
         .frame(maxWidth: .infinity)
         .background { background(context).ignoresSafeArea(edges: .top) }
-        .offset(CGSize(width: 0, height: -max(tabsModel.data.headerOffset, 0)))
+        .offset(CGSize(width: 0, height: -max(tabsModel.state.headerContext.offset, 0)))
     }
 
     @ViewBuilder private func makeTitleView() -> some View {
@@ -67,13 +67,9 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
                     Color.clear
                         .preference(
                             key: TabBarHeightPreferenceKey.self,
-                            value: 40//proxy.size.height
+                            value: proxy.size.height
                         )
                 }
             }
     }
 }
-
-//#Preview {
-//    MaterialTabsHeaderView()
-//}

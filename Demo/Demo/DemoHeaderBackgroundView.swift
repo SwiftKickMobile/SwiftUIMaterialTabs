@@ -23,5 +23,5 @@ struct DemoHeaderBackgroundView: View {
 }
 
 #Preview {
-    DemoTitleView(context: HeaderContext(selectedTab: .constant(.one)))
+    DemoTitleView(context: HeaderContext(selectedTab: .one))
 }
