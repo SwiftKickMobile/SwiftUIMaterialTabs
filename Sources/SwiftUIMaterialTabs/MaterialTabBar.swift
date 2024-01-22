@@ -8,11 +8,15 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
 
     // MARK: - API
 
-    typealias Label = (_ isSelected: Bool, _ context: HeaderContext<Tab>, _ config: MaterialTabBarConfig) -> AnyView
+    public enum Label {
+        case primary(title: String, icon: Image)
+        case secondary(title: String)
+    }
 
-    public init(selectedTab: Binding<Tab>, context: HeaderContext<Tab>, config: MaterialTabBarConfig = MaterialTabBarConfig()) {
+    public typealias CustomLabel = (_ isSelected: Bool, _ tapped: @escaping () -> Void, _ context: HeaderContext<Tab>) -> AnyView
+
+    public init(selectedTab: Binding<Tab>, context: HeaderContext<Tab>) {
         _selectedTab = selectedTab
-        self.config = config
     }
 
     // MARK: - Constants
@@ -20,7 +24,6 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     // MARK: - Variables
 
     @Binding private var selectedTab: Tab
-    private let config: MaterialTabBarConfig
     @EnvironmentObject private var tabBarModel: TabBarModel<Tab>
     @EnvironmentObject private var tabsModel: TabsModel<Tab>
     @State private var size: CGSize = .zero
@@ -32,7 +35,13 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
             HStack(spacing: 0) {
                 Spacer()
                 ForEach(Array(tabBarModel.tabs.enumerated()), id: \.offset) { (offset, tab) in
-                    tabBarModel.labels[tab]!(selectedTab == tab, tabsModel.state.headerContext, config)
+                    tabBarModel.labels[tab]!(
+                        selectedTab == tab,
+                        {
+                            tabsModel.selected(tab: tab)
+                        },
+                        tabsModel.state.headerContext
+                    )
                     Spacer()
                 }
             }

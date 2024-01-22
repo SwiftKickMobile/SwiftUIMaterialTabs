@@ -9,13 +9,20 @@ public extension View {
         modifier(MaterialTabItemModifier<Tab>(tab: tab, label: { _, _, _ in AnyView(EmptyView()) }))
     }
 
-    func materialTabItem<Tab>(tab: Tab, title: String) -> some View where Tab: Hashable {
+    func materialTabItem<Tab>(tab: Tab, label: MaterialTabBar<Tab>.Label) -> some View where Tab: Hashable {
         modifier(
             MaterialTabItemModifier<Tab>(
                 tab: tab,
-                label: { _, _, config in
+                label: { isSelected, tapped, context in
                     AnyView(
-                        Text(title)
+                        Group {
+                            switch label {
+                            case .primary(let title, let icon):
+                                PrimaryTab(isSelected: isSelected, tapped: tapped, title: title, icon: icon)
+                            case .secondary(let title):
+                                SecondaryTab(isSelected: isSelected, tapped: tapped, title: title)
+                            }
+                        }
                     )
                 }
             )
@@ -24,25 +31,26 @@ public extension View {
 
     func materialTabItem<Tab, Label>(
         tab: Tab, @ViewBuilder
-        label: @escaping (_ isSelected: Bool, _ context: HeaderContext<Tab>, _ config: MaterialTabBarConfig) -> Label
+        label: @escaping (_ isSelected: Bool, _ tapped: @escaping () -> Void, _ context: HeaderContext<Tab>) -> Label
     ) -> some View where Tab: Hashable, Label: View {
         modifier(MaterialTabItemModifier<Tab>(tab: tab, label: { AnyView(label($0, $1, $2)) }))
     }
 }
 
-struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
+public struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
 
     // MARK: - API
 
+
     init(
         tab: Tab,
-        @ViewBuilder label: @escaping MaterialTabBar<Tab>.Label) {
+        @ViewBuilder label: @escaping MaterialTabBar<Tab>.CustomLabel) {
         self.tab = tab
         self.label = label
     }
 
     let tab: Tab
-    @ViewBuilder let label: MaterialTabBar<Tab>.Label
+    @ViewBuilder let label: MaterialTabBar<Tab>.CustomLabel
 
     // MARK: - Constants
 
@@ -53,7 +61,7 @@ struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
 
     // MARK: - Body
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         // This VStack is critical to prevent a bug in iOS 17 where scrolling breaks under the following conditions:
         // 1. The scroll view is in a `TabView` in paged mode.
         // 2. The scroll view has the `scrollPosition()` modifier applied.

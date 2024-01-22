@@ -105,8 +105,11 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
         .onPreferenceChange(TitleHeightPreferenceKey.self, perform: tabsModel.titleHeightChanged(_:))
         .onPreferenceChange(TabBarHeightPreferenceKey.self, perform: tabsModel.tabBarHeightChanged(_:))
         .onPreferenceChange(MinTitleHeightPreferenceKey.self, perform: tabsModel.minTitleHeightChanged(_:))
-        .onChange(of: selectedTab) {
+        .onChange(of: selectedTab, initial: true) {
             tabsModel.selected(tab: selectedTab)
+        }
+        .onChange(of: tabsModel.state.headerContext.selectedTab, initial: true) {
+            selectedTab = tabsModel.state.headerContext.selectedTab
         }
     }
 }

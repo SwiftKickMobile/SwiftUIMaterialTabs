@@ -24,7 +24,7 @@ struct DemoTitleView: View {
             .bold()
             .foregroundStyle(context.selectedTab.headerForeground)
             .padding(30)
-            .titleStyle(OffsetTitleStyle(fade: true), context: context)
+            .titleStyle(ShrinkTitleStyle<DemoTab>(), context: context)
     }
 }
 

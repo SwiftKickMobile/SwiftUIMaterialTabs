@@ -9,10 +9,9 @@ class TabBarModel<Tab>: ObservableObject where Tab: Hashable {
     // MARK: - API
 
     @Published private(set) var tabs: [Tab] = []
-    var labels: [Tab: MaterialTabBar<Tab>.Label] = [:]
+    var labels: [Tab: MaterialTabBar<Tab>.CustomLabel] = [:]
 
-    func register(tab: Tab, @ViewBuilder label: @escaping MaterialTabBar<Tab>.Label) {
-        print("XXXX register=\(tab)")
+    func register(tab: Tab, @ViewBuilder label: @escaping MaterialTabBar<Tab>.CustomLabel) {
         if !tabs.contains(tab) {
             tabs.append(tab)
         }

@@ -35,17 +35,17 @@ struct DemoView: View {
                     tab: .one,
                     name: DemoTab.one.name
                 )
-                .materialTabItem(tab: DemoTab.one, title: DemoTab.one.name.uppercased())
+                .materialTabItem(tab: DemoTab.one, label: .secondary(title: DemoTab.one.name.uppercased()))
                 DemoTabExternalScrollingView(
                     tab: .two,
                     name: DemoTab.two.name
                 )
-                .materialTabItem(tab: DemoTab.two, title: DemoTab.two.name.uppercased())
+                .materialTabItem(tab: DemoTab.two, label: .secondary(title: DemoTab.two.name.uppercased()))
                 DemoTabExternalScrollingView(
                     tab: .three,
                     name: DemoTab.three.name
                 )
-                .materialTabItem(tab: DemoTab.three, title: DemoTab.three.name.uppercased())
+                .materialTabItem(tab: DemoTab.three, label: .secondary(title: DemoTab.three.name.uppercased()))
             }
         )
     }
