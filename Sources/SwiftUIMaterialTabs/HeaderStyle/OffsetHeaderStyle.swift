@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-public struct OffsetTitleStyle<Tab>: TitleStyle where Tab: Hashable {
+public struct OffsetHeaderStyle<Tab>: HeaderStyle where Tab: Hashable {
 
     // MARK: - API
 
@@ -20,8 +20,8 @@ public struct OffsetTitleStyle<Tab>: TitleStyle where Tab: Hashable {
 
     // MARK: - Body
 
-    public func makeBody(context: HeaderContext<Tab>, title: Title) -> some View {
-        title
+    public func makeBody(context: HeaderContext<Tab>, content: Content) -> some View {
+        content
             .opacity(fade ? (1 - context.unitOffset).clamped01() : 1)
     }
 }

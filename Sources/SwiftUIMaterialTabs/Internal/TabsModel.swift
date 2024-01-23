@@ -26,6 +26,7 @@ class TabsModel<Tab>: ObservableObject where Tab: Hashable {
 
     func heightChanged(_ height: CGFloat) {
         state.totalHeight = height
+        print("XXXX height=\(state.headerContext.totalHeight), backgroundHeight=\(state.headerContext.titleHeight)")
     }
 
     func titleHeightChanged(_ height: CGFloat) {
@@ -42,6 +43,11 @@ class TabsModel<Tab>: ObservableObject where Tab: Hashable {
 
     func selected(tab: Tab) {
         self.state.headerContext.selectedTab = tab
+    }
+
+    func topSafeAreaChanged(_ topSafeArea: CGFloat) {
+        self.state.headerContext.topSafeArea = topSafeArea
+        print("XXXX height=\(state.headerContext.totalHeight), backgroundHeight=\(state.headerContext.titleHeight)")
     }
 
     // MARK: - Constants

@@ -40,13 +40,14 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
 
     public init(
         @ViewBuilder headerTitle: @escaping (HeaderContext<Tab>) -> HeaderTitle,
+        @ViewBuilder headerBackground: @escaping (HeaderContext<Tab>) -> HeaderBackground,
         @ViewBuilder content: @escaping () -> Content
-    ) where HeaderBackground == EmptyView, HeaderTabBar == EmptyView, Tab == Int {
+    ) where HeaderTabBar == MaterialTabBar<Tab>, Tab == Int {
         self.init(
             selectedTab: .constant(0),
             headerTitle: headerTitle,
-            headerTabBar: { _ in EmptyView() },
-            headerBackground: { _ in EmptyView() },
+            headerTabBar: { context in MaterialTabBar(selectedTab: .constant(0), context: context) },
+            headerBackground: headerBackground,
             content: content
         )
     }
@@ -92,11 +93,13 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                 .ignoresSafeArea(edges: .bottom)
                 .ignoresSafeArea(edges: .top)
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .toolbar(.hidden, for: .tabBar)
                 .onChange(of: proxy.size.height, initial: true) {
                     tabsModel.heightChanged(proxy.size.height)
                 }
                 header(tabsModel.state.headerContext)
+            }
+            .onChange(of: proxy.safeAreaInsets.top, initial: true) {
+                tabsModel.topSafeAreaChanged(proxy.safeAreaInsets.top)
             }
         }
         .animation(.default, value: selectedTab)
@@ -104,7 +107,13 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
         .environmentObject(tabBarModel)
         .onPreferenceChange(TitleHeightPreferenceKey.self, perform: tabsModel.titleHeightChanged(_:))
         .onPreferenceChange(TabBarHeightPreferenceKey.self, perform: tabsModel.tabBarHeightChanged(_:))
-        .onPreferenceChange(MinTitleHeightPreferenceKey.self, perform: tabsModel.minTitleHeightChanged(_:))
+        .onPreferenceChange(MinTitleHeightPreferenceKey.self) { value in
+            Task {
+                tabsModel.minTitleHeightChanged(value)
+                print("XXXX MinTitleHeightPreferenceKey=\(value)")
+            }
+        }
+//        .onPreferenceChange(MinTitleHeightPreferenceKey.self, perform: tabsModel.minTitleHeightChanged(_:))
         .onChange(of: selectedTab, initial: true) {
             tabsModel.selected(tab: selectedTab)
         }

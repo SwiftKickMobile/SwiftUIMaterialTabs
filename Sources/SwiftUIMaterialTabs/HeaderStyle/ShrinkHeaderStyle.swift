@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-public struct ShrinkTitleStyle<Tab>: TitleStyle where Tab: Hashable {
+public struct ShrinkHeaderStyle<Tab>: HeaderStyle where Tab: Hashable {
 
     // MARK: - API
 
@@ -22,8 +22,8 @@ public struct ShrinkTitleStyle<Tab>: TitleStyle where Tab: Hashable {
 
     // MARK: - Body
 
-    public func makeBody(context: HeaderContext<Tab>, title: Title) -> some View {
-        title
+    public func makeBody(context: HeaderContext<Tab>, content: Content) -> some View {
+        content
             .scaleEffect(pow(1 - context.unitOffset, scaleExponent), anchor: .center)
             .offset(CGSize(width: 0, height: context.offset > 0 ? context.offset * offsetFactor : 0))
             .opacity((1 - context.unitOffset).clamped01())

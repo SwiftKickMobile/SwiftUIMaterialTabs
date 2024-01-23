@@ -21,13 +21,14 @@ public struct SecondaryTab: View {
 
     public var body: some View {
         Button(action: tapped) {
-            VStack {
+            VStack(spacing: 0) {
                 Text(title)
-                    .padding(.vertical, 5)
+                    .padding(.vertical, 10)
                     .padding(.horizontal, 10)
                 Rectangle().fill(isSelected ? AnyShapeStyle(.foreground) : AnyShapeStyle(Color.clear))
                     .frame(height: 2)
             }
+            .contentShape(Rectangle())
         }
     }
 }

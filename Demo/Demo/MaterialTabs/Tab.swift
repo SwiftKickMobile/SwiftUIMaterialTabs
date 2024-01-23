@@ -4,7 +4,8 @@
 
 import SwiftUI
 
-enum DemoTab: Hashable, CaseIterable {
+enum Tab: Hashable, CaseIterable {
+    
     case one
     case two
     case three
@@ -28,8 +29,16 @@ enum DemoTab: Hashable, CaseIterable {
     var headerBackground: AnyShapeStyle {
         switch self {
         case .one: AnyShapeStyle(Color.black)
+        case .two: AnyShapeStyle(Color.white)
+        case .three: AnyShapeStyle(Color.black.opacity(0.5))
+        }
+    }
+
+    var tabBarBackground: AnyShapeStyle {
+        switch self {
+        case .one: AnyShapeStyle(Color.clear)
         case .two: AnyShapeStyle(Color.skaiPurple)
-        case .three: AnyShapeStyle(Color.skm1Blue)
+        case .three: AnyShapeStyle(Color.clear)
         }
     }
 
@@ -45,7 +54,7 @@ enum DemoTab: Hashable, CaseIterable {
         switch self {
         case .one: AnyShapeStyle(Color.black)
         case .two: AnyShapeStyle(Color.skaiBlue)
-        case .three: AnyShapeStyle(Color.skm1Blue)
+        case .three: AnyShapeStyle(Color.darkRed)
         }
     }
 }

@@ -22,6 +22,18 @@ public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab
     }
 
     public init(
+        @ViewBuilder content: @escaping () -> Content
+    ) where ItemID == InternalTabItemID, Tab == Int {
+        self.init(
+            tab: 0,
+            firstItemID: .first,
+            scrollItemID: .constant(nil),
+            scrollUnitPoint: .constant(.top),
+            content: content
+        )
+    }
+
+    public init(
         tab: Tab,
         firstItemID: ItemID,
         scrollItemID: Binding<ItemID?>,
@@ -101,14 +113,3 @@ public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab
         }
     }
 }
-
-//#Preview {
-//    MaterialTabsScrollView(
-//        tab: .zero,
-//        topItem: 0,
-//        scrollItem: .constant(nil),
-//        scrollUnitPoint: .constant(.top)
-//    ) {
-//        Text("Row").id(0)
-//    }
-//}

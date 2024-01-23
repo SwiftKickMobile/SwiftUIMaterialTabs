@@ -5,13 +5,12 @@
 import SwiftUI
 import SwiftUIMaterialTabs
 
-struct DemoTabInternalScrollingView: View {
+struct TabsScrollingContentView: View {
 
     // MARK: - API
 
-    let tab: DemoTab
+    let tab: Tab
     let name: String
-    let color: Color
 
     // MARK: - Constants
 
@@ -25,17 +24,13 @@ struct DemoTabInternalScrollingView: View {
         ) {
             LazyVStack(spacing: 0) {
                 ForEach(0..<100) { index in
-                    DemoRowView(tab: tab, name: name, index: index)
+                    DemoScrollingRowView(index: index, name: name, foregroundStyle: tab.contentForeground)
                         .id(index)
                 }
             }
             .scrollTargetLayout()
         }
-        .background(color)
+        .background(tab.contentBackground)
     }
-}
-
-#Preview {
-    DemoTabInternalScrollingView(tab: .one, name: "One", color: .red)
 }
 

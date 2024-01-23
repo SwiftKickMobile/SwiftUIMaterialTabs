@@ -11,43 +11,32 @@ struct DemoView: View {
 
     // MARK: - Constants
 
-    // MARK: - Variables
+    private enum Tab: Equatable {
+        case tabs
+        case header
+    }
 
-    @State private var selectedTab: DemoTab = .one
+    // MARK: - Variables
 
     // MARK: - Body
 
     var body: some View {
-        MaterialTabs(
-            selectedTab: $selectedTab,
-            headerTitle: { context in
-                DemoTitleView(context: context)
-            },
-            headerTabBar: { context in
-                MaterialTabBar<DemoTab>(selectedTab: $selectedTab, context: context)
-                    .foregroundStyle(context.selectedTab.headerForeground)
-            },
-            headerBackground: { context in
-                DemoHeaderBackgroundView(context: context)
-            },
-            content: {
-                DemoTabExternalScrollingView(
-                    tab: .one,
-                    name: DemoTab.one.name
-                )
-                .materialTabItem(tab: DemoTab.one, label: .secondary(title: DemoTab.one.name.uppercased()))
-                DemoTabExternalScrollingView(
-                    tab: .two,
-                    name: DemoTab.two.name
-                )
-                .materialTabItem(tab: DemoTab.two, label: .secondary(title: DemoTab.two.name.uppercased()))
-                DemoTabExternalScrollingView(
-                    tab: .three,
-                    name: DemoTab.three.name
-                )
-                .materialTabItem(tab: DemoTab.three, label: .secondary(title: DemoTab.three.name.uppercased()))
+        TabView {
+            Group {
+                StickyHeaderView()
+                    .tag(Tab.header)
+                    .tabItem {
+                        Label("Stick Header", image: .stickyHeaderTab)
+                    }
+                TabsView()
+                    .tag(Tab.tabs)
+                    .tabItem {
+                        Label("Material Tabs", image: .materialTabsTab)
+                    }
             }
-        )
+            .toolbarBackground(.black, for: .tabBar)
+        }
+        .tint(.skm2Yellow)
     }
 }
 

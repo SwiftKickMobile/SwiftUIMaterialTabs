@@ -35,16 +35,19 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
     var body: some View {
         VStack(spacing: 0) {
             makeTitleView()
-                .frame(
-                    height: tabsModel.state.headerContext.offset < 0
-                        ? tabsModel.state.headerContext.titleHeight * (1 - tabsModel.state.headerContext.unitOffset)
-                        : nil
-                )
+                .frame(height: context.rubberBandingTitleHeight)
             makeTabBarView()
         }
         .frame(maxWidth: .infinity)
-        .background { background(context).ignoresSafeArea(edges: .top) }
+        .background(alignment: .bottom) {
+            background(context)
+                .ignoresSafeArea(edges: .top)
+                .frame(height: context.rubberBandingBackgroundHeight)
+                // Clip for image backgrounds that use aspect fill
+                .clipped()
+        }
         .offset(CGSize(width: 0, height: -max(tabsModel.state.headerContext.offset, 0)))
+        .animation(.default, value: context.selectedTab)
     }
 
     @ViewBuilder private func makeTitleView() -> some View {

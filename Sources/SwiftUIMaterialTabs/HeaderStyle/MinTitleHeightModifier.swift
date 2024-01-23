@@ -15,7 +15,7 @@ public struct MinTitleHeightModifier: ViewModifier {
     // MARK: - API
 
     public enum Dimension {
-        case content
+        case content(scale: CGFloat = 1)
         case absolute(CGFloat)
         case relative(CGFloat)
     }
@@ -37,12 +37,12 @@ public struct MinTitleHeightModifier: ViewModifier {
             case .relative(let value):
                 content
                     .preference(key: MinTitleHeightPreferenceKey.self, value: .unit(value))
-            case .content:
+            case .content(let scale):
                 content
                     .background {
                         GeometryReader { proxy in
                             Color.clear
-                                .preference(key: MinTitleHeightPreferenceKey.self, value: .absolute(proxy.size.height))
+                                .preference(key: MinTitleHeightPreferenceKey.self, value: .absolute(proxy.size.height * scale))
                         }
                     }
             }
