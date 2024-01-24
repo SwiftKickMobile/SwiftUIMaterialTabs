@@ -5,11 +5,11 @@
 import SwiftUI
 import SwiftUIMaterialTabs
 
-struct TabsHeaderTitle: View {
+struct DemoTabsHeaderTitle: View {
 
     // MARK: - API
 
-    let context: HeaderContext<Tab>
+    let context: HeaderContext<DemoTab>
 
     // MARK: - Constants
 
@@ -22,10 +22,10 @@ struct TabsHeaderTitle: View {
             switch context.selectedTab {
             case .one:
                 Image(.materialTabsLogo)
-                    .headerStyle(OffsetHeaderStyle<Tab>(fade: true), context: context)
+                    .headerStyle(OffsetHeaderStyle<DemoTab>(fade: true), context: context)
             case .two:
                 Image(.swiftkickLogo)
-                    .headerStyle(ShrinkHeaderStyle<Tab>(), context: context)
+                    .headerStyle(ShrinkHeaderStyle<DemoTab>(), context: context)
             case .three:
                 VStack {
                     Text("by")
@@ -42,5 +42,5 @@ struct TabsHeaderTitle: View {
 }
 
 #Preview {
-    TabsHeaderTitle(context: HeaderContext(selectedTab: .one))
+    DemoTabsHeaderTitle(context: HeaderContext(selectedTab: .one))
 }

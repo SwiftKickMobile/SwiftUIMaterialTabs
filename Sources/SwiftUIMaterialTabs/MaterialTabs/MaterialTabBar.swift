@@ -25,7 +25,7 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
 
     @Binding private var selectedTab: Tab
     @EnvironmentObject private var tabBarModel: TabBarModel<Tab>
-    @EnvironmentObject private var tabsModel: TabsModel<Tab>
+    @EnvironmentObject private var headerModel: HeaderModel<Tab>
     @State private var size: CGSize = .zero
 
     // MARK: - Body
@@ -38,9 +38,9 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
                     tabBarModel.labels[tab]!(
                         selectedTab == tab,
                         {
-                            tabsModel.selected(tab: tab)
+                            headerModel.selected(tab: tab)
                         },
-                        tabsModel.state.headerContext
+                        headerModel.state.headerContext
                     )
                     Spacer()
                 }

@@ -4,17 +4,17 @@
 
 import SwiftUI
 
-public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab: Hashable, ItemID: Hashable {
+public struct Scroll<Content, Tab, ItemID>: View where Content: View, Tab: Hashable, ItemID: Hashable {
 
     // MARK: - API
 
     public init(
         tab: Tab,
         @ViewBuilder content: @escaping () -> Content
-    ) where ItemID == InternalTabItemID {
+    ) where ItemID == ScrollItem {
         self.init(
             tab: tab,
-            firstItemID: .first,
+            firstItemID: .item,
             scrollItemID: .constant(nil),
             scrollUnitPoint: .constant(.top),
             content: content
@@ -23,10 +23,10 @@ public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab
 
     public init(
         @ViewBuilder content: @escaping () -> Content
-    ) where ItemID == InternalTabItemID, Tab == Int {
+    ) where ItemID == ScrollItem, Tab == NoTab {
         self.init(
-            tab: 0,
-            firstItemID: .first,
+            tab: .none,
+            firstItemID: .item,
             scrollItemID: .constant(nil),
             scrollUnitPoint: .constant(.top),
             content: content
@@ -64,7 +64,7 @@ public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab
     @Binding private var scrollUnitPoint: UnitPoint
     @StateObject private var scrollModel: ScrollModel<ItemID, Tab>
     @ViewBuilder private var content: () -> Content
-    @EnvironmentObject private var tabsModel: TabsModel<Tab>
+    @EnvironmentObject private var headerModel: HeaderModel<Tab>
 
     // MARK: - Body
 
@@ -73,7 +73,7 @@ public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab
             ScrollView {
                 VStack(spacing: 0) {
                     Color.clear
-                        .frame(height: tabsModel.state.headerContext.totalHeight)
+                        .frame(height: headerModel.state.headerContext.totalHeight)
                         .background {
                             GeometryReader { proxy in
                                 Color.clear.preference(
@@ -96,10 +96,10 @@ public struct MaterialTabsScrollView<Content: View, Tab, ItemID>: View where Tab
             // It is important not to attempt to adjust the scroll position until after the view has appeared
             // and this task seems to accomplish that.
             Task {
-                scrollModel.appeared(tabsModel: tabsModel)
+                scrollModel.appeared(headerModel: headerModel)
             }
         }
-        .onChange(of: tabsModel.state.headerContext.selectedTab, initial: true) {
+        .onChange(of: headerModel.state.headerContext.selectedTab, initial: true) {
             scrollModel.selectedTabChanged()
         }
         .onChange(of: scrollItemID, initial: true) {

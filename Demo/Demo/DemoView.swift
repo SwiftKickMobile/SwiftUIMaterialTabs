@@ -18,25 +18,28 @@ struct DemoView: View {
 
     // MARK: - Variables
 
+    @State private var tabBarBackground: any ShapeStyle = Color.red
+    @State private var tabBarTint: any ShapeStyle = Color.black
+
     // MARK: - Body
 
     var body: some View {
         TabView {
             Group {
-                StickyHeaderView()
-                    .tag(Tab.header)
-                    .tabItem {
-                        Label("Stick Header", image: .stickyHeaderTab)
-                    }
-                TabsView()
+                DemoTabsView(mainTabBarBackground: $tabBarBackground, mainTabBarTint: $tabBarTint)
                     .tag(Tab.tabs)
                     .tabItem {
                         Label("Material Tabs", image: .materialTabsTab)
                     }
+                DemoStickyHeaderView(mainTabBarBackground: $tabBarBackground, mainTabBarTint: $tabBarTint)
+                    .tag(Tab.header)
+                    .tabItem {
+                        Label("Sticky Header", image: .stickyHeaderTab)
+                    }
             }
-            .toolbarBackground(.black, for: .tabBar)
+            .toolbarBackground(AnyShapeStyle(tabBarBackground), for: .tabBar)
         }
-        .tint(.skm2Yellow)
+        .tint(AnyShapeStyle(tabBarTint))
     }
 }
 

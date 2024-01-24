@@ -56,7 +56,7 @@ public struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
 
     // MARK: - Variables
 
-    @EnvironmentObject private var tabsModel: TabsModel<Tab>
+    @EnvironmentObject private var headerModel: HeaderModel<Tab>
     @EnvironmentObject private var tabBarModel: TabBarModel<Tab>
 
     // MARK: - Body

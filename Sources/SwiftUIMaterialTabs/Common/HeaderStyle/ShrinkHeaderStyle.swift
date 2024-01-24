@@ -8,7 +8,7 @@ public struct ShrinkHeaderStyle<Tab>: HeaderStyle where Tab: Hashable {
 
     // MARK: - API
 
-    public init(scaleExponent: CGFloat = 0.35, offsetFactor: CGFloat = 0.5) {
+    public init(scaleExponent: CGFloat = 0.35, offsetFactor: CGFloat = 0.35) {
         self.scaleExponent = scaleExponent
         self.offsetFactor = offsetFactor
     }

@@ -28,7 +28,7 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
     @ViewBuilder private let title: (HeaderContext<Tab>) -> Title
     @ViewBuilder private let tabBar: (HeaderContext<Tab>) -> TabBar
     @ViewBuilder private let background: (HeaderContext<Tab>) -> Background
-    @EnvironmentObject private var tabsModel: TabsModel<Tab>
+    @EnvironmentObject private var headerModel: HeaderModel<Tab>
 
     // MARK: - Body
 
@@ -46,7 +46,7 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
                 // Clip for image backgrounds that use aspect fill
                 .clipped()
         }
-        .offset(CGSize(width: 0, height: -max(tabsModel.state.headerContext.offset, 0)))
+        .offset(CGSize(width: 0, height: -max(headerModel.state.headerContext.offset, 0)))
         .animation(.default, value: context.selectedTab)
     }
 

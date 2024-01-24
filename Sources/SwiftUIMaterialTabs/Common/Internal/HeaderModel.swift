@@ -5,7 +5,7 @@
 import SwiftUI
 
 @MainActor
-class TabsModel<Tab>: ObservableObject where Tab: Hashable {
+class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
 
     // MARK: - API
 
@@ -26,7 +26,6 @@ class TabsModel<Tab>: ObservableObject where Tab: Hashable {
 
     func heightChanged(_ height: CGFloat) {
         state.totalHeight = height
-        print("XXXX height=\(state.headerContext.totalHeight), backgroundHeight=\(state.headerContext.titleHeight)")
     }
 
     func titleHeightChanged(_ height: CGFloat) {
@@ -47,14 +46,13 @@ class TabsModel<Tab>: ObservableObject where Tab: Hashable {
 
     func topSafeAreaChanged(_ topSafeArea: CGFloat) {
         self.state.headerContext.topSafeArea = topSafeArea
-        print("XXXX height=\(state.headerContext.totalHeight), backgroundHeight=\(state.headerContext.titleHeight)")
     }
 
     // MARK: - Constants
 
     // MARK: - Variables
 
-    // MARK: - MaterialTabsModel
+    // MARK: - Scroll tracking
 
     func scrolled(tab: Tab, offset: CGFloat, deltaOffset: CGFloat) {
         // Any time the offset is less than the max offset, the header offset exactly tracks the offset.

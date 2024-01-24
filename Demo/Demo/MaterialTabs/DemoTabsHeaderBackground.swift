@@ -5,11 +5,11 @@
 import SwiftUI
 import SwiftUIMaterialTabs
 
-struct TabsHeaderBackground: View {
+struct DemoTabsHeaderBackground: View {
 
     // MARK: - API
 
-    let context: HeaderContext<Tab>
+    let context: HeaderContext<DemoTab>
 
     // MARK: - Constants
 
@@ -39,5 +39,5 @@ struct TabsHeaderBackground: View {
 }
 
 #Preview {
-    TabsHeaderTitle(context: HeaderContext(selectedTab: .one))
+    DemoTabsHeaderTitle(context: HeaderContext(selectedTab: .one))
 }

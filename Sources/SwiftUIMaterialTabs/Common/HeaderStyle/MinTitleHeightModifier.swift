@@ -5,7 +5,7 @@
 import SwiftUI
 
 public extension View {
-    func minTitleHeight(dimension: MinTitleHeightModifier.Dimension) -> some View {
+    func minTitleHeight(_ dimension: MinTitleHeightModifier.Dimension) -> some View {
         modifier(MinTitleHeightModifier(dimension: dimension))
     }
 }

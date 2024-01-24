@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct DemoScrollingRowView: View {
+struct DemoContentRowView: View {
 
     // MARK: - API
 
@@ -27,13 +27,15 @@ struct DemoScrollingRowView: View {
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
-            Text("Demo tab \(name) content, row \(index)")
+            Text("Demo \(name) – Row \(index)")
                 .font(.system(size: 20))
                 .padding()
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity)
                 .foregroundStyle(AnyShapeStyle(foregroundStyle))
             Spacer()
-            Rectangle().fill(foregroundStyle.opacity(0.2)).frame(height: 1)
+            Rectangle().fill(foregroundStyle.opacity(0.2))
+                .frame(height: 1)
+                .padding(.horizontal, 20)
         }
         .onTapGesture {
             print("TAP")

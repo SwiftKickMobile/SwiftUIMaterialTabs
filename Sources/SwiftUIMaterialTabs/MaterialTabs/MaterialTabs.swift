@@ -69,7 +69,7 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
             )
         }
         self.content = content
-        _tabsModel = StateObject(wrappedValue: TabsModel(selectedTab: selectedTab.wrappedValue))
+        _headerModel = StateObject(wrappedValue: HeaderModel(selectedTab: selectedTab.wrappedValue))
     }
 
     // MARK: - Constants
@@ -79,7 +79,7 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     @Binding private var selectedTab: Tab
     @ViewBuilder private let header: (HeaderContext<Tab>) -> HeaderView<HeaderTitle, HeaderTabBar, HeaderBackground, Tab>
     @ViewBuilder private let content: () -> Content
-    @StateObject private var tabsModel: TabsModel<Tab>
+    @StateObject private var headerModel: HeaderModel<Tab>
     @StateObject private var tabBarModel = TabBarModel<Tab>()
 
     // MARK: - Body
@@ -94,31 +94,25 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                 .ignoresSafeArea(edges: .top)
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .onChange(of: proxy.size.height, initial: true) {
-                    tabsModel.heightChanged(proxy.size.height)
+                    headerModel.heightChanged(proxy.size.height)
                 }
-                header(tabsModel.state.headerContext)
+                header(headerModel.state.headerContext)
             }
             .onChange(of: proxy.safeAreaInsets.top, initial: true) {
-                tabsModel.topSafeAreaChanged(proxy.safeAreaInsets.top)
+                headerModel.topSafeAreaChanged(proxy.safeAreaInsets.top)
             }
         }
         .animation(.default, value: selectedTab)
-        .environmentObject(tabsModel)
+        .environmentObject(headerModel)
         .environmentObject(tabBarModel)
-        .onPreferenceChange(TitleHeightPreferenceKey.self, perform: tabsModel.titleHeightChanged(_:))
-        .onPreferenceChange(TabBarHeightPreferenceKey.self, perform: tabsModel.tabBarHeightChanged(_:))
-        .onPreferenceChange(MinTitleHeightPreferenceKey.self) { value in
-            Task {
-                tabsModel.minTitleHeightChanged(value)
-                print("XXXX MinTitleHeightPreferenceKey=\(value)")
-            }
-        }
-//        .onPreferenceChange(MinTitleHeightPreferenceKey.self, perform: tabsModel.minTitleHeightChanged(_:))
+        .onPreferenceChange(TitleHeightPreferenceKey.self, perform: headerModel.titleHeightChanged(_:))
+        .onPreferenceChange(TabBarHeightPreferenceKey.self, perform: headerModel.tabBarHeightChanged(_:))
+        .onPreferenceChange(MinTitleHeightPreferenceKey.self, perform: headerModel.minTitleHeightChanged(_:))
         .onChange(of: selectedTab, initial: true) {
-            tabsModel.selected(tab: selectedTab)
+            headerModel.selected(tab: selectedTab)
         }
-        .onChange(of: tabsModel.state.headerContext.selectedTab, initial: true) {
-            selectedTab = tabsModel.state.headerContext.selectedTab
+        .onChange(of: headerModel.state.headerContext.selectedTab, initial: true) {
+            selectedTab = headerModel.state.headerContext.selectedTab
         }
     }
 }

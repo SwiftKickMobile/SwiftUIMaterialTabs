@@ -4,6 +4,6 @@
 
 import Foundation
 
-public enum InternalTabItemID: Hashable {
-    case first
+public enum ScrollItem: Hashable {
+    case item
 }

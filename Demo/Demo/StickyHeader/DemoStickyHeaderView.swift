@@ -5,9 +5,12 @@
 import SwiftUI
 import SwiftUIMaterialTabs
 
-struct StickyHeaderView: View {
+struct DemoStickyHeaderView: View {
 
     // MARK: - API
+
+    @Binding var mainTabBarBackground: any ShapeStyle
+    @Binding var mainTabBarTint: any ShapeStyle
 
     // MARK: - Constants
 
@@ -16,17 +19,21 @@ struct StickyHeaderView: View {
     // MARK: - Body
 
     var body: some View {
-        MaterialTabs(
+        StickyHeader(
             headerTitle: { context in
-                StickyHeaderTitle(context: context)
+                DemoStickyHeaderTitleView(context: context)
             },
             headerBackground: { _ in
                 Color.skm2Yellow
             },
             content: {
-                StickyHeaderScrollingView()
+                DemoStickyHeaderContentView()
             }
         )
         .background(.skm2Yellow)
+        .onAppear {
+            mainTabBarBackground = Color.black
+            mainTabBarTint = Color.skm2Yellow
+        }
     }
 }
