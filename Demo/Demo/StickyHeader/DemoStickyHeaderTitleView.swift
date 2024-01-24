@@ -14,7 +14,7 @@ struct DemoStickyHeaderTitleView: View {
 
     // MARK: - Constants
 
-    private let titleScale: CGFloat = 0.45
+    private let titleScale: CGFloat = 0.55
 
     // MARK: - Variables
 
@@ -24,17 +24,24 @@ struct DemoStickyHeaderTitleView: View {
         VStack(spacing: 20) {
             Text("Sticky Header").font(.title).bold()
                 .padding(.vertical, 15)
-                // Shrink the title text down to the original size * `1 - titleScale`. The
-                // scale effect must be anchored `.top` to keep the title top aligned.
-                .scaleEffect(1 - context.unitOffset * titleScale, anchor: .top)
-                // Set the the minimum height for the title view based on the measured height of
-                // the title text + padding. Apply a scale factor that matches the scale effect so
-                // that the min height matches the final scaled height. Note that the scale effect
-                // itself doesn't affect the measured height of the view it modifiers, so the ordering of these
-                // modifiers doesn't matter.
-                .minTitleHeight(.content(scale: 1 - titleScale))
-                // Apply the fixed header style to have the title text maintain a fixed top-alinged position.
+                // Apply the shrink style to have the text shrink to `titleScale` of its original size.
+                // Anchoring to `.top` is required to have the title remain top-aligned.
+                .headerStyle(
+                    ShrinkHeaderStyle(
+                        fade: false,
+                        minimumScale: titleScale,
+                        offsetFactor: 0,
+                        anchor: .top
+                    ),
+                    context: context
+                )
+                // In addition, apply the fixed header style to have the title remain in a fixed position.
+                // Order matters here. The fixed style must be applied after the shrink style.
                 .headerStyle(FixedHeaderStyle(), context: context)
+                // Inform the sticky header that it should establish a minimum overall height for the title view
+                // by measuring the title text. We pass `scale: titleScale` for the measurement to match the
+                // the final text size.
+                .minTitleHeight(.content(scale: titleScale))
             Image(.swiftkickLogoBlack)
                 // Apply the shrink header style to the logo image so that it shrinks and fades out of view.
                 .headerStyle(ShrinkHeaderStyle(), context: context)

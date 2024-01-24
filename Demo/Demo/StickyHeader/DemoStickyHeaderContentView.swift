@@ -24,11 +24,10 @@ struct DemoStickyHeaderContentView: View {
                     borderStyle: Color.skm2Yellow) {
                         AnyView(
                             Group {
-                                Text("__Sticky Headers__ are essentially __Material Tabs__ without the tabs.")
-                                Text("Header components are provided with scroll metrics that can be used to create custom effects.")
-                                Text("The sticky, shrinking title is accomplished by combining the __`FixedHeaderEffect`__ with the __`scaleEffect()`__ modifier.")
-                                Text("The __`minTitleHeight(_:)`__ modifier automatically measures the shrinking title to establish title view's persistence on screen.")
-                                Text("The logo shrinks and fades away using __`ShrinkHeaderEffect`__.")
+                                Text("__Sticky Headers__ is a slightly simplified API like __Material Tabs__ when you don't need the tabs.")
+                                Text("The title view combines two effects, resuling in a shrinking title text that sticks at the top while the logo shrinks and fades.")
+                                Text("To achieve this, we apply both a __`ShrinkHeaderEffect`__ and __`FixedHeaderEffect`__ to the text and a __`ShrinkHeaderEffect`__ to the logo.")
+                                Text("We also use __`minTitleHeight()`__ on the text to measure and establish the final collapsed height of the title view.")
                             }
                         )
                     }

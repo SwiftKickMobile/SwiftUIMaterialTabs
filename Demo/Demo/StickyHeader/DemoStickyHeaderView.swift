@@ -37,3 +37,7 @@ struct DemoStickyHeaderView: View {
         }
     }
 }
+
+#Preview {
+    DemoStickyHeaderView(mainTabBarBackground: .constant(.black), mainTabBarTint: .constant(.skm2Yellow))
+}

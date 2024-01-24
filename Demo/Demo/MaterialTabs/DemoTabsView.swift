@@ -16,7 +16,7 @@ struct DemoTabsView: View {
 
     // MARK: - Variables
 
-    @State private var selectedTab: DemoTab = .one
+    @State private var selectedTab: DemoTab = .three
 
     // MARK: - Body
 
@@ -56,4 +56,8 @@ struct DemoTabsView: View {
             mainTabBarTint = selectedTab.contentForeground
         }
     }
+}
+
+#Preview {
+    DemoTabsView(mainTabBarBackground: .constant(.black), mainTabBarTint: .constant(.skm2Yellow))
 }

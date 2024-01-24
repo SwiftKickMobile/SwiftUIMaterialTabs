@@ -8,10 +8,9 @@ public struct ParallaxHeaderStyle<Tab>: HeaderStyle where Tab: Hashable {
 
     // MARK: - API
 
-    public init(amount: CGFloat = 0.35, fade: Bool = true, rubberBandingScaleExponent: CGFloat = 1) {
+    public init(amount: CGFloat = 0.35, fade: Bool = true) {
         self.amount = amount
         self.fade = fade
-        self.rubberBandingScaleExponent = rubberBandingScaleExponent
     }
 
     // MARK: - Constants
@@ -20,7 +19,6 @@ public struct ParallaxHeaderStyle<Tab>: HeaderStyle where Tab: Hashable {
 
     private let amount: CGFloat
     private let fade: Bool
-    private let rubberBandingScaleExponent: CGFloat
 
     // MARK: - Body
 
