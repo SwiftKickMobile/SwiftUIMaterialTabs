@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-extension Binding {
+public extension Binding {
     func asOptionalBinding(nullValue: Value) -> Binding<Value?> {
         Binding<Value?> (
             get: {

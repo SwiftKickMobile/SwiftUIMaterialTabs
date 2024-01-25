@@ -28,7 +28,10 @@ struct DemoTabsView: View {
             },
             headerTabBar: { context in
                 MaterialTabBar<DemoTab>(selectedTab: $selectedTab, context: context)
-                    .foregroundStyle(context.selectedTab.headerForeground)
+                    .foregroundStyle(
+                        context.selectedTab.headerForeground,
+                        context.selectedTab.headerForeground.opacity(0.7)
+                    )
                     .background(context.selectedTab.tabBarBackground)
             },
             headerBackground: { context in

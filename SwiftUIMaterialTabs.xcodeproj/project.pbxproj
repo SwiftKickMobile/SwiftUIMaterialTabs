@@ -122,7 +122,9 @@
 			children = (
 				228F9D0C2B6051CD0075D820 /* MaterialTabs */,
 				22982C1E2B604A7F00852311 /* StickyHeader */,
-				228F9D0D2B6052940075D820 /* Common */,
+				226DFD8B2B5C3795008AFFF2 /* HeaderStyle */,
+				226DFD972B5C65DB008AFFF2 /* Extensions */,
+				2243647E2B547D1B00563396 /* Internal */,
 			);
 			path = SwiftUIMaterialTabs;
 			sourceTree = "<group>";
@@ -138,7 +140,6 @@
 				2243647F2B547D1B00563396 /* ScrollItem.swift */,
 				224364802B547D1B00563396 /* ScrollModel.swift */,
 				2295EC352B5C774500A19247 /* TabBarModel.swift */,
-				228F9D302B62EBAA0075D820 /* Extensions */,
 				224364832B547D1B00563396 /* PreferenceKeys */,
 			);
 			path = Internal;
@@ -190,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				226DFD982B5C6621008AFFF2 /* BinaryFloatingPoint+Extensions.swift */,
+				228F9D312B62EBBD0075D820 /* Binding+Extensions.swift */,
 				226DFD9A2B5C6663008AFFF2 /* Comparable+Extensions.swift */,
 			);
 			path = Extensions;
@@ -206,24 +208,6 @@
 				2295EC3D2B5DE43A00A19247 /* SecondaryTab.swift */,
 			);
 			path = MaterialTabs;
-			sourceTree = "<group>";
-		};
-		228F9D0D2B6052940075D820 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				226DFD8B2B5C3795008AFFF2 /* HeaderStyle */,
-				226DFD972B5C65DB008AFFF2 /* Extensions */,
-				2243647E2B547D1B00563396 /* Internal */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		228F9D302B62EBAA0075D820 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				228F9D312B62EBBD0075D820 /* Binding+Extensions.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		22982C1E2B604A7F00852311 /* StickyHeader */ = {

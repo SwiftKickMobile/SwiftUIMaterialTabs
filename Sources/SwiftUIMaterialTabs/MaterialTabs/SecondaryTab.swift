@@ -29,6 +29,7 @@ public struct SecondaryTab: View {
                     .frame(height: 2)
             }
             .contentShape(Rectangle())
+            .foregroundStyle(isSelected ? .primary : .secondary)
         }
     }
 }
