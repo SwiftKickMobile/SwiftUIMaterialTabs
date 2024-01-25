@@ -27,15 +27,15 @@ struct DemoView: View {
         TabView {
             Group {
                 DemoTabsView(mainTabBarBackground: $tabBarBackground, mainTabBarTint: $tabBarTint)
-                .tag(Tab.tabs)
-                .tabItem {
-                    Label("Material Tabs", image: .materialTabsTab)
-                }
+                    .tag(Tab.tabs)
+                    .tabItem {
+                        Label("Material Tabs", image: .materialTabsTab)
+                    }
                 DemoStickyHeaderView(mainTabBarBackground: $tabBarBackground, mainTabBarTint: $tabBarTint)
-                .tag(Tab.header)
-                .tabItem {
-                    Label("Sticky Header", image: .stickyHeaderTab)
-                }
+                    .tag(Tab.header)
+                    .tabItem {
+                        Label("Sticky Header", image: .stickyHeaderTab)
+                    }
             }
             .toolbarBackground(AnyShapeStyle(tabBarBackground), for: .tabBar)
         }
