@@ -69,29 +69,27 @@ public struct Scroll<Content, Tab, ItemID>: View where Content: View, Tab: Hasha
     // MARK: - Body
 
     public var body: some View {
-        ZStack {
-            ScrollView {
-                VStack(spacing: 0) {
-                    Color.clear
-                        .frame(height: headerModel.state.headerContext.totalHeight)
-                        .background {
-                            GeometryReader { proxy in
-                                Color.clear.preference(
-                                    key: ScrollOffsetPreferenceKey.self,
-                                    value: proxy.frame(in: .named(coordinateSpaceName)).origin.y
-                                )
-                            }
+        ScrollView {
+            VStack(spacing: 0) {
+                Color.clear
+                    .frame(height: headerModel.state.headerContext.totalHeight)
+                    .background {
+                        GeometryReader { proxy in
+                            Color.clear.preference(
+                                key: ScrollOffsetPreferenceKey.self,
+                                value: proxy.frame(in: .named(coordinateSpaceName)).origin.y
+                            )
                         }
-                        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { offset in
-                            scrollModel.contentOffsetChanged(offset)
-                        }
-                        .id(firstItemID)
-                    content()
-                }
+                    }
+                    .onPreferenceChange(ScrollOffsetPreferenceKey.self) { offset in
+                        scrollModel.contentOffsetChanged(offset)
+                    }
+                    .id(firstItemID)
+                content()
             }
-            .coordinateSpace(name: coordinateSpaceName)
-            .scrollPosition(id: $scrollModel.scrollItemID, anchor: scrollModel.scrollUnitPoint)
         }
+        .coordinateSpace(name: coordinateSpaceName)
+        .scrollPosition(id: $scrollModel.scrollItemID, anchor: scrollModel.scrollUnitPoint)
         .onAppear {
             // It is important not to attempt to adjust the scroll position until after the view has appeared
             // and this task seems to accomplish that.

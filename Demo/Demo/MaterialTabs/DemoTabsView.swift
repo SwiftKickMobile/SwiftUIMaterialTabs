@@ -16,7 +16,7 @@ struct DemoTabsView: View {
 
     // MARK: - Variables
 
-    @State private var selectedTab: DemoTab = .three
+    @State private var selectedTab: DemoTab = .one
 
     // MARK: - Body
 

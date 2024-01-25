@@ -62,21 +62,18 @@ public struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
     // MARK: - Body
 
     public func body(content: Content) -> some View {
-        // This VStack is critical to prevent a bug in iOS 17 where scrolling breaks under the following conditions:
-        // 1. The scroll view is in a `TabView` in paged mode.
-        // 2. The scroll view has the `scrollPosition()` modifier applied.
-        VStack {
-            // There must be a better way to do this, but each tab needs to be able to supply a label for the tab bar,
-            // even if the tab isn't appeared yet. This hacky code is accessing the `tabBarModel` to register
-            // the tab's label because we can't rely on `onAppear()` being called.
-            { () -> EmptyView in
-                Task {
-                    tabBarModel.register(tab: tab, label: label)
-                }
-                return EmptyView()
-            }()
-            content
-        }
-        .tag(tab)
+        content
+            .background {
+                // There must be a better way to do this, but each tab needs to be able to supply a label for the tab bar,
+                // even if the tab isn't appeared yet. This hacky code is accessing the `tabBarModel` to register
+                // the tab's label because we can't rely on `onAppear()` being called.
+                { () -> EmptyView in
+                    Task {
+                        tabBarModel.register(tab: tab, label: label)
+                    }
+                    return EmptyView()
+                }()
+            }
+            .id(tab)
     }
 }
