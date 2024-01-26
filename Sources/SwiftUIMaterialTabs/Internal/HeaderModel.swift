@@ -24,8 +24,9 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
         )
     }
 
-    func heightChanged(_ height: CGFloat) {
-        state.totalHeight = height
+    func sizeChanged(_ size: CGSize) {
+        state.totalHeight = size.height
+        state.headerContext.width = size.width
     }
 
     func titleHeightChanged(_ height: CGFloat) {

@@ -5,8 +5,9 @@
 import SwiftUI
 
 public extension Binding {
-    func asOptionalBinding(nullValue: Value) -> Binding<Value?> {
-        Binding<Value?> (
+    func asOptionalBinding() -> Binding<Value?> {
+        let nullValue = wrappedValue
+        return Binding<Value?> (
             get: {
                 wrappedValue
             },

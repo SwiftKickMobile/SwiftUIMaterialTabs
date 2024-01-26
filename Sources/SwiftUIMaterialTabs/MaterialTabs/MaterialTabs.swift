@@ -70,7 +70,6 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
         }
         self.content = content
         _headerModel = StateObject(wrappedValue: HeaderModel(selectedTab: selectedTab.wrappedValue))
-        _nullTab = State(initialValue: selectedTab.wrappedValue)
     }
 
     // MARK: - Constants
@@ -78,11 +77,11 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     // MARK: - Variables
 
     @Binding private var selectedTab: Tab
+    @State private var selectedTabScroll: Tab?
     @ViewBuilder private let header: (HeaderContext<Tab>) -> HeaderView<HeaderTitle, HeaderTabBar, HeaderBackground, Tab>
     @ViewBuilder private let content: () -> Content
     @StateObject private var headerModel: HeaderModel<Tab>
     @StateObject private var tabBarModel = TabBarModel<Tab>()
-    @State private var nullTab: Tab
 
     // MARK: - Body
 
@@ -94,21 +93,27 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                         content()
                             .scrollClipDisabled()
                             .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
-                            .safeAreaInset(edge: .top) {
-                                Color.clear.frame(height: max(0, proxy.safeAreaInsets.top))
-                            }
+                            .safeAreaPadding(proxy.safeAreaInsets)
                     }
                     .scrollTargetLayout()
                 }
-                .scrollPosition(id: $selectedTab.asOptionalBinding(nullValue: nullTab))
+                .scrollPosition(id: $selectedTabScroll, anchor: .center)
                 .scrollTargetBehavior(.paging)
                 .scrollClipDisabled()
-                .ignoresSafeArea(edges: .bottom)
-                .ignoresSafeArea(edges: .top)
-                .onChange(of: proxy.size.height, initial: true) {
-                    headerModel.heightChanged(proxy.size.height)
+                .scrollIndicators(.never)
+                .scrollBounceBehavior(.basedOnSize)
+                .ignoresSafeArea()
+                .onChange(of: proxy.size, initial: true) {
+                    headerModel.sizeChanged(proxy.size)
                 }
                 header(headerModel.state.headerContext)
+            }
+            .background {
+                TabView {
+                    content()
+                }
+                .frame(height: 0)
+                .tabViewStyle(.page(indexDisplayMode: .never))
             }
             .onChange(of: proxy.safeAreaInsets.top, initial: true) {
                 headerModel.topSafeAreaChanged(proxy.safeAreaInsets.top)
@@ -123,8 +128,13 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
         .onChange(of: selectedTab, initial: true) {
             headerModel.selected(tab: selectedTab)
         }
+        .onChange(of: selectedTabScroll) {
+            guard let selectedTab = selectedTabScroll else { return }
+            headerModel.selected(tab: selectedTab)
+        }
         .onChange(of: headerModel.state.headerContext.selectedTab, initial: true) {
             selectedTab = headerModel.state.headerContext.selectedTab
+            selectedTabScroll = selectedTab
         }
     }
 }

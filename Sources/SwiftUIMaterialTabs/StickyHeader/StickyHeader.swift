@@ -52,7 +52,7 @@ public struct StickyHeader<HeaderTitle, HeaderBackground, Content>: View
             ZStack(alignment: .top) {
                 content()
                     .onChange(of: proxy.size.height, initial: true) {
-                        headerModel.heightChanged(proxy.size.height)
+                        headerModel.sizeChanged(proxy.size)
                     }
                 header(headerModel.state.headerContext)
             }

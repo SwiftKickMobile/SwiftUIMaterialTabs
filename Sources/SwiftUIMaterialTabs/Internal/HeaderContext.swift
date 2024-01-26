@@ -14,6 +14,8 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
 
     public var tabBarHeight: CGFloat = 0
 
+    public var width: CGFloat = 0
+
     public var totalHeight: CGFloat { titleHeight + tabBarHeight }
 
     public var backgroundHeight: CGFloat { totalHeight + topSafeArea }
