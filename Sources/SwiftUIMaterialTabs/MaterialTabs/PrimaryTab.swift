@@ -4,11 +4,11 @@
 
 import SwiftUI
 
-struct PrimaryTab: View {
+public struct PrimaryTab: View {
 
     // MARK: - API
 
-    init(
+    public init(
         isSelected: Bool,
         tapped: @escaping () -> Void,
         title: String,
@@ -20,7 +20,7 @@ struct PrimaryTab: View {
         self.icon = AnyView(icon.resizable().aspectRatio(contentMode: .fit))
     }
 
-    init<Icon>(
+    public init<Icon>(
         isSelected: Bool,
         tapped: @escaping () -> Void,
         title: String,
@@ -44,7 +44,7 @@ struct PrimaryTab: View {
 
     // MARK: - Body
 
-    var body: some View {
+    public var body: some View {
         Button(action: tapped) {
             VStack(spacing: 0) {
                 icon

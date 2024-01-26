@@ -19,8 +19,14 @@ public extension View {
                             switch label {
                             case .primary(let title, let icon):
                                 PrimaryTab(isSelected: isSelected, tapped: tapped, title: title, icon: icon)
-                            case .secondary(let title):
-                                SecondaryTab(isSelected: isSelected, tapped: tapped, title: title)
+                            case .secondary(let title, let config, let deselectedConfig):
+                                SecondaryTab(
+                                    isSelected: isSelected,
+                                    tapped: tapped,
+                                    title: title,
+                                    config: config,
+                                    deselectedConfig: deselectedConfig
+                                )
                             }
                         }
                     )

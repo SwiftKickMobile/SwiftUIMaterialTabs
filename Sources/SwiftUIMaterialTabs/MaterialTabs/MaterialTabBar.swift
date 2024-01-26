@@ -10,7 +10,7 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
 
     public enum Label {
         case primary(String, icon: Image)
-        case secondary(String)
+        case secondary(String, config: SecondaryTab.Config = .init(), deselectedConfig: SecondaryTab.Config? = nil)
     }
 
     public enum Sizing {
