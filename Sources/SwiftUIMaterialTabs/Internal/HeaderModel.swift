@@ -49,6 +49,10 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
         self.state.headerContext.topSafeArea = topSafeArea
     }
 
+    func animationNamespaceChanged(_ animationNamespace: Namespace.ID) {
+        state.headerContext.animationNamespace = animationNamespace
+    }
+
     // MARK: - Constants
 
     // MARK: - Variables

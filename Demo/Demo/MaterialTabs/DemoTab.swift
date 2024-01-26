@@ -16,9 +16,17 @@ enum DemoTab: String, Hashable, CaseIterable, Identifiable {
 
     var name: String {
         switch self {
-        case .one: "One"
-        case .two: "Two"
-        case .three: "Three"
+        case .one: "Beginning"
+        case .two: "Middle"
+        case .three: "End"
+        }
+    }
+
+    var icon: Image {
+        switch self {
+        case .one: Image(systemName: "hand.wave")
+        case .two: Image(systemName: "hand.point.down")
+        case .three: Image(systemName: "hand.point.right")
         }
     }
 

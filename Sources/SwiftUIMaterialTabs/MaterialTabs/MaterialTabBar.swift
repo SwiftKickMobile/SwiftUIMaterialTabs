@@ -9,8 +9,17 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     // MARK: - API
 
     public enum Label {
-        case primary(String, icon: Image)
-        case secondary(String, config: SecondaryTab.Config = .init(), deselectedConfig: SecondaryTab.Config? = nil)
+        case primary(
+            String? = nil,
+            icon: (any View)? = nil,
+            config: PrimaryTab<Tab>.Config = .init(),
+            deselectedConfig: PrimaryTab<Tab>.Config? = nil
+        )
+        case secondary(
+            String,
+            config: SecondaryTab<Tab>.Config = .init(),
+            deselectedConfig: SecondaryTab<Tab>.Config? = nil
+        )
     }
 
     public enum Sizing {
@@ -18,7 +27,11 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
         case proportional
     }
 
-    public typealias CustomLabel = (_ isSelected: Bool, _ tapped: @escaping () -> Void, _ context: HeaderContext<Tab>) -> AnyView
+    public typealias CustomLabel = (
+        _ tab: Tab,
+        _ context: HeaderContext<Tab>,
+        _ tapped: @escaping () -> Void
+    ) -> AnyView
 
     public init(selectedTab: Binding<Tab>, sizing: Sizing = .proportional, context: HeaderContext<Tab>) {
         _selectedTab = selectedTab
@@ -44,14 +57,14 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
 
     public var body: some View {
         ScrollView(.horizontal) {
-            HStack(spacing: 0) {
+            HStack(alignment: .bottom, spacing: 0) {
                 ForEach(tabBarModel.tabs, id: \.self) { tab in
                     tabBarModel.labels[tab]?(
-                        selectedTab == tab,
+                        tab,
+                        headerModel.state.headerContext,
                         {
                             headerModel.selected(tab: tab)
-                        },
-                        headerModel.state.headerContext
+                        }
                     )
                     .background {
                         GeometryReader { proxy in
@@ -94,7 +107,7 @@ struct MaterialTabBarPreviewView: View {
     // MARK: - API
 
     init(tabCount: Int, sizing: MaterialTabBar<Int>.Sizing) {
-        self.init(tabs: Array(0..<tabCount).map { MaterialTabBar<Int>.Label.secondary("Tab #\($0)") }, sizing: sizing)
+        self.init(tabs: Array(0..<tabCount).map { MaterialTabBar<Int>.Label.secondary("Tab Number \($0)") }, sizing: sizing)
     }
     
     init(tabs: [MaterialTabBar<Int>.Label], sizing: MaterialTabBar<Int>.Sizing) {

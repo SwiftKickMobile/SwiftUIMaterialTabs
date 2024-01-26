@@ -61,6 +61,8 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
         return (rubberBandingTitleHeight ?? titleHeight) + tabBarHeight + topSafeArea
     }
 
+    var animationNamespace: Namespace.ID? = nil
+
     // MARK: - Constants
 
     // MARK: - Variables

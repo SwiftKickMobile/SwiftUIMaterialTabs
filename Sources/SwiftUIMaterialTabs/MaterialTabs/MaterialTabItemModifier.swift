@@ -13,15 +13,24 @@ public extension View {
         modifier(
             MaterialTabItemModifier<Tab>(
                 tab: tab,
-                label: { isSelected, tapped, context in
+                label: { tab, context, tapped in
                     AnyView(
                         Group {
                             switch label {
-                            case .primary(let title, let icon):
-                                PrimaryTab(isSelected: isSelected, tapped: tapped, title: title, icon: icon)
+                            case .primary(let title, let icon, let config, let deselectedConfig):
+                                PrimaryTab(
+                                    tab: tab,
+                                    context: context,
+                                    tapped: tapped,
+                                    title: title,
+                                    icon: icon.map { AnyView($0) },
+                                    config: config,
+                                    deselectedConfig: deselectedConfig
+                                )
                             case .secondary(let title, let config, let deselectedConfig):
                                 SecondaryTab(
-                                    isSelected: isSelected,
+                                    tab: tab,
+                                    context: context,
                                     tapped: tapped,
                                     title: title,
                                     config: config,
@@ -36,8 +45,8 @@ public extension View {
     }
 
     func materialTabItem<Tab, Label>(
-        tab: Tab, @ViewBuilder
-        label: @escaping (_ isSelected: Bool, _ tapped: @escaping () -> Void, _ context: HeaderContext<Tab>) -> Label
+        tab: Tab,
+        @ViewBuilder label: @escaping (_ tab: Tab, _ context: HeaderContext<Tab>, _ tapped: @escaping () -> Void) -> Label
     ) -> some View where Tab: Hashable, Label: View {
         modifier(MaterialTabItemModifier<Tab>(tab: tab, label: { AnyView(label($0, $1, $2)) }))
     }

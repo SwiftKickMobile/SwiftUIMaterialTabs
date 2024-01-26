@@ -50,7 +50,8 @@ struct DemoTabsView: View {
                             content: tab.infoContent
                         )
                     }
-                    .materialTabItem(tab: tab, label: .secondary(tab.name.uppercased()))
+                    .materialTabItem(tab: tab, label: .primary(tab.name, icon: tab.icon))
+//                    .materialTabItem(tab: tab, label: .secondary(tab.name.uppercased()))
                 }
             }
         )

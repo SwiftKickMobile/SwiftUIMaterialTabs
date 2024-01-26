@@ -31,7 +31,6 @@
 		228F9D0E2B6056C60075D820 /* NoTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C212B604E2300852311 /* NoTab.swift */; };
 		228F9D102B6059120075D820 /* StickyHeaderScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228F9D0F2B6059120075D820 /* StickyHeaderScroll.swift */; };
 		228F9D122B605DE50075D820 /* MaterialTabsScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228F9D112B605DE50075D820 /* MaterialTabsScroll.swift */; };
-		228F9D322B62EBBD0075D820 /* Binding+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228F9D312B62EBBD0075D820 /* Binding+Extensions.swift */; };
 		2295EC342B5C73C000A19247 /* MaterialTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2295EC332B5C73C000A19247 /* MaterialTabBar.swift */; };
 		2295EC362B5C774500A19247 /* TabBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2295EC352B5C774500A19247 /* TabBarModel.swift */; };
 		2295EC382B5C849B00A19247 /* WidthPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2295EC372B5C849B00A19247 /* WidthPreferenceKey.swift */; };
@@ -68,7 +67,6 @@
 		228F9D0A2B60516D0075D820 /* StickyHeaderContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeaderContext.swift; sourceTree = "<group>"; };
 		228F9D0F2B6059120075D820 /* StickyHeaderScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeaderScroll.swift; sourceTree = "<group>"; };
 		228F9D112B605DE50075D820 /* MaterialTabsScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialTabsScroll.swift; sourceTree = "<group>"; };
-		228F9D312B62EBBD0075D820 /* Binding+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extensions.swift"; sourceTree = "<group>"; };
 		2295EC332B5C73C000A19247 /* MaterialTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialTabBar.swift; sourceTree = "<group>"; };
 		2295EC352B5C774500A19247 /* TabBarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarModel.swift; sourceTree = "<group>"; };
 		2295EC372B5C849B00A19247 /* WidthPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidthPreferenceKey.swift; sourceTree = "<group>"; };
@@ -191,7 +189,6 @@
 			isa = PBXGroup;
 			children = (
 				226DFD982B5C6621008AFFF2 /* BinaryFloatingPoint+Extensions.swift */,
-				228F9D312B62EBBD0075D820 /* Binding+Extensions.swift */,
 				226DFD9A2B5C6663008AFFF2 /* Comparable+Extensions.swift */,
 			);
 			path = Extensions;
@@ -309,7 +306,6 @@
 				224364902B547D1B00563396 /* HeaderView.swift in Sources */,
 				226DFD962B5C4B75008AFFF2 /* MinTitleHeightModifier.swift in Sources */,
 				224364972B547D1B00563396 /* HeaderContext.swift in Sources */,
-				228F9D322B62EBBD0075D820 /* Binding+Extensions.swift in Sources */,
 				2243648E2B547D1B00563396 /* ScrollItem.swift in Sources */,
 				22982C202B604A9000852311 /* StickyHeader.swift in Sources */,
 				228F9D122B605DE50075D820 /* MaterialTabsScroll.swift in Sources */,

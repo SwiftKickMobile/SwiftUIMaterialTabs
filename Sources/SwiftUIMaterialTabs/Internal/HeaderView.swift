@@ -29,6 +29,7 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
     @ViewBuilder private let tabBar: (HeaderContext<Tab>) -> TabBar
     @ViewBuilder private let background: (HeaderContext<Tab>) -> Background
     @EnvironmentObject private var headerModel: HeaderModel<Tab>
+    @Namespace private var animationNamespace
 
     // MARK: - Body
 
@@ -48,6 +49,9 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
         }
         .offset(CGSize(width: 0, height: -max(headerModel.state.headerContext.offset, 0)))
         .animation(.default, value: context.selectedTab)
+        .onChange(of: animationNamespace, initial: true) {
+            headerModel.animationNamespaceChanged(animationNamespace)
+        }
     }
 
     @ViewBuilder private func makeTitleView() -> some View {
