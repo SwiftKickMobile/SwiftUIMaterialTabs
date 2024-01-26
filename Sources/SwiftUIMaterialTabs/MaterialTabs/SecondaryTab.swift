@@ -34,6 +34,12 @@ public struct SecondaryTab: View {
     }
 }
 
-//#Preview {
-//    SecondaryTab()
-//}
+#Preview {
+    VStack() {
+        SecondaryTab(isSelected: true, tapped: { print("tapped" )}, title: "Tab Title")
+            .background(.black.opacity(0.05))
+        SecondaryTab(isSelected: false, tapped: { print("tapped" )}, title: "Tab Title")
+            .background(.black.opacity(0.05))
+    }
+    .padding()
+}

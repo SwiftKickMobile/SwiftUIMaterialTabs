@@ -9,8 +9,8 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     // MARK: - API
 
     public enum Label {
-        case primary(title: String, icon: Image)
-        case secondary(title: String)
+        case primary(String, icon: Image)
+        case secondary(String)
     }
 
     public enum Sizing {
@@ -93,23 +93,22 @@ struct MaterialTabBarPreviewView: View {
 
     // MARK: - API
 
-    init(tabCount: Int, sizing: MaterialTabBar<String>.Sizing) {
-        self.init(tabs: Array(0..<tabCount).map { "Tab #\($0)" }, sizing: sizing)
+    init(tabCount: Int, sizing: MaterialTabBar<Int>.Sizing) {
+        self.init(tabs: Array(0..<tabCount).map { MaterialTabBar<Int>.Label.secondary("Tab #\($0)") }, sizing: sizing)
     }
     
-    init(tabs: [String], sizing: MaterialTabBar<String>.Sizing) {
+    init(tabs: [MaterialTabBar<Int>.Label], sizing: MaterialTabBar<Int>.Sizing) {
         self.tabs = tabs
         self.sizing = sizing
-        _selectedTab = State(initialValue: tabs.first!)
     }
 
     // MARK: - Constants
 
     // MARK: - Variables
 
-    private let tabs: [String]
-    private let sizing: MaterialTabBar<String>.Sizing
-    @State private var selectedTab: String
+    private let tabs: [MaterialTabBar<Int>.Label]
+    private let sizing: MaterialTabBar<Int>.Sizing
+    @State private var selectedTab: Int = 0
 
     // MARK: - Body
 
@@ -120,9 +119,9 @@ struct MaterialTabBarPreviewView: View {
                 MaterialTabBar(selectedTab: $selectedTab, sizing: sizing, context: context)
             },
             content: {
-                ForEach(tabs, id: \.self) { tab in
-                    Text("Content for \(tab)")
-                        .materialTabItem(tab: tab, label: .secondary(title: tab))
+                ForEach(Array(tabs.enumerated()), id: \.offset) { (offset, tab) in
+                    Text("Content for tab \(offset)")
+                        .materialTabItem(tab: offset, label: tab)
                 }
             }
         )
@@ -144,10 +143,21 @@ struct MaterialTabBarPreviewView: View {
 #Preview("Secondary, proportional") {
     MaterialTabBarPreviewView(
         tabs: [
-            "Tab ABCDE",
-            "Tab X",
-            "Tab STSTSTSTST",
-            "Tab YYY",
+            .secondary("Tab ABCDE"),
+            .secondary("Tab X"),
+            .secondary("Tab STSTSTSTST"),
+            .secondary("Tab YYY"),
+        ],
+        sizing: .proportional
+    )
+}
+
+#Preview("Primary, proportional") {
+    MaterialTabBarPreviewView(
+        tabs: [
+            .primary("ABCDE", icon: Image(systemName: "medal")),
+            .primary("XX", icon: Image(systemName: "lamp.table")),
+            .primary("SSSSSSSSS", icon: Image(systemName: "cloud.sun")),
         ],
         sizing: .proportional
     )
