@@ -139,6 +139,7 @@ public struct PrimaryTab<Tab>: View where Tab: Hashable {
                         }
                     }
                     .padding(activeConfig.contentPadding)
+                    .contentShape(Rectangle())
                 }
                 .background(alignment: .bottom) {
                     if let underlineShape {
@@ -147,17 +148,17 @@ public struct PrimaryTab<Tab>: View where Tab: Hashable {
                             .frame(height: activeConfig.underlineThickness * 2)
                             .offset(y: activeConfig.underlineThickness)
                             .clipped()
+                            .transition(.noTransition)
                             .matchedGeometryEffect(id: "underline", in: context.animationNamespace ?? backupNamespace)
                     }
                 }
             }
             .padding(activeConfig.padding)
-            .contentShape(Rectangle())
             Rectangle().fill(bottomRuleStyle)
                 .frame(height: activeConfig.bottomRuleThickness)
         }
         .transaction(value: context.selectedTab) { transform in
-            transform.animation = .snappy(duration: 5.35, extraBounce: 0.07)
+            transform.animation = .snappy(duration: 0.35, extraBounce: 0.07)
         }
     }
 }

@@ -71,7 +71,7 @@ public struct SecondaryTab<Tab>: View where Tab: Hashable {
     }
 
     private var titleStyle: AnyShapeStyle {
-        activeConfig.titleStyle.map { AnyShapeStyle($0) } ?? AnyShapeStyle(.primary)
+        activeConfig.titleStyle.map { AnyShapeStyle($0) } ?? AnyShapeStyle(.tint)
     }
 
     private var underlineStyle: AnyShapeStyle {
@@ -101,25 +101,24 @@ public struct SecondaryTab<Tab>: View where Tab: Hashable {
                 }
                 .contentShape(Rectangle())
             }
-            VStack(spacing: 0) {
+            ZStack {
+                Rectangle()
+                    .fill(deselectedUnderlineStyle)
+                    .frame(height: deselectedConfig.underlineThickness)
+                    .zIndex(-1)
                 if tab == context.selectedTab {
                     Rectangle()
-                        .fill(.red)
+                        .fill(underlineStyle)
+                        .transition(.noTransition)
                         .matchedGeometryEffect(id: "underline", in: context.animationNamespace ?? backupNamespace)
                 }
             }
             .frame(maxWidth: .infinity)
             .frame(height: activeConfig.underlineThickness)
-            .background {
-                Rectangle()
-                    .fill(deselectedUnderlineStyle)
-                    .frame(height: deselectedConfig.underlineThickness)
-
-            }
         }
         .background(backgroundStyle)
         .transaction(value: context.selectedTab) { transform in
-            transform.animation = .snappy(duration: 2.35, extraBounce: 0.07)
+            transform.animation = .snappy(duration: 0.35, extraBounce: 0.07)
         }
     }
 }
@@ -133,7 +132,7 @@ public extension SecondaryTab.Config {
         case .none:
             config.titleStyle = .secondary
         }
-        config.underlineStyle = .yellow
+        config.underlineStyle = nil
         return config
     }
 }
