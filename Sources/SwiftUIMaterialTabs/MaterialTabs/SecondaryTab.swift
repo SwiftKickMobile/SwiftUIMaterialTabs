@@ -101,21 +101,25 @@ public struct SecondaryTab<Tab>: View where Tab: Hashable {
                 }
                 .contentShape(Rectangle())
             }
-            if tab == context.selectedTab {
-                Rectangle()
-                    .fill(.red)
-                    .frame(height: activeConfig.underlineThickness)
-                    .matchedGeometryEffect(id: "underline", in: context.animationNamespace ?? backupNamespace)
-                    .zIndex(1)
-            } else {
+            VStack(spacing: 0) {
+                if tab == context.selectedTab {
+                    Rectangle()
+                        .fill(.red)
+                        .matchedGeometryEffect(id: "underline", in: context.animationNamespace ?? backupNamespace)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: activeConfig.underlineThickness)
+            .background {
                 Rectangle()
                     .fill(deselectedUnderlineStyle)
                     .frame(height: deselectedConfig.underlineThickness)
+
             }
         }
         .background(backgroundStyle)
         .transaction(value: context.selectedTab) { transform in
-            transform.animation = .snappy(duration: 0.35, extraBounce: 0.07)
+            transform.animation = .snappy(duration: 2.35, extraBounce: 0.07)
         }
     }
 }
@@ -129,7 +133,7 @@ public extension SecondaryTab.Config {
         case .none:
             config.titleStyle = .secondary
         }
-        config.underlineStyle = nil
+        config.underlineStyle = .yellow
         return config
     }
 }
