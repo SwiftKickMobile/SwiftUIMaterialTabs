@@ -27,7 +27,7 @@ struct DemoTabsView: View {
                 DemoTabsHeaderTitle(context: context)
             },
             headerTabBar: { context in
-                MaterialTabBar<DemoTab>(selectedTab: $selectedTab, context: context)
+                MaterialTabBar<DemoTab>(selectedTab: $selectedTab, sizing: .equalWidth, context: context)
                     .foregroundStyle(
                         context.selectedTab.headerForeground,
                         context.selectedTab.headerForeground.opacity(0.7)
@@ -51,7 +51,6 @@ struct DemoTabsView: View {
                         )
                     }
                     .materialTabItem(tab: tab, label: .primary(tab.name, icon: tab.icon))
-//                    .materialTabItem(tab: tab, label: .secondary(tab.name.uppercased()))
                 }
             }
         )

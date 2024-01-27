@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import SwiftUIMaterialTabs
 
 @main
 struct DemoApp: App {

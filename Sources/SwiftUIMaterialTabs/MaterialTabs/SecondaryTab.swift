@@ -90,17 +90,17 @@ public struct SecondaryTab<Tab>: View where Tab: Hashable {
     // MARK: - Body
 
     public var body: some View {
-        VStack(spacing: 0) {
-            Button(action: tapped) {
-                VStack(spacing: 0) {
-                    Text(title)
-                        .font(activeConfig.font ?? font)
-                        .foregroundStyle(titleStyle)
-                        .padding(activeConfig.padding)
-                        .frame(maxWidth: .infinity)
-                }
-                .contentShape(Rectangle())
+        Button(action: tapped) {
+            VStack(spacing: 0) {
+                Text(title)
+                    .font(activeConfig.font ?? font)
+                    .foregroundStyle(titleStyle)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(activeConfig.padding)
             }
+            .contentShape(Rectangle())
+        }
+        .background(alignment: .bottom) {
             ZStack {
                 Rectangle()
                     .fill(deselectedUnderlineStyle)

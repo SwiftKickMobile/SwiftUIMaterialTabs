@@ -125,6 +125,7 @@ public struct PrimaryTab<Tab>: View where Tab: Hashable {
     public var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
+                Spacer()
                 Button(action: tapped) {
                     VStack(spacing: activeConfig.contentSpacing) {
                         if let icon {

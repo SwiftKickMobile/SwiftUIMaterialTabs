@@ -23,8 +23,8 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     }
 
     public enum Sizing {
-        case equal
-        case proportional
+        case equalWidth
+        case proportionalWidth
     }
 
     public typealias CustomLabel = (
@@ -33,7 +33,7 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
         _ tapped: @escaping () -> Void
     ) -> AnyView
 
-    public init(selectedTab: Binding<Tab>, sizing: Sizing = .proportional, context: HeaderContext<Tab>) {
+    public init(selectedTab: Binding<Tab>, sizing: Sizing = .proportionalWidth, context: HeaderContext<Tab>) {
         _selectedTab = selectedTab
         _selectedTabScroll = State(initialValue: selectedTab.wrappedValue)
         self.sizing = sizing
@@ -51,13 +51,12 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     @EnvironmentObject private var headerModel: HeaderModel<Tab>
     @State private var height: CGFloat = 0
     private let context: HeaderContext<Tab>
-    @State private var minTabWidth: CGFloat = 0
 
     // MARK: - Body
 
     public var body: some View {
         ScrollView(.horizontal) {
-            HStack(alignment: .bottom, spacing: 0) {
+            TabBarLayout(fittingWidth: context.width, sizing: sizing) {
                 ForEach(tabBarModel.tabs, id: \.self) { tab in
                     tabBarModel.labels[tab]?(
                         tab,
@@ -71,11 +70,6 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
                             Color.clear
                                 .preference(key: WidthPreferenceKey.self, value: proxy.size.width)
                         }
-                    }
-                    .frame(minWidth: sizing == .equal ? minTabWidth : nil)
-                    .onPreferenceChange(WidthPreferenceKey.self) { width in
-                        // TODO YOU'RE HERE this isn't working. And we need to set a min width so that the tabs always fill the width
-                        minTabWidth = width
                     }
                     .id(tab)
                 }
@@ -142,15 +136,15 @@ struct MaterialTabBarPreviewView: View {
 }
 
 #Preview("Secondary, equal 1") {
-    MaterialTabBarPreviewView(tabCount: 1, sizing: .equal)
+    MaterialTabBarPreviewView(tabCount: 1, sizing: .equalWidth)
 }
 
 #Preview("Secondary, equal 3") {
-    MaterialTabBarPreviewView(tabCount: 3, sizing: .equal)
+    MaterialTabBarPreviewView(tabCount: 3, sizing: .equalWidth)
 }
 
 #Preview("Secondary, equal 8") {
-    MaterialTabBarPreviewView(tabCount: 8, sizing: .equal)
+    MaterialTabBarPreviewView(tabCount: 8, sizing: .equalWidth)
 }
 
 #Preview("Secondary, proportional") {
@@ -161,7 +155,7 @@ struct MaterialTabBarPreviewView: View {
             .secondary("Tab STSTSTSTST"),
             .secondary("Tab YYY"),
         ],
-        sizing: .proportional
+        sizing: .proportionalWidth
     )
 }
 
@@ -172,6 +166,17 @@ struct MaterialTabBarPreviewView: View {
             .primary("XX", icon: Image(systemName: "lamp.table")),
             .primary("SSSSSSSSS", icon: Image(systemName: "cloud.sun")),
         ],
-        sizing: .proportional
+        sizing: .proportionalWidth
+    )
+}
+
+#Preview("Primary, equal") {
+    MaterialTabBarPreviewView(
+        tabs: [
+            .primary("ABCDE", icon: Image(systemName: "medal")),
+            .primary("XX", icon: Image(systemName: "lamp.table")),
+            .primary("SSSSSSSSS", icon: Image(systemName: "cloud.sun")),
+        ],
+        sizing: .equalWidth
     )
 }
