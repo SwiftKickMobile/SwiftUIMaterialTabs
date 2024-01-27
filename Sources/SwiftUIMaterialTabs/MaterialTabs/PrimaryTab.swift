@@ -4,10 +4,14 @@
 
 import SwiftUI
 
+/// An implementation of the [Google Material 3 primary tab style](https://m3.material.io/components/tabs/overview).
+/// While these views may be constructed directly, typically, they are only directly referenced in the `materialTabItem()` view modifier configuration
+/// parameters and subsequently constructed by the system.
 public struct PrimaryTab<Tab>: View where Tab: Hashable {
 
     // MARK: - API
 
+    /// Optional configuration parameters for selected and deselected tab selectors.
     public struct Config {
         public var font: Font?
         public var titleStyle: (any ShapeStyle)?
@@ -50,7 +54,7 @@ public struct PrimaryTab<Tab>: View where Tab: Hashable {
 
     public init<Icon>(
         tab: Tab,
-        context: HeaderContext<Tab>,
+        context: MaterialTabsHeaderContext<Tab>,
         tapped: @escaping () -> Void,
         title: String? = nil,
         icon: Icon,
@@ -68,7 +72,7 @@ public struct PrimaryTab<Tab>: View where Tab: Hashable {
 
     public init(
         tab: Tab,
-        context: HeaderContext<Tab>,
+        context: MaterialTabsHeaderContext<Tab>,
         tapped: @escaping () -> Void,
         title: String? = nil,
         config: Config,
@@ -89,7 +93,7 @@ public struct PrimaryTab<Tab>: View where Tab: Hashable {
 
     @Environment(\.font) private var font: Font?
     private let tab: Tab
-    private let context: HeaderContext<Tab>
+    private let context: MaterialTabsHeaderContext<Tab>
     private let tapped: () -> Void
     private let title: String?
     private let icon: AnyView?
@@ -181,7 +185,7 @@ public extension PrimaryTab.Config {
 }
 
 #Preview {
-    let context = HeaderContext(selectedTab: 0)
+    let context = MaterialTabsHeaderContext(selectedTab: 0)
 
     return VStack() {
         PrimaryTab<Int>(

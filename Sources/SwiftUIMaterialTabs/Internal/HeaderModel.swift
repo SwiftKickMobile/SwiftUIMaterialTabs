@@ -33,8 +33,8 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
         state.headerContext.titleHeight = height
     }
 
-    func minTitleHeightChanged(_ dimension: MinTitleHeightPreferenceKey.Dimension) {
-        state.headerContext.minTitleDimension = dimension
+    func minTitleHeightChanged(_ metric: MinTitleHeightPreferenceKey.Metric) {
+        state.headerContext.minTitleMetric = metric
     }
 
     func tabBarHeightChanged(_ height: CGFloat) {

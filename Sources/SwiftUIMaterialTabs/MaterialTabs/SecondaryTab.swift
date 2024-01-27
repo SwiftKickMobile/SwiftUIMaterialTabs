@@ -4,6 +4,9 @@
 
 import SwiftUI
 
+/// An implementation of the [Google Material 3 secondary tab style](https://m3.material.io/components/tabs/overview).
+/// While these views may be constructed directly, typically, they are only directly referenced in the `materialTabItem()` view modifier configuration
+/// parameters and subsequently constructed by the system.
 public struct SecondaryTab<Tab>: View where Tab: Hashable {
 
     // MARK: - API
@@ -36,7 +39,7 @@ public struct SecondaryTab<Tab>: View where Tab: Hashable {
 
     public init(
         tab: Tab,
-        context: HeaderContext<Tab>,
+        context: MaterialTabsHeaderContext<Tab>,
         tapped: @escaping () -> Void,
         title: String,
         config: Config,
@@ -56,7 +59,7 @@ public struct SecondaryTab<Tab>: View where Tab: Hashable {
 
     @Environment(\.font) private var font
     private let tab: Tab
-    private let context: HeaderContext<Tab>
+    private let context: MaterialTabsHeaderContext<Tab>
     private let tapped: () -> Void
     private let title: String
     private let config: Config
@@ -156,7 +159,7 @@ public extension SecondaryTab.Config {
         backgroundStyle: Gradient(colors: [.yellow, .orange])
     )
 
-    let context = HeaderContext<Int>(selectedTab: 0)
+    let context = MaterialTabsHeaderContext<Int>(selectedTab: 0)
 
     return VStack() {
         SecondaryTab(

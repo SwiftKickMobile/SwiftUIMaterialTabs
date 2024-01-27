@@ -4,17 +4,29 @@
 
 import SwiftUI
 
+/// A scrollable tab bar implementation that supports Google Material 3 primary and secondary tab bar styles. The tab bar can be configured to size tab selectors
+/// equally or proportinally. Tab selectors are configured by applying the `materialTabItem()` view modifier to the top-level tab content views.
+/// The `materialTabItem()` modifier is conceptually similar to a combination of the `tag()` and `tagitem()` view modifiers used with
+/// a standard `TabView`. In addition to primary and secondary styles,  `materialTabItem()` supports fully custom tab selectors.
+/// If space permits, tabs selectors will fill the entire width of the tab bar. Otherwise, the tab bar will scroll horizontally.
 public struct MaterialTabBar<Tab>: View where Tab: Hashable {
 
     // MARK: - API
 
+    /// Models for [Material 3 primary and secondary tab styles](https://m3.material.io/components/tabs/overview).
     public enum Label {
+
+        /// [Material 3 primary tab style](https://m3.material.io/components/tabs/overview).
+        /// Supply a title, icon or both. Provide selected and/or deselected configs to cusotmize further.
         case primary(
             String? = nil,
             icon: (any View)? = nil,
             config: PrimaryTab<Tab>.Config = .init(),
             deselectedConfig: PrimaryTab<Tab>.Config? = nil
         )
+
+        /// [Material 3 secondary tab style](https://m3.material.io/components/tabs/overview).
+        /// Provide selected and/or deselected configs to cusotmize further.
         case secondary(
             String,
             config: SecondaryTab<Tab>.Config = .init(),
@@ -22,18 +34,36 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
         )
     }
 
+    /// Options for tab selector width sizing. If space permits, tabs selectors will fill the entire width of the tab bar. Otherwise, the tab bar will scroll horizontally.
     public enum Sizing {
+
+        /// Size all tab selectors equally. If space permits, tabs selectors will fill the entire width of the tab bar. Otherwise, the tab bar will scroll horizontally.
         case equalWidth
+
+        /// Size all tab selectors proportionally. If space permits, tabs selectors will fill the entire width of the container. Otherwise, the tab bar will scroll horizontally.
         case proportionalWidth
     }
 
+    /// A closure for providing a custom tab selector labels. Custom labels should have greedy width and height
+    /// using `.frame(maxWidth: .infinity, maxHeight: .infinity)`. The tab bar layout will automatically detmerine their intrinsic content sizes
+    /// and set their frames based on the `Sizing` option and available space. All labels will be given the same height, determined by the maximum
+    /// intrinsic height across all labels.
     public typealias CustomLabel = (
         _ tab: Tab,
-        _ context: HeaderContext<Tab>,
+        _ context: MaterialTabsHeaderContext<Tab>,
         _ tapped: @escaping () -> Void
     ) -> AnyView
-
-    public init(selectedTab: Binding<Tab>, sizing: Sizing = .proportionalWidth, context: HeaderContext<Tab>) {
+    
+    /// Constructs a tab bar component.
+    /// - Parameters:
+    ///   - selectedTab: The external tab selection binding.
+    ///   - sizing: The tab selector sizing option.
+    ///   - context: The current context value.
+    public init(
+        selectedTab: Binding<Tab>,
+        sizing: Sizing = .proportionalWidth,
+        context: MaterialTabsHeaderContext<Tab>
+    ) {
         _selectedTab = selectedTab
         _selectedTabScroll = State(initialValue: selectedTab.wrappedValue)
         self.sizing = sizing
@@ -50,7 +80,7 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     @EnvironmentObject private var tabBarModel: TabBarModel<Tab>
     @EnvironmentObject private var headerModel: HeaderModel<Tab>
     @State private var height: CGFloat = 0
-    private let context: HeaderContext<Tab>
+    private let context: MaterialTabsHeaderContext<Tab>
 
     // MARK: - Body
 

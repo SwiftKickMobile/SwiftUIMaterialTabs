@@ -4,11 +4,35 @@
 
 import SwiftUI
 
+/// `StickyHeader` is a stripped down version of `MaterialTabs` without tabs when you just want a scroll view with
+/// a fancy sticky header.
+///
+/// `StickyHeader` is the primary container view, consisting of a top header area and a bottom area for scrollable content.
+///
+/// The content view must be constructed using the lightweight `ScrollView` wrapper `StickyHeaderScroll`.
+///
+/// Header elements consist of a title view and an optional background view spanning the header and top safe area.
+/// When content is scrolled, the library automatically offsets the header to track scrolling, but sticks at the top when the tab bar reaches the top safe area.
+/// The header elements are collectively referred to as the "sticky header" throughout the library, regarless of whether you're using `StickyHeader`
+/// or `MaterialTabs`.
+///
+/// The `headerStyle()` view modifier can be applied to one or more sticky header elements to achieve sophisticated scroll effects, such
+/// as fade, shrink and parallax. The effects are driven by a variety of dynamic metrics, through the stream of `StickyHeaderContext` values
+/// provided to each header element's view builder. You may implement your own header styles or use the context in other ways to achieve a variety of
+/// unique effects.
 public struct StickyHeader<HeaderTitle, HeaderBackground, Content>: View
     where HeaderTitle: View, HeaderBackground: View, Content: View {
 
     // MARK: - API
 
+    /// Constructs a sticky header component with a title and content (no background).
+    ///
+    /// - Parameters:
+    ///   - headerTitle: The header title view builder.
+    ///   - content: a content view builder, who's top level elements are assumed to be individual tab contents.
+    ///
+    /// The content is typically a `StickyHeaderScroll` view. `StickyHeaderScroll` is a lightweight wrapper, around
+    /// `ScrollView` and is required to enable scroll effects.
     public init(
         @ViewBuilder headerTitle: @escaping (StickyHeaderContext) -> HeaderTitle,
         @ViewBuilder content: @escaping () -> Content
@@ -20,6 +44,15 @@ public struct StickyHeader<HeaderTitle, HeaderBackground, Content>: View
         )
     }
 
+    /// Constructs a sticky header component with a title and background.
+    ///
+    /// - Parameters:
+    ///   - headerTitle: The header title view builder.
+    ///   - headerBackground: The header background view builder, typically a `Color`, `Gradient` or scalable `Image`.
+    ///   - content: a content view builder, who's top level elements are assumed to be individual tab contents.
+    ///
+    /// The content is typically a `StickyHeaderScroll` view. `StickyHeaderScroll` is a lightweight wrapper, around
+    /// `ScrollView` and is required to enable scroll effects.
     public init(
         @ViewBuilder headerTitle: @escaping (StickyHeaderContext) -> HeaderTitle,
         @ViewBuilder headerBackground: @escaping (StickyHeaderContext) -> HeaderBackground,

@@ -41,6 +41,7 @@
 		22982C062B5ECC9700852311 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22982C052B5ECC9700852311 /* Media.xcassets */; };
 		22982C0F2B5EF52200852311 /* FixedHeaderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C0E2B5EF52200852311 /* FixedHeaderStyle.swift */; };
 		22982C202B604A9000852311 /* StickyHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C1F2B604A9000852311 /* StickyHeader.swift */; };
+		22C5509F2B65A7E80037C991 /* MaterialTabsHeaderContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C5509E2B65A7E80037C991 /* MaterialTabsHeaderContext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		22982C0E2B5EF52200852311 /* FixedHeaderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedHeaderStyle.swift; sourceTree = "<group>"; };
 		22982C1F2B604A9000852311 /* StickyHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeader.swift; sourceTree = "<group>"; };
 		22982C212B604E2300852311 /* NoTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTab.swift; sourceTree = "<group>"; };
+		22C5509E2B65A7E80037C991 /* MaterialTabsHeaderContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialTabsHeaderContext.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 				224364872B547D1B00563396 /* MaterialTabItemModifier.swift */,
 				2295EC3B2B5DE42D00A19247 /* PrimaryTab.swift */,
 				2295EC3D2B5DE43A00A19247 /* SecondaryTab.swift */,
+				22C5509E2B65A7E80037C991 /* MaterialTabsHeaderContext.swift */,
 			);
 			path = MaterialTabs;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 				2295EC3E2B5DE43A00A19247 /* SecondaryTab.swift in Sources */,
 				226DFD8A2B5C3546008AFFF2 /* HeaderStyleModifier.swift in Sources */,
 				226DFD942B5C462C008AFFF2 /* MinTitleHeightPreferernceKey.swift in Sources */,
+				22C5509F2B65A7E80037C991 /* MaterialTabsHeaderContext.swift in Sources */,
 				229401E12B6574DB00605B29 /* TabBarLayout.swift in Sources */,
 				229401DF2B656FA600605B29 /* NoTransition.swift in Sources */,
 				224364922B547D1B00563396 /* ScrollOffsetPreferenceKey.swift in Sources */,

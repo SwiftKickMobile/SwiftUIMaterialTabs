@@ -5,11 +5,11 @@
 import SwiftUI
 
 @MainActor
-class ScrollModel<ItemID, Tab>: ObservableObject where ItemID: Hashable, Tab: Hashable {
+class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashable {
 
     // MARK: - API
 
-    @Published var scrollItemID: ItemID?
+    @Published var scrollItem: Item?
     @Published var scrollUnitPoint: UnitPoint = .top
     @Published private(set) var appeared = false
 
@@ -37,8 +37,8 @@ class ScrollModel<ItemID, Tab>: ObservableObject where ItemID: Hashable, Tab: Ha
         selectedTab = headerModel.state.headerContext.selectedTab
     }
 
-    func scrollItemIDChanged(_ itemID: ItemID?) {
-        scrollItemID = itemID
+    func scrollItemChanged(_ item: Item?) {
+        scrollItem = item
     }
 
     func scrollUnitPointChanged(_ unitPoint: UnitPoint) {
@@ -47,10 +47,10 @@ class ScrollModel<ItemID, Tab>: ObservableObject where ItemID: Hashable, Tab: Ha
 
     init(
         tab: Tab,
-        firstItemID: ItemID
+        firstItem: Item
     ) {
         self.tab = tab
-        self.firstItemID = firstItemID
+        self.firstItem = firstItem
     }
 
     // MARK: - Constants
@@ -58,7 +58,7 @@ class ScrollModel<ItemID, Tab>: ObservableObject where ItemID: Hashable, Tab: Ha
     // MARK: - Variables
 
     private let tab: Tab
-    private let firstItemID: ItemID
+    private let firstItem: Item
     private var cachedTabsState: HeaderModel<Tab>.State?
     private weak var headerModel: HeaderModel<Tab>?
 
@@ -100,7 +100,7 @@ class ScrollModel<ItemID, Tab>: ObservableObject where ItemID: Hashable, Tab: Ha
         }
         cachedTabsState = headerModel.state
         contentOffset = contentOffset + delta
-        scrollItemID = firstItemID
+        scrollItem = firstItem
         scrollUnitPoint = UnitPoint(
             x: UnitPoint.top.x,
             y: -contentOffset / headerModel.state.scrollViewHeight
@@ -109,7 +109,7 @@ class ScrollModel<ItemID, Tab>: ObservableObject where ItemID: Hashable, Tab: Ha
         // future scroll adjustments. Placing this in a task is sufficient for the
         // above scrolling to occur.
         Task {
-            scrollItemID = nil
+            scrollItem = nil
         }
     }
 }

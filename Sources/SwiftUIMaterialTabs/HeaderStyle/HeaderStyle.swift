@@ -4,6 +4,8 @@
 
 import SwiftUI
 
+// A protocol used by the `headerStyle()` view modifier for easy creation of unique sticky header effects,
+// such as fade, shink and parallax.
 public protocol HeaderStyle {
 
     associatedtype Body: View

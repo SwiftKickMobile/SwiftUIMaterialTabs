@@ -5,7 +5,13 @@
 import SwiftUI
 
 public extension View {
-    func headerStyle<S, Tab>(_ style: S, context: HeaderContext<Tab>) -> some View where Tab: Hashable, S: HeaderStyle, S.Tab == Tab {
+    // A view modifier that may be applied to sticky header elements to easily create sticky header effects,
+    // such as fade, shink and parallax. The modifier may be applied to multiple elements separately or even multiple
+    // times on the same element to combine effects.
+    func headerStyle<S, Tab>(
+        _ style: S,
+        context: HeaderContext<Tab>
+    ) -> some View where Tab: Hashable, S: HeaderStyle, S.Tab == Tab {
         modifier(HeaderStyleModifier(style: style, context: context))
     }
 }
