@@ -16,9 +16,9 @@ enum DemoTab: String, Hashable, CaseIterable, Identifiable {
 
     var name: String {
         switch self {
-        case .one: "Beginning"
-        case .two: "Middle"
-        case .three: "End"
+        case .one: "Lorem Ipsum"
+        case .two: "Dolor Sit"
+        case .three: "Voluptate"
         }
     }
 

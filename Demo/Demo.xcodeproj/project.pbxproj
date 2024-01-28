@@ -23,6 +23,7 @@
 		22982C0D2B5EE36B00852311 /* DemoStickyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C0C2B5EE36B00852311 /* DemoStickyHeaderView.swift */; };
 		22982C132B5F48AC00852311 /* DemoStickyHeaderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C122B5F48AC00852311 /* DemoStickyHeaderContentView.swift */; };
 		22982C152B5F4A4200852311 /* DemoStickyHeaderTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C142B5F4A4200852311 /* DemoStickyHeaderTitleView.swift */; };
+		22C550A12B66B9B50037C991 /* DebugScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C550A02B66B9B50037C991 /* DebugScroll.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		22982C0C2B5EE36B00852311 /* DemoStickyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoStickyHeaderView.swift; sourceTree = "<group>"; };
 		22982C122B5F48AC00852311 /* DemoStickyHeaderContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoStickyHeaderContentView.swift; sourceTree = "<group>"; };
 		22982C142B5F4A4200852311 /* DemoStickyHeaderTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoStickyHeaderTitleView.swift; sourceTree = "<group>"; };
+		22C550A02B66B9B50037C991 /* DebugScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugScroll.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				22034C1A2B54777D008147F0 /* Preview Assets.xcassets */,
+				22C550A02B66B9B50037C991 /* DebugScroll.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 			files = (
 				22034C482B5477E4008147F0 /* DemoContentRowView.swift in Sources */,
 				22034C402B5477E4008147F0 /* DemoTabsHeaderTitle.swift in Sources */,
+				22C550A12B66B9B50037C991 /* DebugScroll.swift in Sources */,
 				22982C152B5F4A4200852311 /* DemoStickyHeaderTitleView.swift in Sources */,
 				22982C132B5F48AC00852311 /* DemoStickyHeaderContentView.swift in Sources */,
 				22982C0D2B5EE36B00852311 /* DemoStickyHeaderView.swift in Sources */,
