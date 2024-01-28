@@ -132,6 +132,7 @@ public struct Scroll<Content, Tab, Item>: View where Content: View, Tab: Hashabl
             VStack(spacing: 0) {
                 Color.clear
                     .frame(height: headerModel.state.headerContext.totalHeight)
+                    .id(firstItem)
                     .background {
                         GeometryReader { proxy in
                             Color.clear.preference(

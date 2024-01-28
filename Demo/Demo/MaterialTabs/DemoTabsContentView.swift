@@ -24,7 +24,7 @@ struct DemoTabsContentView: View {
     @ViewBuilder private let info: () -> DemoContentInfoView
 
     // MARK: - Body
-
+  
     var body: some View {
         MaterialTabsScroll(
             tab: tab
@@ -32,7 +32,8 @@ struct DemoTabsContentView: View {
             LazyVStack(spacing: 0) {
                 info()
                     .padding([.leading, .trailing, .top], 20)
-                ForEach(0..<25) { index in
+                    .id(0)
+                ForEach(1..<26) { index in
                     DemoContentRowView(index: index, name: name, foregroundStyle: tab.contentForeground)
                         .id(index)
                 }
