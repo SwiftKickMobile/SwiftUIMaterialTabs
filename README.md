@@ -11,8 +11,8 @@
 SwiftUIMaterialTabs is pure SwiftUI component for [Material 3-style tabs](https://m3.material.io/components/tabs/overview) with sticky headers or just sticky headers without the tabs! Supports both primary and secondary tab styles, with numerious cusotmization options. Or supply your own tabs. Easily apply sticky header effects, such as fade, shrink, parralax, etc. or create your own.
 
 <p align="center">
-  <img src="https://github.com/SwiftKickMobile/SwiftUIMaterialTabs/assets/2529176/e8bbd444-92b9-4a25-9a21-8c800627594b" />
-  <img src="https://github.com/SwiftKickMobile/SwiftUIMaterialTabs/assets/2529176/fb62eced-8b1a-4c7b-a92e-880404c0d030" />
+  <img src="https://github.com/SwiftKickMobile/SwiftUIMaterialTabs/assets/2529176/cf00ed57-1a2a-446c-b0d9-70eb59b389f9" />
+  <img src="https://github.com/SwiftKickMobile/SwiftUIMaterialTabs/assets/2529176/fdbffa9f-4194-4937-840c-f2934f790e62" />
 </p>
 
 ## Installation
