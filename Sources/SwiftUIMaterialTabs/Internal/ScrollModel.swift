@@ -50,7 +50,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
 
     init(
         tab: Tab,
-        firstItem: Item
+        firstItem: Item?
     ) {
         self.tab = tab
         self.firstItem = firstItem
@@ -61,7 +61,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     // MARK: - Variables
 
     private let tab: Tab
-    private let firstItem: Item
+    private let firstItem: Item?
     private var cachedTabsState: HeaderModel<Tab>.State?
     private weak var headerModel: HeaderModel<Tab>?
 

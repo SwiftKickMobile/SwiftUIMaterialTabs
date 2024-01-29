@@ -1,5 +1,5 @@
 //
-//  Created by Timothy Moose on 1/23/24.
+//  Created by Timothy Moose on 1/7/24.
 //
 
 import SwiftUI
@@ -59,6 +59,12 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         self.firstItem = firstItem
         _scrollItem = scrollItem
         _scrollUnitPoint = scrollUnitPoint
+        _scrollModel = StateObject(
+            wrappedValue: ScrollModel(
+                tab: tab,
+                firstItem: firstItem
+            )
+        )
         self.content = content
     }
 
@@ -67,20 +73,71 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     // MARK: - Variables
 
     private let tab: Tab
-    private let firstItem: Item
+    private let firstItem: Item?
+    @State private var coordinateSpaceName = UUID()
     @Binding private var scrollItem: Item?
     @Binding private var scrollUnitPoint: UnitPoint
+    @StateObject private var scrollModel: ScrollModel<Item, Tab>
     @ViewBuilder private var content: () -> Content
+    @EnvironmentObject private var headerModel: HeaderModel<Tab>
 
     // MARK: - Body
 
     public var body: some View {
-        Scroll(
-            tab: tab,
-            firstItem: firstItem,
-            scrollItem: $scrollItem,
-            scrollUnitPoint: $scrollUnitPoint,
-            content: content
-        )
+        ScrollView {
+            VStack(spacing: 0) {
+                Color.clear
+                    .frame(height: headerModel.state.headerContext.totalHeight)
+                    .background {
+                        GeometryReader { proxy in
+                            Color.clear.preference(
+                                key: ScrollOffsetPreferenceKey.self,
+                                value: proxy.frame(in: .named(coordinateSpaceName)).origin.y
+                            )
+                        }
+                    }
+                    .onPreferenceChange(ScrollOffsetPreferenceKey.self) { offset in
+                        scrollModel.contentOffsetChanged(offset)
+                    }
+                switch firstItem as? ScrollItem {
+                case let firstItem?:
+                    ZStack(alignment: .top) {
+                        Color.clear
+                            .frame(height: 1)
+                            .id(firstItem)
+                        content()
+                    }
+                case .none:
+                    content()
+                }
+            }
+        }
+        .coordinateSpace(name: coordinateSpaceName)
+        .scrollPosition(id: $scrollModel.scrollItem, anchor: scrollModel.scrollUnitPoint)
+        .onAppear {
+            // It is important not to attempt to adjust the scroll position until after the view has appeared
+            // and this task seems to accomplish that.
+            Task {
+                scrollModel.appeared(headerModel: headerModel)
+            }
+        }
+        .onChange(of: headerModel.state.headerContext.selectedTab, initial: true) {
+            scrollModel.selectedTabChanged()
+        }
+        .onChange(of: scrollItem, initial: true) {
+            scrollModel.scrollItemChanged(scrollItem)
+        }
+        .onChange(of: scrollUnitPoint, initial: true) {
+            scrollModel.scrollUnitPointChanged(scrollUnitPoint)
+        }
+        .onChange(of: headerModel.state.headerContext.totalHeight) {
+            scrollModel.headerHeightChanged()
+        }
+        .onChange(of: headerModel.state.headerContext.safeArea.top) {
+            scrollModel.headerHeightChanged()
+        }
+        .onDisappear() {
+            scrollModel.disappeared()
+        }
     }
 }

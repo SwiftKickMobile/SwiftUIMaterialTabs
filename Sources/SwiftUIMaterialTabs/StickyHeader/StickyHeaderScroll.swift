@@ -5,10 +5,8 @@
 import SwiftUI
 
 /// A lightweight scroll view wrapper required for sticky header scroll effects. For most intents and purposes, you should use `StickyHeaderScroll` as you
-/// would a vertically-oriented `ScrollView`, with typical content being a `VStack` or `LazyVStack`.
-///
-/// Never apply the `scrollPosition()` view modifier to this view because it is already applied internally. You should, however, apply
-/// `scrollTargetLayout()`, where appropriate.
+/// would a vertically-oriented `ScrollView`, with typical content being a `VStack` or `LazyVStack`. The main task that `StickyHeaderScroll`
+/// performs is to track the content offset.
 public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item: Hashable {
 
     // MARK: - API
@@ -17,39 +15,9 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
     ///
     /// - Parameters:
     ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
-    ///
-    /// Never apply the `scrollPosition()` view modifier to this view because it is already applied internally. You should, however, apply
-    /// `scrollTargetLayout()`, where appropriate.
     public init(
         @ViewBuilder content: @escaping () -> Content
     ) where Item == ScrollItem {
-        self.init(
-            firstItem: .item,
-            scrollItem: .constant(nil),
-            scrollUnitPoint: .constant(.top),
-            content: content
-        )
-    }
-
-    /// Constructs a sticky header scroll with external bindings for scroll position.
-    ///
-    /// - Parameters:
-    ///   - firstItem: The item identifier of the first item in the scroll view.
-    ///   - scrollItem: The binding to the scroll item identifier.
-    ///   - scrollUnitPoint: The binding to the scroll unit point.
-    ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
-    ///
-    /// Never apply the `scrollPosition()` view modifier to this view because it is already applied internally. You should, however, apply
-    /// `scrollTargetLayout()`, where appropriate.
-    public init(
-        firstItem: Item,
-        scrollItem: Binding<Item?>,
-        scrollUnitPoint: Binding<UnitPoint>,
-        @ViewBuilder content: @escaping () -> Content
-    ) {
-        self.firstItem = firstItem
-        _scrollItem = scrollItem
-        _scrollUnitPoint = scrollUnitPoint
         self.content = content
     }
 
@@ -57,20 +25,33 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
 
     // MARK: - Variables
 
-    private let firstItem: Item
-    @Binding private var scrollItem: Item?
-    @Binding private var scrollUnitPoint: UnitPoint
+    @State private var coordinateSpaceName = UUID()
+    @State private var contentOffset: CGFloat = 0
     @ViewBuilder private var content: () -> Content
+    @EnvironmentObject private var headerModel: HeaderModel<NoTab>
 
     // MARK: - Body
 
     public var body: some View {
-        Scroll(
-            tab: NoTab.none,
-            firstItem: firstItem,
-            scrollItem: $scrollItem,
-            scrollUnitPoint: $scrollUnitPoint,
-            content: content
-        )
+        ScrollView {
+            VStack(spacing: 0) {
+                Color.clear
+                    .frame(height: headerModel.state.headerContext.totalHeight)
+                    .background {
+                        GeometryReader { proxy in
+                            Color.clear.preference(
+                                key: ScrollOffsetPreferenceKey.self,
+                                value: proxy.frame(in: .named(coordinateSpaceName)).origin.y
+                            )
+                        }
+                    }
+                    .onPreferenceChange(ScrollOffsetPreferenceKey.self) { offset in
+                        headerModel.scrolled(tab: .none, offset: -offset, deltaOffset: -(offset - contentOffset))
+                        contentOffset = -offset
+                    }
+                content()
+            }
+        }
+        .coordinateSpace(name: coordinateSpaceName)
     }
 }
