@@ -52,7 +52,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     /// Material Tabs maniuplates the scroll position in order to ensure continuity between tabs as the sticky header collapses or expands. Unfortunately,
     /// the only way to do precise scroll positioning in SwiftUI is to have an item identifier and know the height of its associated view. Rather than having
     /// you supply the height, Material Tabs applies the reserved item identifier to a hidden view with known height.
-    init(
+    public init(
         tab: Tab,
         reservedItem: Item,
         scrollItem: Binding<Item?>,
