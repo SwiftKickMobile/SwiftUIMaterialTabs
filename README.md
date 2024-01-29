@@ -8,7 +8,7 @@
 
 ## Overview
 
-SwiftUIMaterialTabs is pure SwiftUI component for Material 3-style tabs with sticky headers or just sticky headers without the tabs! Supports both primary and secondary tab styles, with numerious cusotmization options. Or supply your own tabs. Easily apply sticky header effects, such as fade, shrink, parralax, etc. or create your own.
+SwiftUIMaterialTabs is pure SwiftUI component for [Material 3-style tabs](https://m3.material.io/components/tabs/overview)) with sticky headers or just sticky headers without the tabs! Supports both primary and secondary tab styles, with numerious cusotmization options. Or supply your own tabs. Easily apply sticky header effects, such as fade, shrink, parralax, etc. or create your own.
 
 ![Sticky Headers](https://github.com/SwiftKickMobile/SwiftUIMaterialTabs/assets/2529176/5cb78c1d-071d-4e5c-9a2f-44f54d631939)
 ![Material Tabs](https://github.com/SwiftKickMobile/SwiftUIMaterialTabs/assets/2529176/da16a7fd-10ad-4c3f-8177-e2de398226e2)
@@ -35,6 +35,8 @@ These and additional coponents are covered in the Usage section.
 Skip to [Sticky Headers](#sticky-headers)
 
 ### Material Tabs
+
+The basic usage is as follows:
 
 ````swift
 struct BasicTabView: View {
@@ -70,17 +72,17 @@ struct BasicTabView: View {
             },
             // The tab contents.
             content: {
-                Text("Tab 1 Content")
+                Text("First Tab Content")
                     // Identify tabs using the `.materialTabItem()` view modifier.
                     .materialTabItem(
                         tab: Tab.first,
                         // Using Material 3 primary tab style.
-                        label: .primary("One", icon: Image(systemName: "car"))
+                        label: .primary("First", icon: Image(systemName: "car"))
                     )
-                Text("Tab 2 Content")
+                Text("Second Tab Content")
                     .materialTabItem(
                         tab: Tab.second,
-                        label: .primary("Two", icon: Image(systemName: "sailboat"))
+                        label: .primary("Second", icon: Image(systemName: "sailboat"))
                     )
             }
         )
@@ -88,9 +90,186 @@ struct BasicTabView: View {
 }
 ````
 
+#### `MaterialTabBar`
+
+`MaterialTabBar` is a horizontally scrolling tab bar that supports Material 3 primary and secondary tab styles or custom tab selectors. You specify the tab selector labels by applying the `materialTabItem(tab:label:)` view modifier to your top-level tab contents.
+
+`MaterialTabBar` has two options for hoziontal sizing: `.equalWidth` and `.proportionalWidth`.
+
+````swift
+MaterialTabBar(selectedTab: $selectedTab, sizing: .equalWidth, context: context)
+MaterialTabBar(selectedTab: $selectedTab, sizing: .proportionalWidth, context: context)
+````
+
+With `.equalWidth`, all tabs will be the width of the largest tab selector. With `.propertional`, tabs will be sized horizontally to fit. In either case, selector labels will expand to fill the available width of the tab bar. If there isn't enough space, the tab bar scrolls.
+
+#### `MaterialTabItemModifier`
+
+The `MaterialTabItemModifier` view modifier is used to identify and configure tabs for the tab bar. It is conceptually similar to a combination of the `tag()` and `tagitem()` view modifiers used with a standard `TabView`
+
+There are two built-in selector labels: `PrimaryTab` and `SecondaryTab`. You don't typically create these directly, but specify them when applying `.materialTabItem()` to your tab contents:
+
+````swift
+Text("First Tab Content")
+    .materialTabItem(
+        tab: Tab.first,
+        label: .primary("First", icon: Image(systemName: "car"))
+    )
+````
+
+Both styles are highly customizabe through the optional `config` and `deselectedConfig` parameters:
+
+````swift
+Text("Second Tab Content")
+    .materialTabItem(
+        tab: Tab.first,
+        label: .secondary("First", config: customLabelConfig, deselectedConfig: custonDeselectedLabelConfig)
+    )
+````
+
+You may also supply your own custom selector label:
+
+````swift
+Text("Second Tab Content")
+    .materialTabItem(
+        tab: Tab.first,
+        label: { tab, context, tapped in
+            Text(tab.description)
+                .foregroundColor(tab == context.selectedTab ? .blue : .black)
+                .onTapGesture(perform: tapped)
+        }
+    )
+````
+
+### `MaterialTabsScroll`
+
+Scrollable tab content must be contained within a `MaterialTabsScroll`, a lightweight wrapper around `ScrollView` required to enable sticky header effects. Typically, you supply the content in a `VStack` or `LazyVStack`.
+
+````swift
+content: {
+    MaterialTabsScroll(tab: Tab.first) {
+        LazyVStack {
+            ForEach(0..<10) { index in
+                Text("Row \(index)
+                    .padding()
+            }
+        }
+    }
+    .materialTabItem(tab: Tab.first, label: .secondary("First"))
+}
+````
+
+When this component is used, Material Tabs automatically maintains consistency of scroll position across tabs as the header is collapsed and expanded.
+
+Joint manipulation of the scroll position is supported if you need it. You supply `scrollItem` and `scrollUnitPoint` bindings and `MaterialTabsScroll` applies the `scrollPosition()` modifier internally. You are free to set the `scrollTargetLayout()` view modifier in your content where appropriate.
+
+````swift
+@State var scrollItem: Int?
+@State var scrollUnitPoint: UnitPoint = .top
+
+...
+
+content: {
+    MaterialTabsScroll(tab: Tab.first, reservedItem: -1, scrollItem: $scrollItem, scrollUnitPoint: $scrollUnitPoint) {
+        LazyVStack(spacing: 0) {
+            ForEach(0..<10) { index in
+                Text("Row \(index)")
+                    .padding()
+            }
+        }
+        .scrollTargetLayout()
+    }
+    .materialTabItem(tab: Tab.first, label: .secondary("First"))
+}
+````
+
+One of the nuances of the `scrollPosition()` view modifier is that, if you need to manipulate the scroll position precicely, you must know the height of the view being scrolled. Therefore, in order for Material Tabs to achieve precise control, you are required to supply a `reservedItem` identifier that Material Tabs will use to embed its own hidden view in the scroll.
+
+It is worth noting here, because it is not completely obvious, that the formula for calculating the a unit point for `scrollPosition()` is:
+
+````
+unitPoint = (desiredContentOffset) / (scrollViewHeight - verticalSafeArea - verticalContentPadding - viewHeight)
+````
+
+It should be noted that `MaterialTabsScroll` inserts a spacer into the scroll to push your content below the header.
+
 ### Sticky Headers
 
-Foobar
+The sticky header effects covered in this section are equally applicable to `MaterialTabs` and `StickyHeaders`.
 
+The basic usage is the same as `MaterialTabs` without the tab bar:
 
+````swift
+struct BasicStickyHeaderView: View {
 
+    var body: some View {
+        // The main conainer view.
+        StickyHeader(
+            // A view builder for the header title that takes a `StickyHeaderContext`. This can be anything.
+            headerTitle: { context in
+                Text("Header Title")
+                    .padding()
+            },
+            headerBackground: { context in
+                // The background can be anything, but is typically a `Color`, `Gradient` or scalable `Image`.
+                // The background spans the entire header and top safe area.
+                Color.yellow
+            },
+            // The tab contents.
+            content: {
+                StickyHeaderScroll() {
+                    LazyVStack(spacing: 0) {
+                        ForEach(0..<10) { index in
+                            Text("Row \(index)")
+                                .padding()
+                        }
+                    }
+                    .scrollTargetLayout()
+                }
+            }
+        )
+    }
+}
+````
+
+#### `StickyHeaderScroll`
+
+`StickyHeaderScroll` is completely analogous to [`MaterialTabsScroll`](#materialtabsscroll).
+
+#### `HeaderStyleModifier`
+
+The `HeaderStyleModifier` view modifier works with the `HeaderStyle` protocol to implement sticky header scroll effects, such as fade, shrink and parallax. You may apply different `headerStyle(context:)` to modifiers to different header elements or apply multiple styles to a single element to achieve unique effects.
+
+To have the title fade out as it scrolls off screen:
+
+````swift
+Text("Header Title")
+    .padding()
+    .headerStyle(OffsetHeaderStyle(fade: true), context: context)
+````
+
+To have the title shrink and fade out:
+
+````swift
+Text("Header Title")
+    .padding()
+    .headerStyle(ShrinkHeaderStyle(), context: context)
+````
+
+To apply parallax to a background image:
+
+````swift
+Image(.coolBackground)
+    .resizable()
+    .aspectRatio(contentMode: .fill)
+    .headerStyle(ParallaxHeaderStyle(), context: context)
+````
+
+Under the hood, these styles are using parameters provided in the `StickyHeaderHeaderContext`/`MaterialTabsHeaderContext` to adjust `.scaleEffect()`, `.offset()`, and `.opacity()`. You may implement your own styles by adopting `HeaderStyle` or manipulate your header views directly.
+
+## About SwiftKick Mobile
+We build high quality apps for clients! [Get in touch](http://www.swiftkickmobile.com) if you need help with a project.
+
+## License
+
+SwiftMessages is distributed under the MIT license. [See LICENSE](./LICENSE.md) for details.
