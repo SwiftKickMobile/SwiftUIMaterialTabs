@@ -16,8 +16,8 @@
 		22034C452B5477E4008147F0 /* DemoTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22034C3B2B5477E4008147F0 /* DemoTab.swift */; };
 		22034C462B5477E4008147F0 /* DemoTabsHeaderBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22034C3C2B5477E4008147F0 /* DemoTabsHeaderBackground.swift */; };
 		22034C482B5477E4008147F0 /* DemoContentRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22034C3E2B5477E4008147F0 /* DemoContentRowView.swift */; };
-		224364A22B547E1600563396 /* SwiftUIMaterialTabs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224364A02B547E0A00563396 /* SwiftUIMaterialTabs.framework */; };
-		224364A32B547E1600563396 /* SwiftUIMaterialTabs.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 224364A02B547E0A00563396 /* SwiftUIMaterialTabs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		222041DD2B681DAA00306F8E /* MaterialTabs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 222041DC2B681D8D00306F8E /* MaterialTabs.framework */; };
+		222041DE2B681DAA00306F8E /* MaterialTabs.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 222041DC2B681D8D00306F8E /* MaterialTabs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		228F9D152B607EE00075D820 /* DemoContentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228F9D142B607EE00075D820 /* DemoContentInfoView.swift */; };
 		22982C0B2B5EE31900852311 /* DemoTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C0A2B5EE31900852311 /* DemoTabsView.swift */; };
 		22982C0D2B5EE36B00852311 /* DemoStickyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C0C2B5EE36B00852311 /* DemoStickyHeaderView.swift */; };
@@ -27,12 +27,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2243649F2B547E0A00563396 /* PBXContainerItemProxy */ = {
+		222041DB2B681D8D00306F8E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2243649B2B547E0A00563396 /* SwiftUIMaterialTabs.xcodeproj */;
+			containerPortal = 222041D72B681D8D00306F8E /* MaterialTabs.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 224364642B547D0300563396;
-			remoteInfo = SwiftUIMaterialTabs;
+			remoteInfo = MaterialTabs;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -43,7 +43,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				224364A32B547E1600563396 /* SwiftUIMaterialTabs.framework in Embed Frameworks */,
+				222041DE2B681DAA00306F8E /* MaterialTabs.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,8 +61,8 @@
 		22034C3B2B5477E4008147F0 /* DemoTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoTab.swift; sourceTree = "<group>"; };
 		22034C3C2B5477E4008147F0 /* DemoTabsHeaderBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoTabsHeaderBackground.swift; sourceTree = "<group>"; };
 		22034C3E2B5477E4008147F0 /* DemoContentRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoContentRowView.swift; sourceTree = "<group>"; };
+		222041D72B681D8D00306F8E /* MaterialTabs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MaterialTabs.xcodeproj; path = ../MaterialTabs.xcodeproj; sourceTree = "<group>"; };
 		224364412B547A6600563396 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		2243649B2B547E0A00563396 /* SwiftUIMaterialTabs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftUIMaterialTabs.xcodeproj; path = ../SwiftUIMaterialTabs.xcodeproj; sourceTree = "<group>"; };
 		228F9D142B607EE00075D820 /* DemoContentInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoContentInfoView.swift; sourceTree = "<group>"; };
 		22982C0A2B5EE31900852311 /* DemoTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoTabsView.swift; sourceTree = "<group>"; };
 		22982C0C2B5EE36B00852311 /* DemoStickyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoStickyHeaderView.swift; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				224364A22B547E1600563396 /* SwiftUIMaterialTabs.framework in Frameworks */,
+				222041DD2B681DAA00306F8E /* MaterialTabs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,7 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				22034C122B54777C008147F0 /* Demo */,
-				2243649B2B547E0A00563396 /* SwiftUIMaterialTabs.xcodeproj */,
+				222041D72B681D8D00306F8E /* MaterialTabs.xcodeproj */,
 				22034C112B54777C008147F0 /* Products */,
 				224364A12B547E1600563396 /* Frameworks */,
 			);
@@ -126,10 +126,10 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		2243649C2B547E0A00563396 /* Products */ = {
+		222041D82B681D8D00306F8E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				224364A02B547E0A00563396 /* SwiftUIMaterialTabs.framework */,
+				222041DC2B681D8D00306F8E /* MaterialTabs.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -213,8 +213,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 2243649C2B547E0A00563396 /* Products */;
-					ProjectRef = 2243649B2B547E0A00563396 /* SwiftUIMaterialTabs.xcodeproj */;
+					ProductGroup = 222041D82B681D8D00306F8E /* Products */;
+					ProjectRef = 222041D72B681D8D00306F8E /* MaterialTabs.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -225,11 +225,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		224364A02B547E0A00563396 /* SwiftUIMaterialTabs.framework */ = {
+		222041DC2B681D8D00306F8E /* MaterialTabs.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = SwiftUIMaterialTabs.framework;
-			remoteRef = 2243649F2B547E0A00563396 /* PBXContainerItemProxy */;
+			path = MaterialTabs.framework;
+			remoteRef = 222041DB2B681D8D00306F8E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

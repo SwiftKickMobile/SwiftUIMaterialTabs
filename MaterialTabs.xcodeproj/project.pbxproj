@@ -44,7 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		224364642B547D0300563396 /* SwiftUIMaterialTabs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftUIMaterialTabs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		224364642B547D0300563396 /* MaterialTabs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MaterialTabs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2243647D2B547D1B00563396 /* MaterialTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialTabs.swift; sourceTree = "<group>"; };
 		2243647F2B547D1B00563396 /* ScrollItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollItem.swift; sourceTree = "<group>"; };
 		224364802B547D1B00563396 /* ScrollModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollModel.swift; sourceTree = "<group>"; };
@@ -56,7 +56,6 @@
 		224364872B547D1B00563396 /* MaterialTabItemModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialTabItemModifier.swift; sourceTree = "<group>"; };
 		224364882B547D1B00563396 /* MaterialTabsScroll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialTabsScroll.swift; sourceTree = "<group>"; };
 		224364892B547D1B00563396 /* HeaderContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderContext.swift; sourceTree = "<group>"; };
-		2243648C2B547D1B00563396 /* SwiftUIMaterialTabsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIMaterialTabsTests.swift; sourceTree = "<group>"; };
 		226DFD872B5C3301008AFFF2 /* HeaderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderStyle.swift; sourceTree = "<group>"; };
 		226DFD892B5C3546008AFFF2 /* HeaderStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderStyleModifier.swift; sourceTree = "<group>"; };
 		226DFD8C2B5C37B1008AFFF2 /* ShrinkHeaderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShrinkHeaderStyle.swift; sourceTree = "<group>"; };
@@ -98,7 +97,6 @@
 			children = (
 				22982C052B5ECC9700852311 /* Media.xcassets */,
 				2243647B2B547D1B00563396 /* Sources */,
-				2243648A2B547D1B00563396 /* Tests */,
 				2243644F2B547CB300563396 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -106,7 +104,7 @@
 		2243644F2B547CB300563396 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				224364642B547D0300563396 /* SwiftUIMaterialTabs.framework */,
+				224364642B547D0300563396 /* MaterialTabs.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,12 +112,12 @@
 		2243647B2B547D1B00563396 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				2243647C2B547D1B00563396 /* SwiftUIMaterialTabs */,
+				2243647C2B547D1B00563396 /* MaterialTabs */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		2243647C2B547D1B00563396 /* SwiftUIMaterialTabs */ = {
+		2243647C2B547D1B00563396 /* MaterialTabs */ = {
 			isa = PBXGroup;
 			children = (
 				228F9D0C2B6051CD0075D820 /* MaterialTabs */,
@@ -128,7 +126,7 @@
 				226DFD972B5C65DB008AFFF2 /* Extensions */,
 				2243647E2B547D1B00563396 /* Internal */,
 			);
-			path = SwiftUIMaterialTabs;
+			path = MaterialTabs;
 			sourceTree = "<group>";
 		};
 		2243647E2B547D1B00563396 /* Internal */ = {
@@ -158,22 +156,6 @@
 				2295EC372B5C849B00A19247 /* WidthPreferenceKey.swift */,
 			);
 			path = PreferenceKeys;
-			sourceTree = "<group>";
-		};
-		2243648A2B547D1B00563396 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				2243648B2B547D1B00563396 /* SwiftUIMaterialTabsTests */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		2243648B2B547D1B00563396 /* SwiftUIMaterialTabsTests */ = {
-			isa = PBXGroup;
-			children = (
-				2243648C2B547D1B00563396 /* SwiftUIMaterialTabsTests.swift */,
-			);
-			path = SwiftUIMaterialTabsTests;
 			sourceTree = "<group>";
 		};
 		226DFD8B2B5C3795008AFFF2 /* HeaderStyle */ = {
@@ -236,9 +218,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		224364632B547D0300563396 /* SwiftUIMaterialTabs */ = {
+		224364632B547D0300563396 /* MaterialTabs */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 224364752B547D0300563396 /* Build configuration list for PBXNativeTarget "SwiftUIMaterialTabs" */;
+			buildConfigurationList = 224364752B547D0300563396 /* Build configuration list for PBXNativeTarget "MaterialTabs" */;
 			buildPhases = (
 				2243645F2B547D0300563396 /* Headers */,
 				224364602B547D0300563396 /* Sources */,
@@ -249,9 +231,9 @@
 			);
 			dependencies = (
 			);
-			name = SwiftUIMaterialTabs;
+			name = MaterialTabs;
 			productName = SwiftUIMaterialTabs;
-			productReference = 224364642B547D0300563396 /* SwiftUIMaterialTabs.framework */;
+			productReference = 224364642B547D0300563396 /* MaterialTabs.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -269,7 +251,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 224364492B547CB300563396 /* Build configuration list for PBXProject "SwiftUIMaterialTabs" */;
+			buildConfigurationList = 224364492B547CB300563396 /* Build configuration list for PBXProject "MaterialTabs" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -282,7 +264,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				224364632B547D0300563396 /* SwiftUIMaterialTabs */,
+				224364632B547D0300563396 /* MaterialTabs */,
 			);
 		};
 /* End PBXProject section */
@@ -483,7 +465,7 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swiftkickmobile.SwiftUIMaterialTabs;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftkickmobile.MaterialTabs;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -516,7 +498,7 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swiftkickmobile.SwiftUIMaterialTabs;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftkickmobile.MaterialTabs;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -530,7 +512,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		224364492B547CB300563396 /* Build configuration list for PBXProject "SwiftUIMaterialTabs" */ = {
+		224364492B547CB300563396 /* Build configuration list for PBXProject "MaterialTabs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2243645A2B547CB400563396 /* Debug */,
@@ -539,7 +521,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		224364752B547D0300563396 /* Build configuration list for PBXNativeTarget "SwiftUIMaterialTabs" */ = {
+		224364752B547D0300563396 /* Build configuration list for PBXNativeTarget "MaterialTabs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				224364762B547D0300563396 /* Debug */,

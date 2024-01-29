@@ -84,6 +84,11 @@ public struct StickyHeader<HeaderTitle, HeaderBackground, Content>: View
         GeometryReader { proxy in
             ZStack(alignment: .top) {
                 content()
+                    // Padding the top safe area by the minimum header height makes scrolling
+                    // calculations work out better. For example, scrolling an item to `.top`
+                    // results in a fully collapsed header with the item touching the header
+                    // as one would expect.
+                    .safeAreaPadding(.top, headerModel.state.headerContext.minTotalHeight)
                     .onChange(of: proxy.size.height, initial: true) {
                         headerModel.sizeChanged(proxy.size)
                     }

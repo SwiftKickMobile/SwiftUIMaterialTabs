@@ -47,12 +47,17 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
         }
     }
 
-    // A value related to sticky titles. See the `minTitleHeight()` vieww modifier.
+    /// A value related to sticky titles. See the `minTitleHeight()` vieww modifier.
     public var minTitleHeight: CGFloat {
         switch minTitleMetric {
         case .absolute(let metric): metric.clamped(min: 0, max: titleHeight)
         case .unit(let percent): titleHeight * percent.clamped01()
         }
+    }
+
+    /// The minimum effective height of the header in the fully collapsed position.
+    public var minTotalHeight: CGFloat {
+        tabBarHeight + minTitleHeight
     }
 
     #if DEBUG

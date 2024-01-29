@@ -30,7 +30,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     ) where Item == ScrollItem {
         self.init(
             tab: tab,
-            firstItem: .item,
+            reservedItem: .item,
             scrollItem: .constant(nil),
             scrollUnitPoint: .constant(.top),
             content: content
@@ -41,28 +41,32 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     ///
     /// - Parameters:
     ///   - tab: The tab that this scroll belongs to.
-    ///   - firstItem: The item identifier of the first item in the scroll view. This is required for joint maniuplation of the scroll position.
+    ///   - reservedItem: A reserved item identifier used internally by Material Tabs.
     ///   - scrollItem: The binding to the scroll item identifier.
     ///   - scrollUnitPoint: The binding to the scroll unit point.
     ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
     ///
-    /// Never use the `scrollPosition()` view modifier on this view, it is already applied internally. This view does not use `scrollTargetLayout()`,
-    /// so you are free to apply that modifier as needed.
+    /// Never apply the `scrollPosition()` view modifier on this view because it is already applied internally. You should, however, apply
+    /// `scrollTargetLayout()` as you would with a regular `ScrollView`.
+    ///
+    /// Material Tabs maniuplates the scroll position in order to ensure continuity between tabs as the sticky header collapses or expands. Unfortunately,
+    /// the only way to do precise scroll positioning in SwiftUI is to have an item identifier and know the height of its associated view. Rather than having
+    /// you supply the height, Material Tabs applies the reserved item identifier to a hidden view with known height.
     init(
         tab: Tab,
-        firstItem: Item,
+        reservedItem: Item,
         scrollItem: Binding<Item?>,
         scrollUnitPoint: Binding<UnitPoint>,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.tab = tab
-        self.firstItem = firstItem
+        self.reservedItem = reservedItem
         _scrollItem = scrollItem
         _scrollUnitPoint = scrollUnitPoint
         _scrollModel = StateObject(
             wrappedValue: ScrollModel(
                 tab: tab,
-                firstItem: firstItem
+                reservedItem: reservedItem
             )
         )
         self.content = content
@@ -73,7 +77,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     // MARK: - Variables
 
     private let tab: Tab
-    private let firstItem: Item?
+    private let reservedItem: Item?
     @State private var coordinateSpaceName = UUID()
     @Binding private var scrollItem: Item?
     @Binding private var scrollUnitPoint: UnitPoint
@@ -87,7 +91,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         ScrollView {
             VStack(spacing: 0) {
                 Color.clear
-                    .frame(height: headerModel.state.headerContext.totalHeight)
+                    .frame(height: headerModel.state.headerContext.maxOffset)
                     .background {
                         GeometryReader { proxy in
                             Color.clear.preference(
@@ -99,15 +103,10 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
                     .onPreferenceChange(ScrollOffsetPreferenceKey.self) { offset in
                         scrollModel.contentOffsetChanged(offset)
                     }
-                switch firstItem as? ScrollItem {
-                case let firstItem?:
-                    ZStack(alignment: .top) {
-                        Color.clear
-                            .frame(height: 1)
-                            .id(firstItem)
-                        content()
-                    }
-                case .none:
+                ZStack(alignment: .top) {
+                    Color.clear
+                        .frame(height: 1)
+                        .id(reservedItem)
                     content()
                 }
             }

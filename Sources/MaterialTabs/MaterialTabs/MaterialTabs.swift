@@ -136,6 +136,11 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                             .scrollClipDisabled()
                             .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
                             .safeAreaPadding(proxy.safeAreaInsets)
+                            // Padding the top safe area by the minimum header height makes scrolling
+                            // calculations work out better. For example, scrolling an item to `.top`
+                            // results in a fully collapsed header with the item touching the header
+                            // as one would expect.
+                            .safeAreaPadding(.top, headerModel.state.headerContext.minTotalHeight)
                     }
                     .scrollTargetLayout()
                 }

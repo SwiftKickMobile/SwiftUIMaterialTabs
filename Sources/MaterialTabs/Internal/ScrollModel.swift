@@ -14,6 +14,8 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     @Published private(set) var appeared = false
 
     func contentOffsetChanged(_ offset: CGFloat) {
+        // Don't report offset change if we've just internally scrolled to sync up with the current header position.
+        guard scrollItem != firstItem else { return }
         let oldContentOffset = contentOffset
         contentOffset = -offset
         let deltaOffset = contentOffset - oldContentOffset
@@ -50,10 +52,10 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
 
     init(
         tab: Tab,
-        firstItem: Item?
+        reservedItem: Item?
     ) {
         self.tab = tab
-        self.firstItem = firstItem
+        self.firstItem = reservedItem
     }
 
     // MARK: - Constants
@@ -104,22 +106,16 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         cachedTabsState = headerModel.state
         contentOffset = contentOffset + delta
         scrollItem = firstItem
-        scrollUnitPoint = unitPoint(contentOffset: contentOffset, itemHeight: 1)
+        scrollUnitPoint = UnitPoint(
+            x: UnitPoint.top.x,
+            y: (headerModel.state.headerContext.maxOffset - contentOffset) / (headerModel.state.safeHeight - 1)
+        )
         // It is essential to set the scroll item back to `nil` so that we can make
         // future scroll adjustments. Placing this in a task is sufficient for the
         // above scrolling to occur.
         Task {
             scrollItem = nil
         }
-    }
-
-    private func unitPoint(contentOffset: CGFloat, itemHeight: CGFloat) -> UnitPoint {
-        headerModel.map { headerModel in
-            UnitPoint(
-                x: UnitPoint.top.x,
-                y: (headerModel.state.headerContext.totalHeight - contentOffset) / (headerModel.state.totalHeight - itemHeight)
-            )
-        } ?? .top
     }
 }
 

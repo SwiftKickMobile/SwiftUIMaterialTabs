@@ -36,7 +36,7 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
         ScrollView {
             VStack(spacing: 0) {
                 Color.clear
-                    .frame(height: headerModel.state.headerContext.totalHeight)
+                    .frame(height: headerModel.state.headerContext.maxOffset)
                     .background {
                         GeometryReader { proxy in
                             Color.clear.preference(

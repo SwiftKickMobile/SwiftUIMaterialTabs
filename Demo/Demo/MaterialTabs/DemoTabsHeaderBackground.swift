@@ -3,7 +3,7 @@
 //
 
 import SwiftUI
-import SwiftUIMaterialTabs
+import MaterialTabs
 
 struct DemoTabsHeaderBackground: View {
 

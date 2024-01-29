@@ -11,8 +11,16 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
 
     struct State: Equatable {
         var headerContext: HeaderContext<Tab>
-        var totalHeight: CGFloat = 0
+
+        /// The height reported by the geometry reader. Includes the safe area, but not the additional safe area padding we apply.
+        var height: CGFloat = 0
+
         var tabsRegistered: Bool = false
+
+        /// The height factoring in the additional safe area padding we apply.
+        var safeHeight: CGFloat {
+            height - headerContext.minTotalHeight
+        }
     }
 
     @Published fileprivate(set) var state: State
@@ -24,7 +32,7 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
     }
 
     func sizeChanged(_ size: CGSize) {
-        state.totalHeight = size.height
+        state.height = size.height
         state.headerContext.width = size.width
     }
 
@@ -62,6 +70,10 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
     // MARK: - Constants
 
     // MARK: - Variables
+
+    // MARK: - Height
+
+    
 
     // MARK: - Scroll tracking
 
