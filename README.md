@@ -28,13 +28,9 @@ The main components you'll use will depend on the use case: Material Tabs or Sti
 | The context passed to view builders for calculating sticky header effects. | `MaterialTabsContext` | `StickyHeaderContext` |
 | The tab bar. | `MaterialTabBar` | n/a |
 
-These and additional coponents are covered in the Usage section.
+These and additional coponents are covered in the Material Tabs and Sticky Headers sections (jump to [Sticky Headers](#sticky-headers)).
 
-## Usage
-
-Skip to [Sticky Headers](#sticky-headers)
-
-### Material Tabs
+## Material Tabs
 
 The basic usage is as follows:
 
@@ -90,7 +86,7 @@ struct BasicTabView: View {
 }
 ````
 
-#### `MaterialTabBar`
+### `MaterialTabBar`
 
 `MaterialTabBar` is a horizontally scrolling tab bar that supports Material 3 primary and secondary tab styles or custom tab selectors. You specify the tab selector labels by applying the `materialTabItem(tab:label:)` view modifier to your top-level tab contents.
 
@@ -103,7 +99,7 @@ MaterialTabBar(selectedTab: $selectedTab, sizing: .proportionalWidth, context: c
 
 With `.equalWidth`, all tabs will be the width of the largest tab selector. With `.propertional`, tabs will be sized horizontally to fit. In either case, selector labels will expand to fill the available width of the tab bar. If there isn't enough space, the tab bar scrolls.
 
-#### `MaterialTabItemModifier`
+### `MaterialTabItemModifier`
 
 The `MaterialTabItemModifier` view modifier is used to identify and configure tabs for the tab bar. It is conceptually similar to a combination of the `tag()` and `tagitem()` view modifiers used with a standard `TabView`
 
@@ -193,7 +189,7 @@ unitPoint = (desiredContentOffset) / (scrollViewHeight - verticalSafeArea - vert
 
 It should be noted that `MaterialTabsScroll` inserts a spacer into the scroll to push your content below the header.
 
-### Sticky Headers
+## Sticky Headers
 
 The sticky header effects covered in this section are equally applicable to `MaterialTabs` and `StickyHeaders`.
 
@@ -232,11 +228,11 @@ struct BasicStickyHeaderView: View {
 }
 ````
 
-#### `StickyHeaderScroll`
+### `StickyHeaderScroll`
 
 `StickyHeaderScroll` is completely analogous to [`MaterialTabsScroll`](#materialtabsscroll).
 
-#### `HeaderStyleModifier`
+### `HeaderStyleModifier`
 
 The `HeaderStyleModifier` view modifier works with the `HeaderStyle` protocol to implement sticky header scroll effects, such as fade, shrink and parallax. You may apply different `headerStyle(context:)` to modifiers to different header elements or apply multiple styles to a single element to achieve unique effects.
 
@@ -266,6 +262,48 @@ Image(.coolBackground)
 ````
 
 Under the hood, these styles are using parameters provided in the `StickyHeaderHeaderContext`/`MaterialTabsHeaderContext` to adjust `.scaleEffect()`, `.offset()`, and `.opacity()`. You may implement your own styles by adopting `HeaderStyle` or manipulate your header views directly.
+
+### `MinTitleHeightModifier`
+
+The `MinTitleHeightModifier` view modifier can be used to inform the library what the minimum collapsed height of the title view should be. By default, the title view scrolls entirely out of the safe area. However, if you apply `.minTitleHeight()`, whatever amount you specify will stick to the top of the safe area.
+
+To make a bottom title element stick at the top:
+
+````swift
+VStack() {
+    Text("Top Title Element").
+        .padding()
+    Text("Bottom Title Element")
+        .padding()
+        .minTitleHeight(.content())
+}
+````
+
+The use of the `.content()` option causes the library to measure the height of the receiving view and use that height as the minimum.
+
+The `FixedHeaderStyle` header style can be used to make a top title element stick:
+
+````swift
+VStack() {
+    Text("Top Title Element").
+        .padding()
+        .headerStyle(
+            ShrinkHeaderStyle(
+                fade: false,
+                minimumScale: 0.5,
+                offsetFactor: 0,
+                anchor: .top
+            ),
+            context: context
+        )
+        .headerStyle(FixedHeaderStyle(), context: context)
+        .minTitleHeight(.content(scale: 0.5))
+    Text("Bottom Title Element")
+        .padding()
+}
+````
+
+In this case, we've created a shrinking top title element, reducing the scale to 0.5. This scale factor is also provided to `.minTitleHeight()` so that it uses the height of the scaled down element.
 
 ## About SwiftKick Mobile
 We build high quality apps for clients! [Get in touch](http://www.swiftkickmobile.com) if you need help with a project.
