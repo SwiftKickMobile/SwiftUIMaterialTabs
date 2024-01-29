@@ -199,8 +199,8 @@
 			isa = PBXGroup;
 			children = (
 				22982C1F2B604A9000852311 /* StickyHeader.swift */,
-				228F9D0A2B60516D0075D820 /* StickyHeaderContext.swift */,
 				228F9D0F2B6059120075D820 /* StickyHeaderScroll.swift */,
+				228F9D0A2B60516D0075D820 /* StickyHeaderContext.swift */,
 			);
 			path = StickyHeader;
 			sourceTree = "<group>";
