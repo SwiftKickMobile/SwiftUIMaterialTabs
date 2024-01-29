@@ -33,7 +33,6 @@ struct DemoTabsView: View {
                         context.selectedTab.headerForeground.opacity(0.7)
                     )
                     .background(context.selectedTab.tabBarBackground)
-                    .safeAreaPadding(.horizontal, 20)
             },
             headerBackground: { context in
                 DemoTabsHeaderBackground(context: context)

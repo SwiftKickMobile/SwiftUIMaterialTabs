@@ -25,6 +25,8 @@
 		22982C132B5F48AC00852311 /* DemoStickyHeaderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C122B5F48AC00852311 /* DemoStickyHeaderContentView.swift */; };
 		22982C152B5F4A4200852311 /* DemoStickyHeaderTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C142B5F4A4200852311 /* DemoStickyHeaderTitleView.swift */; };
 		22C550A12B66B9B50037C991 /* TestStickyHeaderScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C550A02B66B9B50037C991 /* TestStickyHeaderScroll.swift */; };
+		22F3C7FC2B6850DB00ECC3B9 /* BasicTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F3C7FB2B6850DB00ECC3B9 /* BasicTabView.swift */; };
+		22F3C7FF2B685C0300ECC3B9 /* BasicStickyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F3C7FE2B685C0300ECC3B9 /* BasicStickyHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		22982C122B5F48AC00852311 /* DemoStickyHeaderContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoStickyHeaderContentView.swift; sourceTree = "<group>"; };
 		22982C142B5F4A4200852311 /* DemoStickyHeaderTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoStickyHeaderTitleView.swift; sourceTree = "<group>"; };
 		22C550A02B66B9B50037C991 /* TestStickyHeaderScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestStickyHeaderScroll.swift; sourceTree = "<group>"; };
+		22F3C7FB2B6850DB00ECC3B9 /* BasicTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTabView.swift; sourceTree = "<group>"; };
+		22F3C7FE2B685C0300ECC3B9 /* BasicStickyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStickyHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +129,8 @@
 				22034C1A2B54777D008147F0 /* Preview Assets.xcassets */,
 				22C550A02B66B9B50037C991 /* TestStickyHeaderScroll.swift */,
 				222041DF2B68210500306F8E /* TestMaterialTabsScroll.swift */,
+				22F3C7FB2B6850DB00ECC3B9 /* BasicTabView.swift */,
+				22F3C7FE2B685C0300ECC3B9 /* BasicStickyHeaderView.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -257,12 +263,14 @@
 				22034C482B5477E4008147F0 /* DemoContentRowView.swift in Sources */,
 				22034C402B5477E4008147F0 /* DemoTabsHeaderTitle.swift in Sources */,
 				22C550A12B66B9B50037C991 /* TestStickyHeaderScroll.swift in Sources */,
+				22F3C7FF2B685C0300ECC3B9 /* BasicStickyHeaderView.swift in Sources */,
 				222041E02B68210500306F8E /* TestMaterialTabsScroll.swift in Sources */,
 				22982C152B5F4A4200852311 /* DemoStickyHeaderTitleView.swift in Sources */,
 				22982C132B5F48AC00852311 /* DemoStickyHeaderContentView.swift in Sources */,
 				22982C0D2B5EE36B00852311 /* DemoStickyHeaderView.swift in Sources */,
 				22982C0B2B5EE31900852311 /* DemoTabsView.swift in Sources */,
 				22034C462B5477E4008147F0 /* DemoTabsHeaderBackground.swift in Sources */,
+				22F3C7FC2B6850DB00ECC3B9 /* BasicTabView.swift in Sources */,
 				228F9D152B607EE00075D820 /* DemoContentInfoView.swift in Sources */,
 				22034C452B5477E4008147F0 /* DemoTab.swift in Sources */,
 				22034C412B5477E4008147F0 /* DemoView.swift in Sources */,

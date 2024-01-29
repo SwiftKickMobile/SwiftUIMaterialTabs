@@ -31,7 +31,7 @@ struct DemoTabsHeaderBackground: View {
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                     }
-                    .headerStyle(ParallaxHeaderStyle(fade: false), context: context)
+                    .headerStyle(ParallaxHeaderStyle(), context: context)
             }
         }
         .background(.black)
