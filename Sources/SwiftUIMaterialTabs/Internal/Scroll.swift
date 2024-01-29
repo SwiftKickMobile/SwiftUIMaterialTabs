@@ -48,7 +48,6 @@ struct Scroll<Content, Tab, Item>: View where Content: View, Tab: Hashable, Item
             VStack(spacing: 0) {
                 Color.clear
                     .frame(height: headerModel.state.headerContext.totalHeight)
-                    .id(firstItem)
                     .background {
                         GeometryReader { proxy in
                             Color.clear.preference(
@@ -60,7 +59,17 @@ struct Scroll<Content, Tab, Item>: View where Content: View, Tab: Hashable, Item
                     .onPreferenceChange(ScrollOffsetPreferenceKey.self) { offset in
                         scrollModel.contentOffsetChanged(offset)
                     }
-                content()
+                switch firstItem as? ScrollItem {
+                case let firstItem?:
+                    ZStack(alignment: .top) {
+                        Color.clear
+                            .frame(height: 1)
+                            .id(firstItem)
+                        content()
+                    }
+                case .none:
+                    content()
+                }
             }
         }
         .coordinateSpace(name: coordinateSpaceName)
@@ -80,6 +89,12 @@ struct Scroll<Content, Tab, Item>: View where Content: View, Tab: Hashable, Item
         }
         .onChange(of: scrollUnitPoint, initial: true) {
             scrollModel.scrollUnitPointChanged(scrollUnitPoint)
+        }
+        .onChange(of: headerModel.state.headerContext.totalHeight) {
+            scrollModel.headerHeightChanged()
+        }
+        .onChange(of: headerModel.state.headerContext.safeArea.top) {
+            scrollModel.headerHeightChanged()
         }
         .onDisappear() {
             scrollModel.disappeared()

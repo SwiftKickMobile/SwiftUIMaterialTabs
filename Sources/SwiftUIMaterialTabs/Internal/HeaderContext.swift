@@ -26,7 +26,7 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
     public var totalHeight: CGFloat { titleHeight + tabBarHeight }
 
     /// The total height of the background view, i.e. `totalHeight + [top safe Area]`.
-    public var backgroundHeight: CGFloat { totalHeight + topSafeArea }
+    public var backgroundHeight: CGFloat { totalHeight + safeArea.top }
 
     /// The current scroll offset, raning from 0 to `maxOffset`. Use this value to transition header elements between expanded and collapsed states.
     public var offset: CGFloat = 0
@@ -69,7 +69,7 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
 
     var rubberBandingBackgroundHeight: CGFloat {
         guard offset < 0 else { return backgroundHeight }
-        return (rubberBandingTitleHeight ?? titleHeight) + tabBarHeight + topSafeArea
+        return (rubberBandingTitleHeight ?? titleHeight) + tabBarHeight + safeArea.top
     }
 
     var animationNamespace: Namespace.ID? = nil
@@ -79,5 +79,5 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
     // MARK: - Variables
 
     var minTitleMetric: MinTitleHeightPreferenceKey.Metric = MinTitleHeightPreferenceKey.defaultValue
-    var topSafeArea: CGFloat = 0
+    var safeArea: EdgeInsets = .init()
 }

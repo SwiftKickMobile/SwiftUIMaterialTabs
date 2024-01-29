@@ -12,8 +12,7 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
     struct State: Equatable {
         var headerContext: HeaderContext<Tab>
         var totalHeight: CGFloat = 0
-
-        var scrollViewHeight: CGFloat { totalHeight - headerContext.totalHeight }
+        var tabsRegistered: Bool = false
     }
 
     @Published fileprivate(set) var state: State
@@ -45,12 +44,19 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
         self.state.headerContext.selectedTab = tab
     }
 
-    func topSafeAreaChanged(_ topSafeArea: CGFloat) {
-        self.state.headerContext.topSafeArea = topSafeArea
+    func safeAreaChanged(_ safeArea: EdgeInsets) {
+        self.state.headerContext.safeArea = safeArea
     }
 
     func animationNamespaceChanged(_ animationNamespace: Namespace.ID) {
         state.headerContext.animationNamespace = animationNamespace
+    }
+
+    func tabsRegistered() {
+        Task {
+            guard !state.tabsRegistered else { return }
+            state.tabsRegistered = true
+        }
     }
 
     // MARK: - Constants

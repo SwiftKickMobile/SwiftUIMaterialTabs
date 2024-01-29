@@ -4,11 +4,12 @@
 
 import SwiftUI
 
+@MainActor
 class TabBarModel<Tab>: ObservableObject where Tab: Hashable {
 
     // MARK: - API
 
-    @Published private(set) var tabs: [Tab] = []
+    private(set) var tabs: [Tab] = []
     var labels: [Tab: MaterialTabBar<Tab>.CustomLabel] = [:]
 
     func register(tab: Tab, @ViewBuilder label: @escaping MaterialTabBar<Tab>.CustomLabel) {

@@ -24,6 +24,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         appeared = true
         self.headerModel = headerModel
         selectedTab = headerModel?.state.headerContext.selectedTab
+        updateContentOffset()
     }
 
     func disappeared() {
@@ -31,9 +32,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     }
 
     func selectedTabChanged() {
-        // We shouldn't attempt to scroll before appearance (it isn't reliable) so we just bail out in that case.
-        // The selected tab will be updated in `appeared` anyway if we don't do it here.
-        guard appeared, let headerModel else { return }
+        guard let headerModel else { return }
         selectedTab = headerModel.state.headerContext.selectedTab
     }
 
@@ -43,6 +42,10 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
 
     func scrollUnitPointChanged(_ unitPoint: UnitPoint) {
         scrollUnitPoint = unitPoint
+    }
+
+    func headerHeightChanged() {
+        updateContentOffset()
     }
 
     init(
@@ -79,38 +82,44 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         }
     }
 
-    private var isSelected: Bool {
-        tab == selectedTab
-    }
-
     private var contentOffset: CGFloat = 0
 
     // MARK: Adjusting scroll and header state
 
+    /// Scrolls to the desired content offset to maintain continuity when switching tabs.
+    ///
+    /// The formula for calculating the Y component of the unit point for a given item is:
+    ///
+    /// ````
+    /// offset / (scrollView.height - safeArea.top - safeArea.bottom - item.height)
+    /// ````
     func updateContentOffset() {
-        guard isSelected else { return }
-        guard let headerModel else { return }
+        guard appeared, let headerModel, headerModel.state.tabsRegistered else { return }
         let delta: CGFloat
         if let cachedTabsState {
-            let deltaHeaderHeight = headerModel.state.headerContext.totalHeight - cachedTabsState.headerContext.totalHeight
-            let deltaHeaderOffset = headerModel.state.headerContext.offset - cachedTabsState.headerContext.offset
-            delta = deltaHeaderHeight + deltaHeaderOffset
+            delta = headerModel.state.headerContext.offset - cachedTabsState.headerContext.offset
         } else {
             delta = headerModel.state.headerContext.offset
         }
         cachedTabsState = headerModel.state
         contentOffset = contentOffset + delta
         scrollItem = firstItem
-        scrollUnitPoint = UnitPoint(
-            x: UnitPoint.top.x,
-            y: -contentOffset / headerModel.state.scrollViewHeight
-        )
+        scrollUnitPoint = unitPoint(contentOffset: contentOffset, itemHeight: 1)
         // It is essential to set the scroll item back to `nil` so that we can make
         // future scroll adjustments. Placing this in a task is sufficient for the
         // above scrolling to occur.
         Task {
             scrollItem = nil
         }
+    }
+
+    private func unitPoint(contentOffset: CGFloat, itemHeight: CGFloat) -> UnitPoint {
+        headerModel.map { headerModel in
+            UnitPoint(
+                x: UnitPoint.top.x,
+                y: (headerModel.state.headerContext.totalHeight - contentOffset) / (headerModel.state.totalHeight - itemHeight)
+            )
+        } ?? .top
     }
 }
 

@@ -89,12 +89,15 @@ public struct StickyHeader<HeaderTitle, HeaderBackground, Content>: View
                     }
                 header(headerModel.state.headerContext)
             }
-            .onChange(of: proxy.safeAreaInsets.top, initial: true) {
-                headerModel.topSafeAreaChanged(proxy.safeAreaInsets.top)
+            .onChange(of: proxy.safeAreaInsets, initial: true) {
+                headerModel.safeAreaChanged(proxy.safeAreaInsets)
             }
         }
         .environmentObject(headerModel)
         .onPreferenceChange(TitleHeightPreferenceKey.self, perform: headerModel.titleHeightChanged(_:))
         .onPreferenceChange(MinTitleHeightPreferenceKey.self, perform: headerModel.minTitleHeightChanged(_:))
+        .onAppear {
+            headerModel.tabsRegistered()
+        }
     }
 }

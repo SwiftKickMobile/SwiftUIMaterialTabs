@@ -149,16 +149,25 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                     headerModel.sizeChanged(proxy.size)
                 }
                 header(headerModel.state.headerContext)
+                    .background {
+                            if !headerModel.state.tabsRegistered {
+                                /// This is a somewhat elaborate workaround for using a horizontal paged `ScrollView` instead of a `TabView`.
+                                /// The `TabView` had some insurmountable inconsistency issues when used in different context, such as
+                                /// within a `NavigationStack`. The issue with `ScrollView` is that it is using a `LazyHStack`
+                                /// and, due to the laziness, tabs that are off-screen do not get registered. Whent he same content
+                                /// is placed in a `TabView`, all of the tabs get registered. So what we're doing here is briefly
+                                /// including a `TabView` with the tab content and then removing it after the tabs get registered.
+                                /// Making the frame zero height ensures that nothing actually gets rendered.
+                                TabView {
+                                    content()
+                                }
+                                .tabViewStyle(.page(indexDisplayMode: .never))
+                                .frame(height: 0)
+                            }
+                    }
             }
-            .background {
-                TabView {
-                    content()
-                }
-                .frame(height: 0)
-                .tabViewStyle(.page(indexDisplayMode: .never))
-            }
-            .onChange(of: proxy.safeAreaInsets.top, initial: true) {
-                headerModel.topSafeAreaChanged(proxy.safeAreaInsets.top)
+            .onChange(of: proxy.safeAreaInsets, initial: true) {
+                headerModel.safeAreaChanged(proxy.safeAreaInsets)
             }
         }
         .animation(.default, value: selectedTab)

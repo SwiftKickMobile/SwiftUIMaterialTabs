@@ -99,6 +99,7 @@ public struct PrimaryTab<Tab>: View where Tab: Hashable {
     private let icon: AnyView?
     private let config: Config
     private let deselectedConfig: Config
+    @Namespace private var initialNamespace
 
     private var activeConfig: Config {
         switch tab == context.selectedTab {
@@ -155,7 +156,7 @@ public struct PrimaryTab<Tab>: View where Tab: Hashable {
                             .transition(.noTransition)
                             .matchedGeometryEffect(
                                 id: "underline",
-                                in: context.animationNamespace ?? Namespace().wrappedValue
+                                in: context.animationNamespace ?? initialNamespace
                             )
                     }
                 }

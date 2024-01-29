@@ -83,7 +83,8 @@ public struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
 
     init(
         tab: Tab,
-        @ViewBuilder label: @escaping MaterialTabBar<Tab>.CustomLabel) {
+        @ViewBuilder label: @escaping MaterialTabBar<Tab>.CustomLabel
+    ) {
         self.tab = tab
         self.label = label
     }
@@ -93,25 +94,32 @@ public struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
 
     // MARK: - Constants
 
+    /// This view is a for registering all of the tabs
+    @MainActor
+    private struct TabRegisteringView: View where Tab: Hashable {
+
+        init(tab: Tab, label: @escaping MaterialTabBar<Tab>.CustomLabel, tabBarModel: TabBarModel<Tab>, headerModel: HeaderModel<Tab>) {
+            tabBarModel.register(tab: tab, label: label)
+            headerModel.tabsRegistered()
+        }
+
+        var body: some View {
+            EmptyView()
+        }
+    }
+
     // MARK: - Variables
 
     @EnvironmentObject private var headerModel: HeaderModel<Tab>
     @EnvironmentObject private var tabBarModel: TabBarModel<Tab>
+    @State private var foo = 0
 
     // MARK: - Body
 
     public func body(content: Content) -> some View {
         content
             .background {
-                // There must be a better way to do this, but each tab needs to be able to supply a label for the tab bar,
-                // even if the tab isn't appeared yet. This hacky code is accessing the `tabBarModel` to register
-                // the tab's label because we can't rely on `onAppear()` being called.
-                { () -> EmptyView in
-                    Task {
-                        tabBarModel.register(tab: tab, label: label)
-                    }
-                    return EmptyView()
-                }()
+                TabRegisteringView(tab: tab, label: label, tabBarModel: tabBarModel, headerModel: headerModel)
             }
             .id(tab)
     }

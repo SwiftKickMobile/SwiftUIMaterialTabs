@@ -173,8 +173,8 @@ struct MaterialTabBarPreviewView: View {
     MaterialTabBarPreviewView(tabCount: 3, sizing: .equalWidth)
 }
 
-#Preview("Secondary, equal 8") {
-    MaterialTabBarPreviewView(tabCount: 8, sizing: .equalWidth)
+#Preview("Secondary, equal 50") {
+    MaterialTabBarPreviewView(tabCount: 50, sizing: .equalWidth)
 }
 
 #Preview("Secondary, proportional") {

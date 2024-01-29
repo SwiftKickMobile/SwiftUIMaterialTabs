@@ -64,6 +64,7 @@ public struct SecondaryTab<Tab>: View where Tab: Hashable {
     private let title: String
     private let config: Config
     private let deselectedConfig: Config
+    @Namespace private var initialNamespace
 
     private var activeConfig: Config {
         return switch tab == context.selectedTab {
@@ -114,7 +115,7 @@ public struct SecondaryTab<Tab>: View where Tab: Hashable {
                         .transition(.noTransition)
                         .matchedGeometryEffect(
                             id: "underline",
-                            in: context.animationNamespace ?? Namespace().wrappedValue
+                            in: context.animationNamespace ?? initialNamespace
                         )
                 }
             }

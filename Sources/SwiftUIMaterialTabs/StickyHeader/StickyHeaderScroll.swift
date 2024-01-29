@@ -46,7 +46,7 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
         scrollItem: Binding<Item?>,
         scrollUnitPoint: Binding<UnitPoint>,
         @ViewBuilder content: @escaping () -> Content
-    ) where Item == ScrollItem {
+    ) {
         self.firstItem = firstItem
         _scrollItem = scrollItem
         _scrollUnitPoint = scrollUnitPoint
