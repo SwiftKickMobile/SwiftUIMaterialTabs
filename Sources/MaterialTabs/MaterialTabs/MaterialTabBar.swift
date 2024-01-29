@@ -85,38 +85,40 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     // MARK: - Body
 
     public var body: some View {
-        ScrollView(.horizontal) {
-            TabBarLayout(fittingWidth: context.width, sizing: sizing) {
-                ForEach(tabBarModel.tabs, id: \.self) { tab in
-                    tabBarModel.labels[tab]?(
-                        tab,
-                        headerModel.state.headerContext,
-                        {
-                            headerModel.selected(tab: tab)
+        GeometryReader { proxy in
+            ScrollView(.horizontal) {
+                TabBarLayout(fittingWidth: proxy.size.width, sizing: sizing) {
+                    ForEach(tabBarModel.tabs, id: \.self) { tab in
+                        tabBarModel.labels[tab]?(
+                            tab,
+                            headerModel.state.headerContext,
+                            {
+                                headerModel.selected(tab: tab)
+                            }
+                        )
+                        .background {
+                            GeometryReader { proxy in
+                                Color.clear
+                                    .preference(key: WidthPreferenceKey.self, value: proxy.size.width)
+                            }
                         }
-                    )
-                    .background {
-                        GeometryReader { proxy in
-                            Color.clear
-                                .preference(key: WidthPreferenceKey.self, value: proxy.size.width)
-                        }
+                        .id(tab)
                     }
-                    .id(tab)
+                }
+                .scrollTargetLayout()
+                .frame(minWidth: proxy.size.width)
+                .background {
+                    GeometryReader { proxy in
+                        Color.clear
+                            .preference(key: TabBarHeightPreferenceKey.self, value: proxy.size.height)
+                    }
                 }
             }
-            .scrollTargetLayout()
-            .frame(minWidth: context.width)
-            .background {
-                GeometryReader { proxy in
-                    Color.clear
-                        .preference(key: TabBarHeightPreferenceKey.self, value: proxy.size.height)
-                }
-            }
+            .scrollPosition(id: $selectedTabScroll, anchor: .center)
+            .scrollIndicators(.never)
+            .scrollBounceBehavior(.basedOnSize)
         }
-        .scrollPosition(id: $selectedTabScroll, anchor: .center)
-        .scrollIndicators(.never)
-        .scrollBounceBehavior(.basedOnSize)
-        .frame(width: context.width, height: height)
+        .frame(height: height)
         .onPreferenceChange(TabBarHeightPreferenceKey.self) { height in
             self.height = height
         }

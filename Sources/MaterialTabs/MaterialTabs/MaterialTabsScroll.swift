@@ -4,14 +4,17 @@
 
 import SwiftUI
 
-/// A lightweight scroll view wrapper that required for `MaterialTabs` scroll effects. For most intents and purposes, you should use
+/// A lightweight scroll view wrapper that required for sticky header scroll effects. For most intents and purposes, you should use
 /// `MaterialTabsScroll` as you would a vertically-oriented `ScrollView`, with typical content being a `VStack` or `LazyVStack`.
 ///
-/// When using `MaterialTabs`, the scroll position may be manipulated by the library to ensure continuity of the sticky header across tabs.
-/// However, an scroll item and unit point bindings may be provided if external manipulation of the scroll position is required.
+/// `MaterialTabs` adjusts the scroll position when switching tabs to ensure continuity when switching tabs after collapsing or expanding the header.
+/// However, joint maniuplation of scroll position is supported, provided that you supply the scroll item and unit point bindings. However, when
+/// using joint manipulation, you must supply a `reservedItem` identifier for `MaterialTabs` to use internally on its own hidden view. This approach was
+/// adopted because precise manipulation of scroll position requires knowing the height the view associated with the scroll item and using our own internal
+/// view for that seemed the easiest solution.
 ///
-/// Never use the `scrollPosition()` view modifier on this view, it is already applied internally. This view does not use `scrollTargetLayout()`, so you
-/// are free to apply that modifier as needed.
+/// Never apply the `scrollPosition()` view modifier to this view because it is already being applied internally. You are free to apply
+/// `scrollTargetLayout()` to your content as needed.
 public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, Tab: Hashable, Item: Hashable {
 
     // MARK: - API
@@ -22,8 +25,8 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     ///   - tab: The tab that this scroll belongs to.
     ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
     ///
-    /// Never use the `scrollPosition()` view modifier on this view, it is already applied internally. This view does not use `scrollTargetLayout()`,
-    /// so you are free to apply that modifier as needed.
+    /// Never apply the `scrollPosition()` view modifier to this view because it is already being applied internally. You are free to apply
+    /// `scrollTargetLayout()` to your content as needed.
     public init(
         tab: Tab,
         @ViewBuilder content: @escaping () -> Content
@@ -41,17 +44,19 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     ///
     /// - Parameters:
     ///   - tab: The tab that this scroll belongs to.
-    ///   - reservedItem: A reserved item identifier used internally by Material Tabs.
+    ///   - reservedItem: A reserved item identifier used internally.
     ///   - scrollItem: The binding to the scroll item identifier.
     ///   - scrollUnitPoint: The binding to the scroll unit point.
     ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
     ///
-    /// Never apply the `scrollPosition()` view modifier on this view because it is already applied internally. You should, however, apply
-    /// `scrollTargetLayout()` as you would with a regular `ScrollView`.
-    ///
-    /// Material Tabs maniuplates the scroll position in order to ensure continuity between tabs as the sticky header collapses or expands. Unfortunately,
-    /// the only way to do precise scroll positioning in SwiftUI is to have an item identifier and know the height of its associated view. Rather than having
-    /// you supply the height, Material Tabs applies the reserved item identifier to a hidden view with known height.
+    ////// `MaterialTabs` adjusts the scroll position when switching tabs to ensure continuity when switching tabs after collapsing or expanding the header.
+    /// However, joint maniuplation of scroll position is supported, provided that you supply the scroll item and unit point bindings. However, when
+    /// using joint manipulation, you must supply a `reservedItem` identifier for `MaterialTabs` to use internally on its own hidden view. This approach was
+    /// adopted because precise manipulation of scroll position requires knowing the height the view associated with the scroll item and using our own internal
+    /// view for that seemed the easiest solution.
+
+    /// Never apply the `scrollPosition()` view modifier to this view because it is already being applied internally. You are free to apply
+    /// `scrollTargetLayout()` to your content as needed.
     public init(
         tab: Tab,
         reservedItem: Item,
@@ -129,7 +134,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         .onChange(of: scrollUnitPoint, initial: true) {
             scrollModel.scrollUnitPointChanged(scrollUnitPoint)
         }
-        .onChange(of: headerModel.state.headerContext.totalHeight) {
+        .onChange(of: headerModel.state.headerContext.height) {
             scrollModel.headerHeightChanged()
         }
         .onChange(of: headerModel.state.headerContext.safeArea.top) {
