@@ -29,6 +29,16 @@
 		22F3C7FF2B685C0300ECC3B9 /* BasicStickyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F3C7FE2B685C0300ECC3B9 /* BasicStickyHeaderView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		22A29D5B2B6BF5AD00AE281D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 222041D72B681D8D00306F8E /* SwiftUIMaterialTabs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 224364642B547D0300563396;
+			remoteInfo = SwiftUIMaterialTabs;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		224364A42B547E1600563396 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -156,6 +166,14 @@
 			path = StickyHeader;
 			sourceTree = "<group>";
 		};
+		22A29D582B6BF5AD00AE281D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				22A29D5C2B6BF5AD00AE281D /* SwiftUIMaterialTabs.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -204,12 +222,28 @@
 			mainGroup = 22034C072B54777C008147F0;
 			productRefGroup = 22034C112B54777C008147F0 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 22A29D582B6BF5AD00AE281D /* Products */;
+					ProjectRef = 222041D72B681D8D00306F8E /* SwiftUIMaterialTabs.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				22034C0F2B54777C008147F0 /* Demo */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		22A29D5C2B6BF5AD00AE281D /* SwiftUIMaterialTabs.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftUIMaterialTabs.framework;
+			remoteRef = 22A29D5B2B6BF5AD00AE281D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		22034C0E2B54777C008147F0 /* Resources */ = {
