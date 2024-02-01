@@ -8,7 +8,7 @@
 
 ## Overview
 
-SwiftUIMaterialTabs is pure SwiftUI component for [Material 3-style tabs](https://m3.material.io/components/tabs/overview) with sticky headers or just sticky headers without the tabs! Supports both primary and secondary tab styles, with numerious cusotmization options. Or supply your own tabs. Easily apply sticky header effects, such as fade, shrink, parralax, etc. or create your own.
+SwiftUIMaterialTabs is [Material 3-style tabs](https://m3.material.io/components/tabs/overview) and Sticky Header library rolled into one! Written in pure SwiftUI. Supports both Primary and Secondary tab styles as well as custom tabs. Easily apply sticky header effects like fade, shrink, parralax, etc. or create your unique effects. If you don't need tabs, Sticky Headers works fine without them because every app needs a cool sticky header!
 
 <p align="center">
   <img src="https://github.com/SwiftKickMobile/SwiftUIMaterialTabs/assets/2529176/cf00ed57-1a2a-446c-b0d9-70eb59b389f9" />
@@ -181,9 +181,9 @@ content: {
 }
 ````
 
-One of the nuances of the `scrollPosition()` view modifier is that, if you need to manipulate the scroll position precicely, you must know the height of the view being scrolled. Therefore, in order for Material Tabs to achieve precise control, you are required to supply a `reservedItem` identifier that Material Tabs will use to embed its own hidden view in the scroll.
+One nuance of the `scrollPosition()` view modifier is that, if you need to precisely manipulate the scroll position, you must know the height of the view being scrolled. Therefore, in order for Material Tabs to achieve precise control, you are required to supply a `reservedItem` identifier that Material Tabs will use to embed its own hidden view in the scroll. We couldn't think of another way to do this while staying "pure SwiftUI".
 
-It is worth noting here, because it is not completely obvious, that the formula for calculating the a unit point for `scrollPosition()` is:
+It is worth noting here, because it is not completely obvious, that the formula for calculating the a unit point for `scrollPosition()` seems to be:
 
 ````
 unitPoint = (desiredContentOffset) / (scrollViewHeight - verticalSafeArea - verticalContentPadding - viewHeight)
