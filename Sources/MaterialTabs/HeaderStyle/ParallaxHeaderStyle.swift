@@ -14,7 +14,7 @@ public struct ParallaxHeaderStyle<Tab>: HeaderStyle where Tab: Hashable {
     /// - Parameters:
     ///   - amount: The amount of parallax. A value of 0 fixes the element on screen while a value of 1 tracks with scrolling.
     ///   - fade: If `true`, the receiving view fades out as the sticky header scrolls out of view.
-    public init(amount: CGFloat = 0.35, fade: Bool = true) {
+    public init(amount: CGFloat = 0.35, fade: Bool = false) {
         self.amount = amount
         self.fade = fade
     }

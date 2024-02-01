@@ -118,6 +118,10 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         }
         .coordinateSpace(name: coordinateSpaceName)
         .scrollPosition(id: $scrollModel.scrollItem, anchor: scrollModel.scrollUnitPoint)
+        .transaction(value: scrollModel.scrollItem) { transation in
+            // Sometimes this happens in an animation context, but this prevents animation
+            transation.animation = nil
+        }
         .onAppear {
             // It is important not to attempt to adjust the scroll position until after the view has appeared
             // and this task seems to accomplish that.

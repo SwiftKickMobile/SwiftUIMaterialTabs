@@ -14,11 +14,12 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     @Published private(set) var appeared = false
 
     func contentOffsetChanged(_ offset: CGFloat) {
-        // Don't report offset change if we've just internally scrolled to sync up with the current header position.
-        guard scrollItem != firstItem else { return }
         let oldContentOffset = contentOffset
         contentOffset = -offset
         let deltaOffset = contentOffset - oldContentOffset
+        // This is how we're detecting programatic scroll for lack of a better idea. We don't want to report
+        // the programatic sync of content offset with the header because it could result in the header moving.
+        guard scrollItem != reservedItem else { return }
         headerModel?.scrolled(tab: tab, offset: contentOffset, deltaOffset: deltaOffset)
     }
 
@@ -26,7 +27,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         appeared = true
         self.headerModel = headerModel
         selectedTab = headerModel?.state.headerContext.selectedTab
-        updateContentOffset()
+        syncContentOffsetWithHeader()
     }
 
     func disappeared() {
@@ -47,7 +48,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     }
 
     func headerHeightChanged() {
-        updateContentOffset()
+        syncContentOffsetWithHeader()
     }
 
     init(
@@ -55,7 +56,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         reservedItem: Item?
     ) {
         self.tab = tab
-        self.firstItem = reservedItem
+        self.reservedItem = reservedItem
     }
 
     // MARK: - Constants
@@ -63,9 +64,10 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     // MARK: - Variables
 
     private let tab: Tab
-    private let firstItem: Item?
+    private let reservedItem: Item?
     private var cachedTabsState: HeaderModel<Tab>.State?
     private weak var headerModel: HeaderModel<Tab>?
+    private var expectingContentOffset: CGFloat?
 
     private var selectedTab: Tab? {
         didSet {
@@ -75,7 +77,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
             case (false, false): break
             case (false, true):
                 // When switching to this tab, update the content offset if needed.
-                updateContentOffset()
+                syncContentOffsetWithHeader()
             case (true, false):
                 // When switching away from this tab, remember the current data so we can
                 // calculate the delta on return.
@@ -88,32 +90,39 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
 
     // MARK: Adjusting scroll and header state
 
-    /// Scrolls to the desired content offset to maintain continuity when switching tabs.
+    /// Scrolls to the desired content offset to maintain continuity when switching tabs after a header height change.
     ///
     /// The formula for calculating the Y component of the unit point for a given item is:
     ///
     /// ````
     /// offset / (scrollView.height - safeArea.top - safeArea.bottom - item.height)
     /// ````
-    func updateContentOffset() {
-        guard appeared, let headerModel, headerModel.state.tabsRegistered else { return }
-        let delta: CGFloat
+    func syncContentOffsetWithHeader() {
+        guard appeared, let headerModel,
+                tab == headerModel.state.headerContext.selectedTab,
+                headerModel.state.tabsRegistered else { return }
+        let deltaHeaderOffset: CGFloat
         if let cachedTabsState {
-            delta = headerModel.state.headerContext.offset - cachedTabsState.headerContext.offset
+            deltaHeaderOffset = headerModel.state.headerContext.offset - cachedTabsState.headerContext.offset
         } else {
-            delta = headerModel.state.headerContext.offset
+            deltaHeaderOffset = headerModel.state.headerContext.offset
         }
         cachedTabsState = headerModel.state
-        contentOffset = contentOffset + delta
-        scrollItem = firstItem
+        //print("syncContentOffsetWithHeader tab=\(tab), contentOffset=\(contentOffset), targetContentOffset=\(contentOffset + deltaHeaderOffset), deltaHeaderOffset=\(deltaHeaderOffset)")
+        contentOffset = contentOffset + deltaHeaderOffset
         scrollUnitPoint = UnitPoint(
             x: UnitPoint.top.x,
             y: (headerModel.state.headerContext.maxOffset - contentOffset) / (headerModel.state.safeHeight - 1)
         )
+        scrollItem = reservedItem
         // It is essential to set the scroll item back to `nil` so that we can make
         // future scroll adjustments. Placing this in a task is sufficient for the
         // above scrolling to occur.
         Task {
+            // Could not find a 100% robust way to detect between a programatic scroll and a user scroll, which we
+            // need to be able to do to avoid adjusting the header after a programatic scroll. So, sadly, we're going
+            // this instead and rely on checking the value of `scrollItem`.
+            try? await Task.sleep(for: .seconds(0.05))
             scrollItem = nil
         }
     }
