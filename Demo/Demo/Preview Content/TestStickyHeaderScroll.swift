@@ -3,7 +3,7 @@
 //
 
 import SwiftUI
-import MaterialTabs
+import SwiftUIMaterialTabs
 
 struct TestStickyHeaderScroll: View {
 

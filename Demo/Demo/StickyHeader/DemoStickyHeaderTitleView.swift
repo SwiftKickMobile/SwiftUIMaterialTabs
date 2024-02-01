@@ -3,7 +3,7 @@
 //
 
 import SwiftUI
-import MaterialTabs
+import SwiftUIMaterialTabs
 
 /// The title view for the sticky header demo> The title text shrinks and remains persistent at the top of the title view while the logo image shrinks and fades away.
 struct DemoStickyHeaderTitleView: View {

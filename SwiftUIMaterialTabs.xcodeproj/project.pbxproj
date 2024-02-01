@@ -44,7 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		224364642B547D0300563396 /* MaterialTabs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MaterialTabs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		224364642B547D0300563396 /* SwiftUIMaterialTabs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftUIMaterialTabs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2243647D2B547D1B00563396 /* MaterialTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialTabs.swift; sourceTree = "<group>"; };
 		2243647F2B547D1B00563396 /* ScrollItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollItem.swift; sourceTree = "<group>"; };
 		224364802B547D1B00563396 /* ScrollModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollModel.swift; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 		2243644F2B547CB300563396 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				224364642B547D0300563396 /* MaterialTabs.framework */,
+				224364642B547D0300563396 /* SwiftUIMaterialTabs.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,12 +112,12 @@
 		2243647B2B547D1B00563396 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				2243647C2B547D1B00563396 /* MaterialTabs */,
+				2243647C2B547D1B00563396 /* SwiftUIMaterialTabs */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		2243647C2B547D1B00563396 /* MaterialTabs */ = {
+		2243647C2B547D1B00563396 /* SwiftUIMaterialTabs */ = {
 			isa = PBXGroup;
 			children = (
 				228F9D0C2B6051CD0075D820 /* MaterialTabs */,
@@ -126,7 +126,7 @@
 				226DFD972B5C65DB008AFFF2 /* Extensions */,
 				2243647E2B547D1B00563396 /* Internal */,
 			);
-			path = MaterialTabs;
+			path = SwiftUIMaterialTabs;
 			sourceTree = "<group>";
 		};
 		2243647E2B547D1B00563396 /* Internal */ = {
@@ -218,9 +218,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		224364632B547D0300563396 /* MaterialTabs */ = {
+		224364632B547D0300563396 /* SwiftUIMaterialTabs */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 224364752B547D0300563396 /* Build configuration list for PBXNativeTarget "MaterialTabs" */;
+			buildConfigurationList = 224364752B547D0300563396 /* Build configuration list for PBXNativeTarget "SwiftUIMaterialTabs" */;
 			buildPhases = (
 				2243645F2B547D0300563396 /* Headers */,
 				224364602B547D0300563396 /* Sources */,
@@ -231,9 +231,9 @@
 			);
 			dependencies = (
 			);
-			name = MaterialTabs;
+			name = SwiftUIMaterialTabs;
 			productName = SwiftUIMaterialTabs;
-			productReference = 224364642B547D0300563396 /* MaterialTabs.framework */;
+			productReference = 224364642B547D0300563396 /* SwiftUIMaterialTabs.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -251,7 +251,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 224364492B547CB300563396 /* Build configuration list for PBXProject "MaterialTabs" */;
+			buildConfigurationList = 224364492B547CB300563396 /* Build configuration list for PBXProject "SwiftUIMaterialTabs" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -264,7 +264,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				224364632B547D0300563396 /* MaterialTabs */,
+				224364632B547D0300563396 /* SwiftUIMaterialTabs */,
 			);
 		};
 /* End PBXProject section */
@@ -512,7 +512,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		224364492B547CB300563396 /* Build configuration list for PBXProject "MaterialTabs" */ = {
+		224364492B547CB300563396 /* Build configuration list for PBXProject "SwiftUIMaterialTabs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2243645A2B547CB400563396 /* Debug */,
@@ -521,7 +521,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		224364752B547D0300563396 /* Build configuration list for PBXNativeTarget "MaterialTabs" */ = {
+		224364752B547D0300563396 /* Build configuration list for PBXNativeTarget "SwiftUIMaterialTabs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				224364762B547D0300563396 /* Debug */,
