@@ -36,7 +36,12 @@ struct TestMaterialTabsScroll: View {
                 Color.yellow.opacity(0.25)
             }
         ) {
-            MaterialTabsScroll(tab: 0, reservedItem: -1, scrollItem: $scrollItem, scrollUnitPoint: $scrollUnitPoint) {
+            MaterialTabsScroll(
+                tab: 0,
+                reservedItem: -1,
+                scrollItem: $scrollItem,
+                scrollUnitPoint: $scrollUnitPoint
+            ) { _ in
                 LazyVStack(spacing: 0) {
                     ForEach(0..<25) { index in
                         VStack(spacing: 0) {

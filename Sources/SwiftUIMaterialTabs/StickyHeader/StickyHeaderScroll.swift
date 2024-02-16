@@ -16,9 +16,22 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
     /// - Parameters:
     ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
     public init(
-        @ViewBuilder content: @escaping () -> Content
+        @ViewBuilder content: @escaping (_ context: StickyHeaderScrollContext) -> Content
     ) where Item == ScrollItem {
         self.content = content
+    }
+
+    public struct Context {
+        /// The header context
+        var headerContext: StickyHeaderContext
+
+        /// The total safe height available to the scroll view
+        var safeHeight: CGFloat
+
+        /// The total safe height available for content below the header view
+        var contentHeight: CGFloat {
+            safeHeight - headerContext.height
+        }
     }
 
     // MARK: - Constants
@@ -27,7 +40,7 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
 
     @State private var coordinateSpaceName = UUID()
     @State private var contentOffset: CGFloat = 0
-    @ViewBuilder private var content: () -> Content
+    @ViewBuilder private var content: (_ context: StickyHeaderScrollContext) -> Content
     @EnvironmentObject private var headerModel: HeaderModel<NoTab>
 
     // MARK: - Body
@@ -49,7 +62,12 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
                         headerModel.scrolled(tab: .none, offset: -offset, deltaOffset: -(offset - contentOffset))
                         contentOffset = -offset
                     }
-                content()
+                content(
+                    StickyHeaderScrollContext(
+                        headerContext: headerModel.state.headerContext,
+                        safeHeight: headerModel.state.safeHeight
+                    )
+                )
             }
         }
         .coordinateSpace(name: coordinateSpaceName)

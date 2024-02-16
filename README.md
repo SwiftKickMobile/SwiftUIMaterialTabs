@@ -25,7 +25,8 @@ The main components you'll use will depend on the use case: Material Tabs or Sti
 | ------------- |:-------------:| :-----:|
 | The top-level container component.      | `MaterialTabs` | `StickyHeader` |
 | Scroll view wrapper required for sticky header effects.      | `MaterialTabsScroll` | `StickyHeaderScroll` |
-| The context passed to view builders for calculating sticky header effects. | `MaterialTabsContext` | `StickyHeaderContext` |
+| The context passed to header view builders for calculating sticky header effects. | `MaterialTabsContext` | `StickyHeaderContext` |
+| The context passed to scroll view builders with useful metrics, such as the safe content height under the header. | `MaterialTabsScrollContext` | `StickyHeaderScrollContext` |
 | The tab bar. | `MaterialTabBar` | n/a |
 
 These and additional coponents are covered in the Material Tabs and Sticky Headers sections (jump to [Sticky Headers](#sticky-headers)).
@@ -97,7 +98,7 @@ MaterialTabBar(selectedTab: $selectedTab, sizing: .equalWidth, context: context)
 MaterialTabBar(selectedTab: $selectedTab, sizing: .proportionalWidth, context: context)
 ````
 
-With `.equalWidth`, all tabs will be the width of the largest tab selector. With `.propertional`, tabs will be sized horizontally to fit. In either case, selector labels will expand to fill the available width of the tab bar. If there isn't enough space, the tab bar scrolls.
+With `.equalWidth`, all tabs will be the width of the largest tab selector. With `.proportional`, tabs will be sized horizontally to fit. In either case, selector labels will expand to fill the available width of the tab bar. If there isn't enough space, the tab bar scrolls.
 
 ### `MaterialTabItemModifier`
 
@@ -113,7 +114,7 @@ Text("First Tab Content")
     )
 ````
 
-Both styles are highly customizabe through the optional `config` and `deselectedConfig` parameters:
+Both styles are highly customizable through the optional `config` and `deselectedConfig` parameters:
 
 ````swift
 Text("Second Tab Content")
@@ -143,7 +144,7 @@ Scrollable tab content must be contained within a `MaterialTabsScroll`, a lightw
 
 ````swift
 content: {
-    MaterialTabsScroll(tab: Tab.first) {
+    MaterialTabsScroll(tab: Tab.first) { _ in
         LazyVStack {
             ForEach(0..<10) { index in
                 Text("Row \(index)
@@ -166,7 +167,7 @@ Joint manipulation of the scroll position is supported if you need it. You suppl
 ...
 
 content: {
-    MaterialTabsScroll(tab: Tab.first, reservedItem: -1, scrollItem: $scrollItem, scrollUnitPoint: $scrollUnitPoint) {
+    MaterialTabsScroll(tab: Tab.first, reservedItem: -1, scrollItem: $scrollItem, scrollUnitPoint: $scrollUnitPoint) { _ in
         LazyVStack(spacing: 0) {
             ForEach(0..<10) { index in
                 Text("Row \(index)")
@@ -213,7 +214,7 @@ struct BasicStickyHeaderView: View {
             },
             // The tab contents.
             content: {
-                StickyHeaderScroll() {
+                StickyHeaderScroll() { _ in
                     LazyVStack(spacing: 0) {
                         ForEach(0..<10) { index in
                             Text("Row \(index)")
