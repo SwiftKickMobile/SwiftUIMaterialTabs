@@ -12,7 +12,7 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
     struct State: Equatable {
         var headerContext: HeaderContext<Tab>
 
-        /// The height reported by the geometry reader. Includes the safe area, but not the additional safe area padding we apply.
+        /// The height reported by the geometry reader. Includes the additional safe area padding we apply.
         var height: CGFloat = 0
 
         var tabsRegistered: Bool = false

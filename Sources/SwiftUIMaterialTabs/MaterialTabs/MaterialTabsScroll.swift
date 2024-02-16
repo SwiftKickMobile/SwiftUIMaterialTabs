@@ -29,7 +29,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     /// `scrollTargetLayout()` to your content as needed.
     public init(
         tab: Tab,
-        @ViewBuilder content: @escaping () -> Content
+        @ViewBuilder content: @escaping (_ context: Context) -> Content
     ) where Item == ScrollItem {
         self.init(
             tab: tab,
@@ -62,7 +62,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         reservedItem: Item,
         scrollItem: Binding<Item?>,
         scrollUnitPoint: Binding<UnitPoint>,
-        @ViewBuilder content: @escaping () -> Content
+        @ViewBuilder content: @escaping (_ context: Context) -> Content
     ) {
         self.tab = tab
         self.reservedItem = reservedItem
@@ -77,6 +77,19 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         self.content = content
     }
 
+    public struct Context {
+        /// The header context
+        var headerContext: MaterialTabsHeaderContext<Tab>
+
+        /// The total safe height available to the scroll view
+        var safeHeight: CGFloat
+
+        /// The total safe height available for content below the header view
+        var contentHeight: CGFloat {
+            safeHeight - headerContext.height
+        }
+    }
+
     // MARK: - Constants
 
     // MARK: - Variables
@@ -87,7 +100,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     @Binding private var scrollItem: Item?
     @Binding private var scrollUnitPoint: UnitPoint
     @StateObject private var scrollModel: ScrollModel<Item, Tab>
-    @ViewBuilder private var content: () -> Content
+    @ViewBuilder private var content: (_ context: Context) -> Content
     @EnvironmentObject private var headerModel: HeaderModel<Tab>
 
     // MARK: - Body
@@ -112,7 +125,12 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
                     Color.clear
                         .frame(height: 1)
                         .id(reservedItem)
-                    content()
+                    content(
+                        Context(
+                            headerContext: headerModel.state.headerContext,
+                            safeHeight: headerModel.state.safeHeight
+                        )
+                    )
                 }
             }
         }

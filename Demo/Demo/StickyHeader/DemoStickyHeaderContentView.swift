@@ -16,7 +16,7 @@ struct DemoStickyHeaderContentView: View {
     // MARK: - Body
 
     var body: some View {
-        StickyHeaderScroll() {
+        StickyHeaderScroll() { _ in
             LazyVStack(spacing: 0) {
                 DemoContentInfoView(
                     foregroundStyle: Color.skm2Yellow,

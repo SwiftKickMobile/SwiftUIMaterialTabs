@@ -22,7 +22,7 @@ struct BasicStickyHeaderView: View {
             },
             // The tab contents.
             content: {
-                StickyHeaderScroll() {
+                StickyHeaderScroll() { _ in
                     LazyVStack(spacing: 0) {
                         ForEach(0..<10) { index in
                             Text("Row \(index)")
