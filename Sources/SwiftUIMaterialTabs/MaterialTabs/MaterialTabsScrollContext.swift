@@ -12,7 +12,7 @@ public struct MaterialTabsScrollContext<Tab> where Tab: Hashable {
     public var safeHeight: CGFloat
 
     /// The total safe height available for content below the header view
-    public var contentHeight: CGFloat {
+    public var safeContentHeight: CGFloat {
         safeHeight - headerContext.height
     }
 
