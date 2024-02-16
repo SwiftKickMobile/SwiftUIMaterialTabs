@@ -90,6 +90,25 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
 
     var animationNamespace: Namespace.ID? = nil
 
+    public init(
+        selectedTab: Tab,
+        titleHeight: CGFloat = 0,
+        tabBarHeight: CGFloat = 0,
+        width: CGFloat = 0,
+        offset: CGFloat = 0,
+        animationNamespace: Namespace.ID? = nil,
+        safeArea: EdgeInsets = .init()
+    ) {
+        self.selectedTab = selectedTab
+        self.titleHeight = titleHeight
+        self.tabBarHeight = tabBarHeight
+        self.width = width
+        self.offset = offset
+        self.animationNamespace = animationNamespace
+        self.safeArea = safeArea
+        self.minTitleMetric = MinTitleHeightPreferenceKey.defaultValue
+    }
+
     // MARK: - Constants
 
     // MARK: - Variables

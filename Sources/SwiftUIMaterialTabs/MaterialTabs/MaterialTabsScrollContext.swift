@@ -15,4 +15,9 @@ public struct MaterialTabsScrollContext<Tab> where Tab: Hashable {
     var contentHeight: CGFloat {
         safeHeight - headerContext.height
     }
+
+    public init(headerContext: MaterialTabsHeaderContext<Tab>, safeHeight: CGFloat) {
+        self.headerContext = headerContext
+        self.safeHeight = safeHeight
+    }
 }
