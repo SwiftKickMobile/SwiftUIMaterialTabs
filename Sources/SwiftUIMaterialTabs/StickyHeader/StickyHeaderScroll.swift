@@ -16,7 +16,7 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
     /// - Parameters:
     ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
     public init(
-        @ViewBuilder content: @escaping (_ context: Context) -> Content
+        @ViewBuilder content: @escaping (_ context: StickyHeaderScrollContext) -> Content
     ) where Item == ScrollItem {
         self.content = content
     }
@@ -40,7 +40,7 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
 
     @State private var coordinateSpaceName = UUID()
     @State private var contentOffset: CGFloat = 0
-    @ViewBuilder private var content: (_ context: Context) -> Content
+    @ViewBuilder private var content: (_ context: StickyHeaderScrollContext) -> Content
     @EnvironmentObject private var headerModel: HeaderModel<NoTab>
 
     // MARK: - Body
@@ -63,7 +63,7 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
                         contentOffset = -offset
                     }
                 content(
-                    Context(
+                    StickyHeaderScrollContext(
                         headerContext: headerModel.state.headerContext,
                         safeHeight: headerModel.state.safeHeight
                     )

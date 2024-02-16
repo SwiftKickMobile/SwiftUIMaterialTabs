@@ -41,6 +41,8 @@
 		22982C0F2B5EF52200852311 /* FixedHeaderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C0E2B5EF52200852311 /* FixedHeaderStyle.swift */; };
 		22982C202B604A9000852311 /* StickyHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C1F2B604A9000852311 /* StickyHeader.swift */; };
 		22C5509F2B65A7E80037C991 /* MaterialTabsHeaderContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C5509E2B65A7E80037C991 /* MaterialTabsHeaderContext.swift */; };
+		22EFAB272B7FD2E100BAC62B /* MaterialTabsScrollContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFAB262B7FD2E100BAC62B /* MaterialTabsScrollContext.swift */; };
+		22EFAB292B7FD3C800BAC62B /* StickyHeaderScrollContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EFAB282B7FD3C800BAC62B /* StickyHeaderScrollContext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +81,8 @@
 		22982C1F2B604A9000852311 /* StickyHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeader.swift; sourceTree = "<group>"; };
 		22982C212B604E2300852311 /* NoTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTab.swift; sourceTree = "<group>"; };
 		22C5509E2B65A7E80037C991 /* MaterialTabsHeaderContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialTabsHeaderContext.swift; sourceTree = "<group>"; };
+		22EFAB262B7FD2E100BAC62B /* MaterialTabsScrollContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialTabsScrollContext.swift; sourceTree = "<group>"; };
+		22EFAB282B7FD3C800BAC62B /* StickyHeaderScrollContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeaderScrollContext.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +195,7 @@
 				2295EC3B2B5DE42D00A19247 /* PrimaryTab.swift */,
 				2295EC3D2B5DE43A00A19247 /* SecondaryTab.swift */,
 				22C5509E2B65A7E80037C991 /* MaterialTabsHeaderContext.swift */,
+				22EFAB262B7FD2E100BAC62B /* MaterialTabsScrollContext.swift */,
 			);
 			path = MaterialTabs;
 			sourceTree = "<group>";
@@ -201,6 +206,7 @@
 				22982C1F2B604A9000852311 /* StickyHeader.swift */,
 				228F9D0F2B6059120075D820 /* StickyHeaderScroll.swift */,
 				228F9D0A2B60516D0075D820 /* StickyHeaderContext.swift */,
+				22EFAB282B7FD3C800BAC62B /* StickyHeaderScrollContext.swift */,
 			);
 			path = StickyHeader;
 			sourceTree = "<group>";
@@ -286,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				226DFD8D2B5C37B1008AFFF2 /* ShrinkHeaderStyle.swift in Sources */,
+				22EFAB272B7FD2E100BAC62B /* MaterialTabsScrollContext.swift in Sources */,
 				2243648F2B547D1B00563396 /* ScrollModel.swift in Sources */,
 				224364962B547D1B00563396 /* MaterialTabsScroll.swift in Sources */,
 				2295EC342B5C73C000A19247 /* MaterialTabBar.swift in Sources */,
@@ -300,6 +307,7 @@
 				228F9D102B6059120075D820 /* StickyHeaderScroll.swift in Sources */,
 				2295EC382B5C849B00A19247 /* WidthPreferenceKey.swift in Sources */,
 				226DFD882B5C3301008AFFF2 /* HeaderStyle.swift in Sources */,
+				22EFAB292B7FD3C800BAC62B /* StickyHeaderScrollContext.swift in Sources */,
 				2295EC3C2B5DE42D00A19247 /* PrimaryTab.swift in Sources */,
 				2295EC362B5C774500A19247 /* TabBarModel.swift in Sources */,
 				2295EC3E2B5DE43A00A19247 /* SecondaryTab.swift in Sources */,
