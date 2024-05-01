@@ -37,6 +37,9 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     /// Options for tab selector width sizing. If space permits, tabs selectors will fill the entire width of the tab bar. Otherwise, the tab bar will scroll horizontally.
     public enum Sizing {
 
+        /// Size the tab selectors according to their intrinsic content size with a constant spacing. Tabs are centered, or scroll horizontally if they overflow the available space.
+        case equalSpacing(CGFloat)
+        
         /// Size all tab selectors equally. If space permits, tabs selectors will fill the entire width of the tab bar. Otherwise, the tab bar will scroll horizontally.
         case equalWidth
 
@@ -96,12 +99,6 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
                                 headerModel.selected(tab: tab)
                             }
                         )
-                        .background {
-                            GeometryReader { proxy in
-                                Color.clear
-                                    .preference(key: WidthPreferenceKey.self, value: proxy.size.width)
-                            }
-                        }
                         .id(tab)
                     }
                 }

@@ -36,12 +36,18 @@ public struct TabBarLayout<Tab>: Layout where Tab: Hashable {
         }
         let totalWidth: CGFloat = {
             switch sizing {
+            case let .equalSpacing(spacing):
+                // For equal spacing, the total width is the element size and the inter-tab spacing.
+                let totalElementSize = cache.sizes.reduce(0) { sum, element in
+                    sum + element.value.width
+                }
+                return totalElementSize + (spacing * CGFloat(cache.sizes.count - 1))
             case .proportionalWidth:
-                cache.sizes.reduce(0) { sum, element in
+                return cache.sizes.reduce(0) { sum, element in
                    sum + element.value.width
                }
             case .equalWidth:
-                maxSize.width * CGFloat(subviews.count)
+                return maxSize.width * CGFloat(subviews.count)
             }
         }()
         let height = max(proposal.height ?? 0, maxSize.height)
@@ -50,6 +56,9 @@ public struct TabBarLayout<Tab>: Layout where Tab: Hashable {
             cache.sizes[index] = CGSize(
                 width: {
                     switch sizing {
+                    case .equalSpacing:
+                        // When using equal spacing, tabs respect intrinsic content size.
+                        size.width
                     case .proportionalWidth: size.width + horizontalPadding
                     case .equalWidth: maxSize.width + horizontalPadding
                     }
@@ -57,7 +66,13 @@ public struct TabBarLayout<Tab>: Layout where Tab: Hashable {
                 height: height
             )
         }
-        return CGSize(width: max(fittingWidth, totalWidth), height: maxSize.height)
+        switch sizing {
+        case .equalSpacing:
+            // When using equal spacing, don't automatically fill all available space.
+            return CGSize(width: totalWidth, height: maxSize.height)
+        default:
+            return CGSize(width: max(fittingWidth, totalWidth), height: maxSize.height)
+        }
     }
 
     public func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout Cache) {
@@ -65,7 +80,12 @@ public struct TabBarLayout<Tab>: Layout where Tab: Hashable {
         for (index, subview) in subviews.enumerated() {
             let size = cache.sizes[index]!
             subview.place(at: origin, proposal: ProposedViewSize(size))
-            origin.x += size.width
+            switch sizing {
+            case let .equalSpacing(spacing):
+                origin.x += size.width + spacing
+            default:
+                origin.x += size.width
+            }
         }
     }
 

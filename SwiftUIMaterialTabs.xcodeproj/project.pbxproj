@@ -34,7 +34,6 @@
 		229401E12B6574DB00605B29 /* TabBarLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229401E02B6574DB00605B29 /* TabBarLayout.swift */; };
 		2295EC342B5C73C000A19247 /* MaterialTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2295EC332B5C73C000A19247 /* MaterialTabBar.swift */; };
 		2295EC362B5C774500A19247 /* TabBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2295EC352B5C774500A19247 /* TabBarModel.swift */; };
-		2295EC382B5C849B00A19247 /* WidthPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2295EC372B5C849B00A19247 /* WidthPreferenceKey.swift */; };
 		2295EC3C2B5DE42D00A19247 /* PrimaryTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2295EC3B2B5DE42D00A19247 /* PrimaryTab.swift */; };
 		2295EC3E2B5DE43A00A19247 /* SecondaryTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2295EC3D2B5DE43A00A19247 /* SecondaryTab.swift */; };
 		22982C062B5ECC9700852311 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22982C052B5ECC9700852311 /* Media.xcassets */; };
@@ -73,7 +72,6 @@
 		229401E02B6574DB00605B29 /* TabBarLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarLayout.swift; sourceTree = "<group>"; };
 		2295EC332B5C73C000A19247 /* MaterialTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialTabBar.swift; sourceTree = "<group>"; };
 		2295EC352B5C774500A19247 /* TabBarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarModel.swift; sourceTree = "<group>"; };
-		2295EC372B5C849B00A19247 /* WidthPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidthPreferenceKey.swift; sourceTree = "<group>"; };
 		2295EC3B2B5DE42D00A19247 /* PrimaryTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryTab.swift; sourceTree = "<group>"; };
 		2295EC3D2B5DE43A00A19247 /* SecondaryTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryTab.swift; sourceTree = "<group>"; };
 		22982C052B5ECC9700852311 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -157,7 +155,6 @@
 				224364842B547D1B00563396 /* ScrollOffsetPreferenceKey.swift */,
 				224364852B547D1B00563396 /* TabBarHeightPreferenceKey.swift */,
 				224364862B547D1B00563396 /* TitleHeightPreferenceKey.swift */,
-				2295EC372B5C849B00A19247 /* WidthPreferenceKey.swift */,
 			);
 			path = PreferenceKeys;
 			sourceTree = "<group>";
@@ -305,7 +302,6 @@
 				22982C202B604A9000852311 /* StickyHeader.swift in Sources */,
 				224364952B547D1B00563396 /* MaterialTabItemModifier.swift in Sources */,
 				228F9D102B6059120075D820 /* StickyHeaderScroll.swift in Sources */,
-				2295EC382B5C849B00A19247 /* WidthPreferenceKey.swift in Sources */,
 				226DFD882B5C3301008AFFF2 /* HeaderStyle.swift in Sources */,
 				22EFAB292B7FD3C800BAC62B /* StickyHeaderScrollContext.swift in Sources */,
 				2295EC3C2B5DE42D00A19247 /* PrimaryTab.swift in Sources */,
