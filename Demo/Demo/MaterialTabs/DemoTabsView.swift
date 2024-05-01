@@ -27,12 +27,18 @@ struct DemoTabsView: View {
                 DemoTabsHeaderTitle(context: context)
             },
             headerTabBar: { context in
-                MaterialTabBar<DemoTab>(selectedTab: $selectedTab, sizing: .equalWidth, context: context)
-                    .foregroundStyle(
-                        context.selectedTab.headerForeground,
-                        context.selectedTab.headerForeground.opacity(0.7)
-                    )
-                    .background(context.selectedTab.tabBarBackground)
+                MaterialTabBar<DemoTab>(
+                    selectedTab: $selectedTab,
+                    sizing: .equalWidth,
+                    spacing: 0,
+                    fillAvailableSpace: true,
+                    context: context
+                )
+                .foregroundStyle(
+                    context.selectedTab.headerForeground,
+                    context.selectedTab.headerForeground.opacity(0.7)
+                )
+                .background(context.selectedTab.tabBarBackground)
             },
             headerBackground: { context in
                 DemoTabsHeaderBackground(context: context)
