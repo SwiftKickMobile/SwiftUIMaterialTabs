@@ -58,7 +58,7 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     /// - Parameters:
     ///   - selectedTab: The external tab selection binding.
     ///   - sizing: The tab selector sizing option.
-    ///   - spacing: The amount of spacing to use between tabs.
+    ///   - spacing: The amount of spacing to use between tabs. Primary and Secondary tabs should use the default spacing of 0 to form a continuous line across the bottom of the tab bar.
     ///   - fillAvailableSpace: When true, tabs assume the maximum space needed to fill the screen or scroll if they overflow the available space.
     ///   - context: The current context value.
     public init(
