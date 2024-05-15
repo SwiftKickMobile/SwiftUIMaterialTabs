@@ -36,7 +36,7 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
 
     /// Options for tab selector width sizing. If space permits, tabs selectors will fill the entire width of the tab bar. Otherwise, the tab bar will scroll horizontally.
     public enum Sizing {
-
+        
         /// Size all tab selectors equally. If space permits, tabs selectors will fill the entire width of the tab bar. Otherwise, the tab bar will scroll horizontally.
         case equalWidth
 
@@ -58,16 +58,22 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     /// - Parameters:
     ///   - selectedTab: The external tab selection binding.
     ///   - sizing: The tab selector sizing option.
+    ///   - spacing: The amount of spacing to use between tabs. Primary and Secondary tabs should use the default spacing of 0 to form a continuous line across the bottom of the tab bar.
+    ///   - fillAvailableSpace: When `true`, tabs assume the maximum space needed to fill the screen or scroll if they overflow the available space.
     ///   - context: The current context value.
     public init(
         selectedTab: Binding<Tab>,
         sizing: Sizing = .proportionalWidth,
+        spacing: CGFloat = 0,
+        fillAvailableSpace: Bool = true,
         context: MaterialTabsHeaderContext<Tab>
     ) {
         _selectedTab = selectedTab
         _selectedTabScroll = State(initialValue: selectedTab.wrappedValue)
         self.sizing = sizing
         self.context = context
+        self.spacing = spacing
+        self.fillAvailableSpace = fillAvailableSpace
     }
 
     // MARK: - Constants
@@ -81,13 +87,20 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     @EnvironmentObject private var headerModel: HeaderModel<Tab>
     @State private var height: CGFloat = 0
     private let context: MaterialTabsHeaderContext<Tab>
+    private let spacing: CGFloat
+    private let fillAvailableSpace: Bool
 
     // MARK: - Body
 
     public var body: some View {
         GeometryReader { proxy in
             ScrollView(.horizontal) {
-                TabBarLayout(fittingWidth: proxy.size.width, sizing: sizing) {
+                TabBarLayout(
+                    fittingWidth: proxy.size.width,
+                    sizing: sizing,
+                    spacing: spacing,
+                    fillAvailableSpace: fillAvailableSpace
+                ) {
                     ForEach(tabBarModel.tabs, id: \.self) { tab in
                         tabBarModel.labels[tab]?(
                             tab,
@@ -96,12 +109,6 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
                                 headerModel.selected(tab: tab)
                             }
                         )
-                        .background {
-                            GeometryReader { proxy in
-                                Color.clear
-                                    .preference(key: WidthPreferenceKey.self, value: proxy.size.width)
-                            }
-                        }
                         .id(tab)
                     }
                 }
