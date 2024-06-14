@@ -118,7 +118,13 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
                             safeHeight: headerModel.state.safeHeight
                         )
                     )
+                    .background {
+                        GeometryReader(content: { proxy in
+                            Color.clear.preference(key: ScrollViewContentSizeKey.self, value: proxy.size)
+                        })
+                    }
                 }
+                Color.clear.frame(height: scrollModel.bottomMargin)
             }
         }
         .coordinateSpace(name: coordinateSpaceName)
@@ -126,6 +132,9 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         .transaction(value: scrollModel.scrollItem) { transation in
             // Sometimes this happens in an animation context, but this prevents animation
             transation.animation = nil
+        }
+        .onPreferenceChange(ScrollViewContentSizeKey.self) { size in
+            scrollModel.contentSizeChanged(size)
         }
         .onAppear {
             // It is important not to attempt to adjust the scroll position until after the view has appeared
@@ -149,8 +158,17 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         .onChange(of: headerModel.state.headerContext.safeArea.top) {
             scrollModel.headerHeightChanged()
         }
+        .onChange(of: headerModel.state) {
+            scrollModel.headerStateChanged()
+        }
         .onDisappear() {
             scrollModel.disappeared()
         }
     }
+}
+
+private struct ScrollViewContentSizeKey: PreferenceKey {
+    typealias Value = CGSize
+    static var defaultValue: CGSize = .zero
+    public static func reduce(value: inout CGSize, nextValue: () -> CGSize) {}
 }

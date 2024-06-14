@@ -12,6 +12,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     @Published var scrollItem: Item?
     @Published var scrollUnitPoint: UnitPoint = .top
     @Published private(set) var appeared = false
+    @Published private(set) var bottomMargin: CGFloat = 0
 
     func contentOffsetChanged(_ offset: CGFloat) {
         let oldContentOffset = contentOffset
@@ -28,6 +29,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         self.headerModel = headerModel
         selectedTab = headerModel?.state.headerContext.selectedTab
         syncContentOffsetWithHeader()
+        configureBottomMargin()
     }
 
     func disappeared() {
@@ -47,8 +49,17 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         scrollUnitPoint = unitPoint
     }
 
+    func contentSizeChanged(_ contentSize: CGSize) {
+        self.contentSize = contentSize
+        configureBottomMargin()
+    }
+
     func headerHeightChanged() {
         syncContentOffsetWithHeader()
+    }
+
+    func headerStateChanged() {
+        configureBottomMargin()
     }
 
     init(
@@ -68,6 +79,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     private var cachedTabsState: HeaderModel<Tab>.State?
     private weak var headerModel: HeaderModel<Tab>?
     private var expectingContentOffset: CGFloat?
+    private var contentSize: CGSize?
 
     private var selectedTab: Tab? {
         didSet {
@@ -87,6 +99,13 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     }
 
     private var contentOffset: CGFloat = 0
+
+    // MARK: Configuring the bottom margin
+
+    private func configureBottomMargin() {
+        guard let headerModel, let contentSize else { return }
+        bottomMargin = max(0, headerModel.state.height - contentSize.height - headerModel.state.headerContext.minTotalHeight)
+    }
 
     // MARK: Adjusting scroll and header state
 
