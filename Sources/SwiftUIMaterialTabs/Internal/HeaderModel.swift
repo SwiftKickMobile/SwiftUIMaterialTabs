@@ -80,6 +80,7 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
     func scrolled(tab: Tab, offset: CGFloat, deltaOffset: CGFloat) {
         guard tab == state.headerContext.selectedTab else { return }
         //print("tab=\(tab), offset=\(offset), deltaOffset=\(deltaOffset)")
+        state.headerContext.contentOffset = offset        
         // Any time the offset is less than the max offset, the header offset exactly tracks the offset.
         if offset < state.headerContext.maxOffset {
             state.headerContext.offset = offset

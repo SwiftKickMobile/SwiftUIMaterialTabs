@@ -58,6 +58,9 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
         }
     }
 
+    /// The absolute horizontal content offset of the scroll view.
+    public var contentOffset: CGFloat = 0
+
     /// A value related to sticky titles. See the `minTitleHeight()` vieww modifier.
     public var minTitleHeight: CGFloat {
         switch minTitleMetric {
@@ -71,12 +74,9 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
         tabBarHeight + minTitleHeight
     }
 
-    #if DEBUG
-    /// A DEBUG-only initializer provided for making previews.
     public init(selectedTab: Tab) {
         self.selectedTab = selectedTab
     }
-    #endif
 
     var rubberBandingTitleHeight: CGFloat? {
         guard offset < 0 else { return nil }
@@ -89,25 +89,6 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
     }
 
     var animationNamespace: Namespace.ID? = nil
-
-    public init(
-        selectedTab: Tab,
-        titleHeight: CGFloat = 0,
-        tabBarHeight: CGFloat = 0,
-        width: CGFloat = 0,
-        offset: CGFloat = 0,
-        animationNamespace: Namespace.ID? = nil,
-        safeArea: EdgeInsets = .init()
-    ) {
-        self.selectedTab = selectedTab
-        self.titleHeight = titleHeight
-        self.tabBarHeight = tabBarHeight
-        self.width = width
-        self.offset = offset
-        self.animationNamespace = animationNamespace
-        self.safeArea = safeArea
-        self.minTitleMetric = MinTitleHeightPreferenceKey.defaultValue
-    }
 
     // MARK: - Constants
 
