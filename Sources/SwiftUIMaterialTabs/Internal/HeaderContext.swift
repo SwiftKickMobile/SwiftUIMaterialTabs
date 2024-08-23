@@ -54,7 +54,7 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
         // When negative, the title view is stretching.
         switch offset >= 0 {
         case true: maxOffset == 0 ? 0 : 1 - (maxOffset - offset) / maxOffset
-        case false: 1 - (titleHeight - offset) / titleHeight
+        case false: titleHeight == 0 ? 0 : 1 - (titleHeight - offset) / titleHeight
         }
     }
 
