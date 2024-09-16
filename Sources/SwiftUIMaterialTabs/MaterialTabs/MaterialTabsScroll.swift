@@ -134,6 +134,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
             transation.animation = nil
         }
         .onPreferenceChange(ScrollViewContentSizeKey.self) { size in
+            guard let size else { return }
             scrollModel.contentSizeChanged(size)
         }
         .onAppear {
@@ -168,7 +169,10 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
 }
 
 private struct ScrollViewContentSizeKey: PreferenceKey {
-    typealias Value = CGSize
-    static var defaultValue: CGSize = .zero
-    public static func reduce(value: inout CGSize, nextValue: () -> CGSize) {}
+    typealias Value = CGSize?
+    static var defaultValue: CGSize? = nil
+    public static func reduce(value: inout CGSize?, nextValue: () -> CGSize?) {
+        guard let next = nextValue() else { return }
+        value = next
+    }
 }

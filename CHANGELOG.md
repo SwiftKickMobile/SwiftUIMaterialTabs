@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.0.3
+
+* Fix the bottom padding on `MaterialTabsScroll` in iOS 18
+
 ## 2.0.2
 
 ### Fixes
