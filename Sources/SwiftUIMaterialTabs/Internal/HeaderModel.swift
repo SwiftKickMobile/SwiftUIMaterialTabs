@@ -73,24 +73,42 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
 
     // MARK: - Height
 
-    
-
     // MARK: - Scroll tracking
 
-    func scrolled(tab: Tab, offset: CGFloat, deltaOffset: CGFloat) {
+    /// Adjust the header offset as the scroll view's offset changes. As discussed elsewhere in this library, the header view itself doesn't shrink—instead its vertical
+    /// position is shifted up until it reaches a maximum corresponding to a fully collapsed header state. Scroll effects can be applied to subviews within the
+    /// header to give the appearance of shrinking, among other things.
+    ///
+    /// In the basic case, the header offset matches the scroll view up calculated max offset. However, in a multi-tab environment, scrolling on another tab
+    /// can change the header offset, introducing edge cases that need to be handled.
+    func scrolled(tab: Tab, contentOffset: CGFloat, deltaContentOffset: CGFloat) {
         guard tab == state.headerContext.selectedTab else { return }
-        //print("tab=\(tab), offset=\(offset), deltaOffset=\(deltaOffset)")
-        state.headerContext.contentOffset = offset        
-        // Any time the offset is less than the max offset, the header offset exactly tracks the offset.
-        if offset < state.headerContext.maxOffset {
-            state.headerContext.offset = offset
-        }
-        // However, for greater offsets, the header offset only gets adjusted for positive changes in the offset.
-        // Once we scroll too far, the header offset hits the limit, so we can't just track the offset. Instead, we
-        // use the change in offset.
-        else if deltaOffset > 0 {
-            let unconstrainedOffset = state.headerContext.offset + deltaOffset
-            state.headerContext.offset = min(unconstrainedOffset, state.headerContext.maxOffset)
+        state.headerContext.contentOffset = contentOffset
+        // When scrolling down (a.k.a. swiping up), the header offset matches the scroll view until it reaches the
+        // max offset, at which point it is fully collapsed.
+        if deltaContentOffset > 0 {
+            // If the scroll view offset is less than the max offset, then the scroll and header offsets should
+            // match.
+            if contentOffset < state.headerContext.maxOffset {
+                state.headerContext.offset = contentOffset
+            }
+            // However, if the scroll view is past the max offset, the header must move by the same amount until
+            // it reaches the max offset.
+            else {
+                state.headerContext.offset = min(
+                    state.headerContext.offset + deltaContentOffset,
+                    state.headerContext.maxOffset
+                )
+            }
+        // When scrolling up (a.k.a. swiping down), the header offset remains fixed unless it needs to change to
+        // prevent the header from separating from the scroll view content. This threshold is reached when the
+        // top of the scroll view reaches the bottom of the header.
+        } else {
+            // If the scroll view's offset is less than the header's offset, the header must match the scroll view
+            // offset to avoid separation.
+            if contentOffset < state.headerContext.offset {
+                state.headerContext.offset = contentOffset
+            }
         }
     }
 }

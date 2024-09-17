@@ -59,7 +59,11 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
                         }
                     }
                     .onPreferenceChange(ScrollOffsetPreferenceKey.self) { offset in
-                        headerModel.scrolled(tab: .none, offset: -offset, deltaOffset: -(offset - contentOffset))
+                        headerModel.scrolled(
+                            tab: .none,
+                            contentOffset: -offset,
+                            deltaContentOffset: -(offset - contentOffset)
+                        )
                         contentOffset = -offset
                     }
                 content(

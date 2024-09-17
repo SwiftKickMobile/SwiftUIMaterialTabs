@@ -21,7 +21,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         // This is how we're detecting programatic scroll for lack of a better idea. We don't want to report
         // the programatic sync of content offset with the header because it could result in the header moving.
         guard scrollItem != reservedItem else { return }
-        headerModel?.scrolled(tab: tab, offset: contentOffset, deltaOffset: deltaOffset)
+        headerModel?.scrolled(tab: tab, contentOffset: contentOffset, deltaContentOffset: deltaOffset)
     }
 
     func appeared(headerModel: HeaderModel<Tab>?) {

@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## 2.0.3
 
+* Fix #12 Scroll doesn't reset when switching the tabs while scrolled to top
 * Fix the bottom padding on `MaterialTabsScroll` in iOS 18
 
 ## 2.0.2
