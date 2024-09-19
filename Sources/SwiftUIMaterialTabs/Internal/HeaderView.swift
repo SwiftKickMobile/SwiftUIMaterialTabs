@@ -44,7 +44,7 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
             background(context)
                 .ignoresSafeArea(edges: .top)
                 .frame(height: context.rubberBandingBackgroundHeight)
-            // Clip for image backgrounds that use aspect fill
+                // Clip for image backgrounds that use aspect fill
                 .clipped()
         }
         .offset(CGSize(width: 0, height: -max(headerModel.state.headerContext.offset, 0)))

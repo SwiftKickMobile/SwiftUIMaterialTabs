@@ -28,7 +28,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         appeared = true
         self.headerModel = headerModel
         selectedTab = headerModel?.state.headerContext.selectedTab
-        syncContentOffsetWithHeader()
+        syncContentOffsetWithHeader(appearance: true)
         configureBottomMargin()
     }
 
@@ -55,7 +55,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     }
 
     func headerHeightChanged() {
-        syncContentOffsetWithHeader()
+        syncContentOffsetWithHeader(appearance: false)
     }
 
     func headerStateChanged() {
@@ -85,15 +85,11 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         didSet {
             guard let headerModel else { return }
             switch (oldValue == tab, selectedTab == tab) {
-            case (true, true): break
-            case (false, false): break
-            case (false, true):
-                // When switching to this tab, update the content offset if needed.
-                syncContentOffsetWithHeader()
             case (true, false):
                 // When switching away from this tab, remember the current data so we can
                 // calculate the delta on return.
                 cachedTabsState = headerModel.state
+            default: break
             }
         }
     }
@@ -116,7 +112,7 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     /// ````
     /// offset / (scrollView.height - safeArea.top - safeArea.bottom - item.height)
     /// ````
-    func syncContentOffsetWithHeader() {
+    func syncContentOffsetWithHeader(appearance: Bool) {
         guard appeared, let headerModel,
                 tab == headerModel.state.headerContext.selectedTab,
                 headerModel.state.tabsRegistered else { return }
@@ -127,8 +123,16 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
             deltaHeaderOffset = headerModel.state.headerContext.offset
         }
         cachedTabsState = headerModel.state
-        //print("syncContentOffsetWithHeader tab=\(tab), contentOffset=\(contentOffset), targetContentOffset=\(contentOffset + deltaHeaderOffset), deltaHeaderOffset=\(deltaHeaderOffset)")
-        contentOffset = contentOffset + deltaHeaderOffset
+        switch headerModel.state.config.crossTabSyncMode {
+        case .resetScrollPosition where
+            appearance &&
+                headerModel.state.headerContext.offset < headerModel.state.headerContext.maxOffset &&
+                contentOffset > headerModel.state.headerContext.offset:
+            contentOffset = headerModel.state.headerContext.offset
+        // Otherwise, preserve the relative content offset between the header and the scroll view.
+        default:
+            contentOffset = contentOffset + deltaHeaderOffset
+        }
         scrollUnitPoint = UnitPoint(
             x: UnitPoint.top.x,
             y: (headerModel.state.headerContext.maxOffset - contentOffset) / (headerModel.state.safeHeight - 1)

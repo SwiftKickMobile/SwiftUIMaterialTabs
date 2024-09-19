@@ -42,12 +42,14 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     /// modifiers used with a standard `TabView`).
     public init(
         selectedTab: Binding<Tab>,
+        config: MaterialTabsConfig = MaterialTabsConfig(),
         @ViewBuilder headerTitle: @escaping (MaterialTabsHeaderContext<Tab>) -> HeaderTitle,
         @ViewBuilder headerTabBar: @escaping (MaterialTabsHeaderContext<Tab>) -> HeaderTabBar,
         @ViewBuilder content: @escaping () -> Content
     ) where HeaderBackground == EmptyView {
         self.init(
             selectedTab: selectedTab,
+            config: config,
             headerTitle: headerTitle,
             headerTabBar: headerTabBar,
             headerBackground: { _ in EmptyView() },
@@ -69,11 +71,13 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     /// modifiers used with a standard `TabView`).
     public init(
         selectedTab: Binding<Tab>,
+        config: MaterialTabsConfig = MaterialTabsConfig(),
         @ViewBuilder headerTabBar: @escaping (MaterialTabsHeaderContext<Tab>) -> HeaderTabBar,
         @ViewBuilder content: @escaping () -> Content
     ) where HeaderTitle == EmptyView, HeaderBackground == EmptyView {
         self.init(
             selectedTab: selectedTab,
+            config: config,
             headerTitle:  { _ in EmptyView() },
             headerTabBar: headerTabBar,
             headerBackground: { _ in EmptyView() },
@@ -96,12 +100,14 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     /// modifiers used with a standard `TabView`).
     public init(
         selectedTab: Binding<Tab>,
+        config: MaterialTabsConfig = MaterialTabsConfig(),
         @ViewBuilder headerTitle: @escaping (MaterialTabsHeaderContext<Tab>) -> HeaderTitle,
         @ViewBuilder headerTabBar: @escaping (MaterialTabsHeaderContext<Tab>) -> HeaderTabBar,
         @ViewBuilder headerBackground: @escaping (MaterialTabsHeaderContext<Tab>) -> HeaderBackground,
         @ViewBuilder content: @escaping () -> Content
     ) {
         _selectedTab = selectedTab
+        self.config = config
         self.header = { context in
             HeaderView(
                 context: context,
@@ -110,6 +116,7 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                 background: headerBackground
             )
         }
+        self.config = config
         self.content = content
         _headerModel = StateObject(wrappedValue: HeaderModel(selectedTab: selectedTab.wrappedValue))
     }
@@ -120,6 +127,7 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
 
     @Binding private var selectedTab: Tab
     @State private var selectedTabScroll: Tab?
+    @State private var config: MaterialTabsConfig
     @ViewBuilder private let header: (MaterialTabsHeaderContext<Tab>) -> HeaderView<HeaderTitle, HeaderTabBar, HeaderBackground, Tab>
     @ViewBuilder private let content: () -> Content
     @StateObject private var headerModel: HeaderModel<Tab>
@@ -183,6 +191,9 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
         .onPreferenceChange(MinTitleHeightPreferenceKey.self, perform: headerModel.minTitleHeightChanged(_:))
         .onChange(of: selectedTab, initial: true) {
             headerModel.selected(tab: selectedTab)
+        }
+        .onChange(of: config, initial: true) {
+            headerModel.configChanged(config)
         }
         .onChange(of: selectedTabScroll) {
             guard let selectedTab = selectedTabScroll else { return }
