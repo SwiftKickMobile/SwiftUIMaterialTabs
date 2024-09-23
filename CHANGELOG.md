@@ -1,8 +1,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.0.4
+
+### Fixes
+
+* Fix #17 Animate tab bar scroll position changes
+
 ## 2.0.3
 
+### Fixes
 * Fix #12 Scroll doesn't reset when switching the tabs while scrolled to top
 * Fix the bottom padding on `MaterialTabsScroll` in iOS 18
 
