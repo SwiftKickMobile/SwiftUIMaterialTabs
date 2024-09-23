@@ -126,6 +126,7 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
             .scrollPosition(id: $selectedTabScroll, anchor: .center)
             .scrollIndicators(.never)
             .scrollBounceBehavior(.basedOnSize)
+            .animation(.default, value: selectedTabScroll)
         }
         .frame(height: height)
         .onPreferenceChange(TabBarHeightPreferenceKey.self) { height in
