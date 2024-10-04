@@ -37,6 +37,7 @@
 		2295EC362B5C774500A19247 /* TabBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2295EC352B5C774500A19247 /* TabBarModel.swift */; };
 		2295EC3C2B5DE42D00A19247 /* PrimaryTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2295EC3B2B5DE42D00A19247 /* PrimaryTab.swift */; };
 		2295EC3E2B5DE43A00A19247 /* SecondaryTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2295EC3D2B5DE43A00A19247 /* SecondaryTab.swift */; };
+		2296A45B2CA8D2DF003CC9F0 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296A45A2CA8D2DB003CC9F0 /* View+Extensions.swift */; };
 		22982C062B5ECC9700852311 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22982C052B5ECC9700852311 /* Media.xcassets */; };
 		22982C0F2B5EF52200852311 /* FixedHeaderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C0E2B5EF52200852311 /* FixedHeaderStyle.swift */; };
 		22982C202B604A9000852311 /* StickyHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22982C1F2B604A9000852311 /* StickyHeader.swift */; };
@@ -76,6 +77,7 @@
 		2295EC352B5C774500A19247 /* TabBarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarModel.swift; sourceTree = "<group>"; };
 		2295EC3B2B5DE42D00A19247 /* PrimaryTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryTab.swift; sourceTree = "<group>"; };
 		2295EC3D2B5DE43A00A19247 /* SecondaryTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryTab.swift; sourceTree = "<group>"; };
+		2296A45A2CA8D2DB003CC9F0 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		22982C052B5ECC9700852311 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		22982C0E2B5EF52200852311 /* FixedHeaderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedHeaderStyle.swift; sourceTree = "<group>"; };
 		22982C1F2B604A9000852311 /* StickyHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeader.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 		226DFD972B5C65DB008AFFF2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2296A45A2CA8D2DB003CC9F0 /* View+Extensions.swift */,
 				226DFD982B5C6621008AFFF2 /* BinaryFloatingPoint+Extensions.swift */,
 				226DFD9A2B5C6663008AFFF2 /* Comparable+Extensions.swift */,
 			);
@@ -301,6 +304,7 @@
 				228F9D0E2B6056C60075D820 /* NoTab.swift in Sources */,
 				224364902B547D1B00563396 /* HeaderView.swift in Sources */,
 				226DFD962B5C4B75008AFFF2 /* MinTitleHeightModifier.swift in Sources */,
+				2296A45B2CA8D2DF003CC9F0 /* View+Extensions.swift in Sources */,
 				224364972B547D1B00563396 /* HeaderContext.swift in Sources */,
 				2243648E2B547D1B00563396 /* ScrollItem.swift in Sources */,
 				22982C202B604A9000852311 /* StickyHeader.swift in Sources */,

@@ -8,10 +8,7 @@ import SwiftUI
 /// `MaterialTabsScroll` as you would a vertically-oriented `ScrollView`, with typical content being a `VStack` or `LazyVStack`.
 ///
 /// `MaterialTabs` adjusts the scroll position when switching tabs to ensure continuity when switching tabs after collapsing or expanding the header.
-/// However, joint maniuplation of scroll position is supported, provided that you supply the scroll item and unit point bindings. However, when
-/// using joint manipulation, you must supply a `reservedItem` identifier for `MaterialTabs` to use internally on its own hidden view. This approach was
-/// adopted because precise manipulation of scroll position requires knowing the height the view associated with the scroll item and using our own internal
-/// view for that seemed the easiest solution.
+/// However, joint maniuplation of scroll position is supported, provided that you supply the scroll position binding.
 ///
 /// Never apply the `scrollPosition()` view modifier to this view because it is already being applied internally. You are free to apply
 /// `scrollTargetLayout()` to your content as needed.
@@ -31,16 +28,58 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         tab: Tab,
         @ViewBuilder content: @escaping (_ context: MaterialTabsScrollContext<Tab>) -> Content
     ) where Item == ScrollItem {
+        #if canImport(ScrollPosition)
         self.init(
             tab: tab,
-            reservedItem: .item,
-            scrollItem: .constant(nil),
-            scrollUnitPoint: .constant(.top),
-            content: content
+            scrollPosition: scrollPosition
         )
+        #else
+        self.tab = tab
+        self.reservedItem = .item
+        _scrollItem = .constant(nil)
+        _scrollUnitPoint = .constant(.top)
+        _scrollModel = StateObject(
+            wrappedValue: ScrollModel(
+                tab: tab,
+                scrollMode: .scrollAnchor,
+                reservedItem: .item
+            )
+        )
+        self.content = content
+        #endif
     }
 
-    /// Constructs a scroll for the given tab with external bindings for join manipulation of the scroll position.
+    /// Constructs a scroll for the given tab with external bindings for joint manipulation of the scroll position.
+    ///
+    /// - Parameters:
+    ///   - tab: The tab that this scroll belongs to.
+    ///   - scrollPosition: The binding to the scroll position.
+    ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
+    ///
+    ////// `MaterialTabs` adjusts the scroll position when switching tabs to ensure continuity when switching tabs after collapsing or expanding the header.
+    /// However, joint maniuplation of scroll position is supported, provided that you supply the scroll position binding.
+    ///
+    /// Never apply the `scrollPosition()` view modifier to this view because it is already being applied internally. You are free to apply
+    /// `scrollTargetLayout()` to your content as needed.
+    #if canImport(ScrollPosition)
+    public init(
+        tab: Tab,
+        scrollPosition: Binding<ScrollPosition>,
+        @ViewBuilder content: @escaping (_ context: MaterialTabsScrollContext<Tab>) -> Content
+    ) {
+        self.tab = tab
+        _scrollPosition = scrollPosition
+        _scrollModel = StateObject(
+            wrappedValue: ScrollModel(
+                tab: tab,
+                reservedItem: reservedItem
+            )
+        )
+        self.content = content
+    }
+    #endif
+
+    /// Constructs a scroll for the given tab with external bindings for joint manipulation of the scroll position.
     ///
     /// - Parameters:
     ///   - tab: The tab that this scroll belongs to.
@@ -54,9 +93,10 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     /// using joint manipulation, you must supply a `reservedItem` identifier for `MaterialTabs` to use internally on its own hidden view. This approach was
     /// adopted because precise manipulation of scroll position requires knowing the height the view associated with the scroll item and using our own internal
     /// view for that seemed the easiest solution.
-
+    ///
     /// Never apply the `scrollPosition()` view modifier to this view because it is already being applied internally. You are free to apply
     /// `scrollTargetLayout()` to your content as needed.
+    @available(*, deprecated, message: "Only use this with apps that need to support versions of iOS less than 18. In iOS 18, the `reservedItem` is not needed.")
     public init(
         tab: Tab,
         reservedItem: Item,
@@ -71,6 +111,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         _scrollModel = StateObject(
             wrappedValue: ScrollModel(
                 tab: tab,
+                scrollMode: .scrollAnchor,
                 reservedItem: reservedItem
             )
         )
@@ -84,6 +125,9 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     private let tab: Tab
     private let reservedItem: Item?
     @State private var coordinateSpaceName = UUID()
+    #if canImport(ScrollPosition)
+    @Binding private var scrollPosition = ScrollPosition(idType: Item.self)
+    #endif
     @Binding private var scrollItem: Item?
     @Binding private var scrollUnitPoint: UnitPoint
     @StateObject private var scrollModel: ScrollModel<Item, Tab>
@@ -128,7 +172,20 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
             }
         }
         .coordinateSpace(name: coordinateSpaceName)
-        .scrollPosition(id: $scrollModel.scrollItem, anchor: scrollModel.scrollUnitPoint)
+        .map { content in
+            switch scrollModel.scrollMode {
+            case .scrollAnchor:
+                content
+                    .scrollPosition(id: $scrollModel.scrollItem, anchor: scrollModel.scrollUnitPoint)
+            case .scrollPosition:
+                #if canImport(ScrollPosition)
+                content
+                    .scrollPosition(scrollPosition)
+                #else
+                content
+                #endif
+            }
+        }
         .transaction(value: scrollModel.scrollItem) { transation in
             // Sometimes this happens in an animation context, but this prevents animation
             transation.animation = nil
@@ -138,9 +195,14 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
             scrollModel.contentSizeChanged(size)
         }
         .onAppear {
-            // It is important not to attempt to adjust the scroll position until after the view has appeared
-            // and this task seems to accomplish that.
-            Task {
+            switch scrollModel.scrollMode {
+            case .scrollAnchor:
+                // It is important not to attempt to adjust the scroll position until after the view has appeared
+                // and this task seems to accomplish that.
+                Task {
+                    scrollModel.appeared(headerModel: headerModel)
+                }
+            case .scrollPosition:
                 scrollModel.appeared(headerModel: headerModel)
             }
         }
@@ -152,6 +214,16 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         }
         .onChange(of: scrollUnitPoint, initial: true) {
             scrollModel.scrollUnitPointChanged(scrollUnitPoint)
+        }
+        .map { content in
+            #if canImport(ScrollPosition)
+            content
+                .onChange(of: scrollPosition, intial: true) {
+                    scrollModel.scrollPositionChanged(scrollPosition)
+                }
+            #else
+            content
+            #endif
         }
         .onChange(of: headerModel.state.headerContext.height) {
             scrollModel.headerHeightChanged()
