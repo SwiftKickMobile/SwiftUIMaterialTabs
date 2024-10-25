@@ -64,7 +64,7 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
                             contentOffset: -offset,
                             deltaContentOffset: -(offset - contentOffset)
                         )
-                        contentOffset = -offset
+                        contentOffset = offset
                     }
                 content(
                     StickyHeaderScrollContext(
