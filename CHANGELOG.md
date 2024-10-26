@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.0.6
+
+### Fixes
+* Fix bug in `StickyHeaderScroll` header rubber banding
+
 ## 2.0.5
 
 ### Improvements
