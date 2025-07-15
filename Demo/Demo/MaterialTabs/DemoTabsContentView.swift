@@ -26,21 +26,34 @@ struct DemoTabsContentView: View {
     // MARK: - Body
   
     var body: some View {
-        MaterialTabsScroll(
-            tab: tab
-        ) { _ in
-            LazyVStack(spacing: 0) {
-                info()
-                    .padding([.leading, .trailing, .top], 20)
-                    .id(0)
-                ForEach(1..<26) { index in
-                    DemoContentRowView(index: index, name: name, foregroundStyle: tab.contentForeground)
-                        .id(index)
+        if tab == .two {
+            MaterialTabsScroll(
+                tab: tab
+            ) { _ in
+                LazyVStack(spacing: 0) {
+                    Text("Short content.")
                 }
+                .scrollTargetLayout()
             }
-            .scrollTargetLayout()
+            .background(tab.contentBackground)
+            .scrollBounceBehavior(.basedOnSize)
+        } else {
+            MaterialTabsScroll(
+                tab: tab
+            ) { _ in
+                LazyVStack(spacing: 0) {
+                    info()
+                        .padding([.leading, .trailing, .top], 20)
+                        .id(0)
+                    ForEach(1..<26) { index in
+                        DemoContentRowView(index: index, name: name, foregroundStyle: tab.contentForeground)
+                            .id(index)
+                    }
+                }
+                .scrollTargetLayout()
+            }
+            .background(tab.contentBackground)
         }
-        .background(tab.contentBackground)
     }
 }
 

@@ -23,6 +23,11 @@ struct DemoTabsView: View {
     var body: some View {
         MaterialTabs(
             selectedTab: $selectedTab,
+            config: MaterialTabsConfig(
+                headerConfig: HeaderConfig(
+                    scrollUpSnapMode: .snapToExpanded
+                )
+            ),
             headerTitle: { context in
                 DemoTabsHeaderTitle(context: context)
             },

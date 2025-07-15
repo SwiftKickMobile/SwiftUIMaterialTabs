@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2215AE542E2421DC000DE893 /* HeaderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2215AE532E2421D8000DE893 /* HeaderConfig.swift */; };
 		2243648D2B547D1B00563396 /* MaterialTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2243647D2B547D1B00563396 /* MaterialTabs.swift */; };
 		2243648E2B547D1B00563396 /* ScrollItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2243647F2B547D1B00563396 /* ScrollItem.swift */; };
 		2243648F2B547D1B00563396 /* ScrollModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224364802B547D1B00563396 /* ScrollModel.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2215AE532E2421D8000DE893 /* HeaderConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderConfig.swift; sourceTree = "<group>"; };
 		224364642B547D0300563396 /* SwiftUIMaterialTabs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftUIMaterialTabs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2243647D2B547D1B00563396 /* MaterialTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialTabs.swift; sourceTree = "<group>"; };
 		2243647F2B547D1B00563396 /* ScrollItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollItem.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 		2243647E2B547D1B00563396 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				2215AE532E2421D8000DE893 /* HeaderConfig.swift */,
 				224364892B547D1B00563396 /* HeaderContext.swift */,
 				224364822B547D1B00563396 /* HeaderModel.swift */,
 				224364812B547D1B00563396 /* HeaderView.swift */,
@@ -311,6 +314,7 @@
 				224364952B547D1B00563396 /* MaterialTabItemModifier.swift in Sources */,
 				228F9D102B6059120075D820 /* StickyHeaderScroll.swift in Sources */,
 				226DFD882B5C3301008AFFF2 /* HeaderStyle.swift in Sources */,
+				2215AE542E2421DC000DE893 /* HeaderConfig.swift in Sources */,
 				22EFAB292B7FD3C800BAC62B /* StickyHeaderScrollContext.swift in Sources */,
 				2295EC3C2B5DE42D00A19247 /* PrimaryTab.swift in Sources */,
 				2295EC362B5C774500A19247 /* TabBarModel.swift in Sources */,

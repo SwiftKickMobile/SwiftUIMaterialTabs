@@ -23,6 +23,15 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
         }
 
         var config: MaterialTabsConfig = MaterialTabsConfig()
+        
+        // MARK: - Scroll Up Tracking
+        /// Accumulates the amount scrolled up in the current scroll up sequence.
+        /// `nil` means scroll up has not been detected or tracking has been reset.
+        var scrollUpAccumulation: CGFloat? = nil
+        
+        /// Distance the header snapped beyond natural scroll position.
+        /// Used to maintain sync until scroll position catches up to snapped position.
+        var snapDistance: CGFloat = 0
     }
 
     @Published fileprivate(set) var state: State
@@ -57,6 +66,8 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
     func selected(tab: Tab) {
         hasScrolledSinceSelected = false
         self.state.headerContext.selectedTab = tab
+        // Reset snap distance when switching tabs
+        state.snapDistance = 0
     }
 
     func safeAreaChanged(_ safeArea: EdgeInsets) {
@@ -90,6 +101,29 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
     /// can change the header offset, introducing edge cases that need to be handled.
     func scrolled(tab: Tab, contentOffset: CGFloat, deltaContentOffset: CGFloat) {
         guard tab == state.headerContext.selectedTab else { return }
+        
+        // Update scroll up accumulation for snap behavior
+        if deltaContentOffset < 0 && state.headerContext.offset > 0 && state.config.headerConfig.scrollUpSnapMode == .snapToExpanded {
+            // Scrolling up and header is not fully expanded and snap mode is enabled - start or continue accumulation
+            let scrollUpAccumulation = (state.scrollUpAccumulation ?? 0) + abs(deltaContentOffset)
+            state.scrollUpAccumulation = scrollUpAccumulation
+            
+            if scrollUpAccumulation >= 30.0 {
+                withAnimation(.snappy(duration: 0.3)) {
+                    state.headerContext.offset = 0 // Fully expanded position
+                }
+                
+                // Record how far we snapped beyond natural position
+                state.snapDistance = contentOffset
+                
+                // Reset accumulation after snapping
+                state.scrollUpAccumulation = nil
+            }
+        } else {
+            // Scrolling down or other conditions - reset accumulation
+            state.scrollUpAccumulation = nil
+        }
+        
         switch state.config.crossTabSyncMode {
         case .resetTitleOnScroll where !hasScrolledSinceSelected:
             withAnimation(.snappy(duration: 0.3)) {
@@ -97,13 +131,24 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
             }
         default:
             state.headerContext.contentOffset = contentOffset
+
+            if deltaContentOffset < 0,
+               state.headerContext.offset == 0 {
+                state.snapDistance = max(0, contentOffset)
+            }
+
+//            // Reset snap distance when reaching either boundary of the direct sync range
+//            if state.snapDistance > 0 && (contentOffset <= 0 || state.headerContext.offset >= state.headerContext.maxOffset) {
+//                state.snapDistance = 0
+//            }
+            
             // When scrolling down (a.k.a. swiping up), the header offset matches the scroll view until it reaches the
             // max offset, at which point it is fully collapsed.
             if deltaContentOffset > 0 {
                 // If the scroll view offset is less than the max offset, then the scroll and header offsets should
-                // match.
+                // match, accounting for any snap distance.
                 if contentOffset < state.headerContext.maxOffset {
-                    state.headerContext.offset = contentOffset
+                    state.headerContext.offset = contentOffset - state.snapDistance
                 }
                 // However, if the scroll view is past the max offset, the header must move by the same amount until
                 // it reaches the max offset.
@@ -125,5 +170,7 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
             }
         }
         hasScrolledSinceSelected = true
+
+        print("XXXX contentOffset=\(contentOffset), snapDistance=\(state.snapDistance), offset=\(state.headerContext.offset)")
     }
 }

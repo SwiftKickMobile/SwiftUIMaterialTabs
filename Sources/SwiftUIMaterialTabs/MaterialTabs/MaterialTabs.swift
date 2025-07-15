@@ -116,7 +116,6 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                 background: headerBackground
             )
         }
-        self.config = config
         self.content = content
         _headerModel = StateObject(wrappedValue: HeaderModel(selectedTab: selectedTab.wrappedValue))
     }
@@ -127,7 +126,7 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
 
     @Binding private var selectedTab: Tab
     @State private var selectedTabScroll: Tab?
-    @State private var config: MaterialTabsConfig
+    private let config: MaterialTabsConfig
     @ViewBuilder private let header: (MaterialTabsHeaderContext<Tab>) -> HeaderView<HeaderTitle, HeaderTabBar, HeaderBackground, Tab>
     @ViewBuilder private let content: () -> Content
     @StateObject private var headerModel: HeaderModel<Tab>

@@ -28,16 +28,19 @@ public struct StickyHeader<HeaderTitle, HeaderBackground, Content>: View
     /// Constructs a sticky header component with a title and content (no background).
     ///
     /// - Parameters:
+    ///   - config: The header configuration for scroll behavior. Defaults to `HeaderConfig()` with current behavior.
     ///   - headerTitle: The header title view builder.
     ///   - content: a content view builder, who's top level elements are assumed to be individual tab contents.
     ///
     /// The content is typically a `StickyHeaderScroll` view. `StickyHeaderScroll` is a lightweight wrapper, around
     /// `ScrollView` and is required to enable scroll effects.
     public init(
+        config: HeaderConfig = HeaderConfig(),
         @ViewBuilder headerTitle: @escaping (StickyHeaderContext) -> HeaderTitle,
         @ViewBuilder content: @escaping () -> Content
     ) where HeaderBackground == EmptyView {
         self.init(
+            config: config,
             headerTitle: headerTitle,
             headerBackground: { _ in EmptyView() },
             content: content
@@ -47,6 +50,7 @@ public struct StickyHeader<HeaderTitle, HeaderBackground, Content>: View
     /// Constructs a sticky header component with a title and background.
     ///
     /// - Parameters:
+    ///   - config: The header configuration for scroll behavior. Defaults to `HeaderConfig()` with current behavior.
     ///   - headerTitle: The header title view builder.
     ///   - headerBackground: The header background view builder, typically a `Color`, `Gradient` or scalable `Image`.
     ///   - content: a content view builder, who's top level elements are assumed to be individual tab contents.
@@ -54,10 +58,12 @@ public struct StickyHeader<HeaderTitle, HeaderBackground, Content>: View
     /// The content is typically a `StickyHeaderScroll` view. `StickyHeaderScroll` is a lightweight wrapper, around
     /// `ScrollView` and is required to enable scroll effects.
     public init(
+        config: HeaderConfig = HeaderConfig(),
         @ViewBuilder headerTitle: @escaping (StickyHeaderContext) -> HeaderTitle,
         @ViewBuilder headerBackground: @escaping (StickyHeaderContext) -> HeaderBackground,
         @ViewBuilder content: @escaping () -> Content
     ) {
+        self.config = config
         self.header = { context in
             HeaderView(
                 context: context,
@@ -74,6 +80,7 @@ public struct StickyHeader<HeaderTitle, HeaderBackground, Content>: View
 
     // MARK: - Variables
 
+    private let config: HeaderConfig
     @ViewBuilder private let header: (StickyHeaderContext) -> HeaderView<HeaderTitle, EmptyView, HeaderBackground, NoTab>
     @ViewBuilder private let content: () -> Content
     @StateObject private var headerModel: HeaderModel<NoTab>
@@ -103,6 +110,9 @@ public struct StickyHeader<HeaderTitle, HeaderBackground, Content>: View
         .onPreferenceChange(MinTitleHeightPreferenceKey.self, perform: headerModel.minTitleHeightChanged(_:))
         .onAppear {
             headerModel.tabsRegistered()
+        }
+        .onChange(of: config, initial: true) {
+            headerModel.configChanged(MaterialTabsConfig(headerConfig: config))
         }
     }
 }

@@ -29,9 +29,21 @@ public struct MaterialTabsConfig: Equatable {
         case resetTitleOnScroll(_ animation: Animation = .snappy(duration: 0.3))
     }
 
+    /// Specifies how the scroll view and header adjust to maintain continuity when switching tabs.
     public var crossTabSyncMode: CrossTabSyncMode = .resetTitleOnScroll()
+    
+    /// Configuration for sticky header behavior, including scroll-up snap behavior.
+    public var headerConfig: HeaderConfig = HeaderConfig()
 
-    public init(crossTabSyncMode: CrossTabSyncMode = .resetTitleOnScroll()) {
+    /// Creates a new MaterialTabsConfig.
+    /// - Parameters:
+    ///   - crossTabSyncMode: The cross-tab synchronization mode. Defaults to `.resetTitleOnScroll()`.
+    ///   - headerConfig: The header configuration. Defaults to `HeaderConfig()` with current behavior.
+    public init(
+        crossTabSyncMode: CrossTabSyncMode = .resetTitleOnScroll(),
+        headerConfig: HeaderConfig = HeaderConfig()
+    ) {
         self.crossTabSyncMode = crossTabSyncMode
+        self.headerConfig = headerConfig
     }
 }

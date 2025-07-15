@@ -1,6 +1,26 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.0.7
+
+### Improvements
+
+* Implement #21 - Add scroll-up snap behavior for sticky headers. When enabled, the header automatically snaps to fully expanded state after detecting scroll-up intent, making it easier to reveal collapsed headers without extensive scrolling.
+
+````swift
+// Enable snap-to-expanded behavior
+MaterialTabs(
+    config: MaterialTabsConfig(
+        headerConfig: HeaderConfig(scrollUpSnapMode: .snapToExpanded)
+    )
+) { }
+
+// Or for StickyHeader
+StickyHeader(
+    config: HeaderConfig(scrollUpSnapMode: .snapToExpanded)
+) { }
+````
+
 ## 2.0.6
 
 ### Fixes

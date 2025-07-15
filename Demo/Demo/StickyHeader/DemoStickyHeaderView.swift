@@ -20,6 +20,9 @@ struct DemoStickyHeaderView: View {
 
     var body: some View {
         StickyHeader(
+            config: HeaderConfig(
+                scrollUpSnapMode: .snapToExpanded
+            ),
             headerTitle: { context in
                 DemoStickyHeaderTitleView(context: context)
             },
