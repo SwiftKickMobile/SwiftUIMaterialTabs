@@ -136,11 +136,6 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
                state.headerContext.offset == 0 {
                 state.snapDistance = max(0, contentOffset)
             }
-
-//            // Reset snap distance when reaching either boundary of the direct sync range
-//            if state.snapDistance > 0 && (contentOffset <= 0 || state.headerContext.offset >= state.headerContext.maxOffset) {
-//                state.snapDistance = 0
-//            }
             
             // When scrolling down (a.k.a. swiping up), the header offset matches the scroll view until it reaches the
             // max offset, at which point it is fully collapsed.
@@ -171,6 +166,6 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
         }
         hasScrolledSinceSelected = true
 
-        print("XXXX contentOffset=\(contentOffset), snapDistance=\(state.snapDistance), offset=\(state.headerContext.offset)")
+//        print("XXXX contentOffset=\(contentOffset), snapDistance=\(state.snapDistance), offset=\(state.headerContext.offset)")
     }
 }
