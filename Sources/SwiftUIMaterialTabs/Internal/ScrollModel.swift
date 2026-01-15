@@ -161,6 +161,8 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         default:
             contentOffset = contentOffset + deltaHeaderOffset
         }
+        // Update the header context with this tab's content offset during programmatic sync
+        headerModel.contentOffsetChanged(contentOffset)
         switch scrollMode {
         case .scrollAnchor:
             scrollUnitPoint = UnitPoint(

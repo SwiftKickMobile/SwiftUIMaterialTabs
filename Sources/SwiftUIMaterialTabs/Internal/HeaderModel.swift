@@ -74,6 +74,10 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
         }
     }
 
+    func contentOffsetChanged(_ contentOffset: CGFloat) {
+        state.headerContext.contentOffset = contentOffset
+    }
+
     // MARK: - Constants
 
     // MARK: - Variables
@@ -92,7 +96,6 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
         guard tab == state.headerContext.selectedTab else { return }
         switch state.config.crossTabSyncMode {
         case .resetTitleOnScroll where !hasScrolledSinceSelected:
-            state.headerContext.contentOffset = contentOffset
             withAnimation(.snappy(duration: 0.3)) {
                 state.headerContext.offset = min(state.headerContext.maxOffset, contentOffset)
             }
