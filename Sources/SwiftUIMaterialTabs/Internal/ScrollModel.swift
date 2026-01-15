@@ -53,7 +53,13 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
 
     func selectedTabChanged() {
         guard let headerModel else { return }
+        let wasSelected = selectedTab == tab
         selectedTab = headerModel.state.headerContext.selectedTab
+        let isSelected = selectedTab == tab
+        // Sync content offset when this tab becomes selected
+        if !wasSelected && isSelected {
+            syncContentOffsetWithHeader(appearance: false)
+        }
     }
 
     #if canImport(ScrollPosition)
