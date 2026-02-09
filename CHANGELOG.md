@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.0.7
+
+### Improvements
+
+* Add context-free initializers to `MaterialTabsScroll` and `StickyHeaderScroll`. The existing initializers pass a `MaterialTabsScrollContext` (or `StickyHeaderScrollContext`) to the content view builder, which includes the content offset. Because the content offset changes on every frame during scrolling, this causes the content view `body` to be re-evaluated continuously. The new initializers omit the context, allowing the content to be shielded from these unnecessary re-evaluations via an internal `ContentWrapperView` with `Equatable` conformance. If your content does not need the context, prefer the new initializers for better scroll performance.
+
 ## 2.0.6
 
 ### Fixes

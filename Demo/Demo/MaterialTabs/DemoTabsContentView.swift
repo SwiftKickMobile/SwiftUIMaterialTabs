@@ -28,7 +28,7 @@ struct DemoTabsContentView: View {
     var body: some View {
         MaterialTabsScroll(
             tab: tab
-        ) { _ in
+        ) {
             LazyVStack(spacing: 0) {
                 info()
                     .padding([.leading, .trailing, .top], 20)

@@ -16,9 +16,30 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
     /// - Parameters:
     ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
     public init(
+        @ViewBuilder content content: @escaping () -> Content
+    ) where Item == ScrollItem {
+        self.content = { _ in
+            ContentWrapperView(tab: NoTab.none, content: content)
+        }
+    }
+
+    /// Constructs a sticky header scroll.
+    ///
+    /// - Parameters:
+    ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
+    ///
+    /// - Important: Because the context is passed to the content view builder, the content `body` will be re-evaluated
+    /// on every scroll offset change. If your content does not need the context, prefer the initializer that omits it to
+    /// avoid unnecessary view body evaluations during scrolling.
+    public init(
         @ViewBuilder content: @escaping (_ context: StickyHeaderScrollContext) -> Content
     ) where Item == ScrollItem {
-        self.content = content
+        self.content = { context in
+            ContentWrapperView(
+                context: context,
+                content: content
+            )
+        }
     }
 
     public struct Context {
@@ -40,7 +61,7 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
 
     @State private var coordinateSpaceName = UUID()
     @State private var contentOffset: CGFloat = 0
-    @ViewBuilder private var content: (_ context: StickyHeaderScrollContext) -> Content
+    @ViewBuilder private var content: (_ context: StickyHeaderScrollContext) -> ContentWrapperView<Content, NoTab>
     @EnvironmentObject private var headerModel: HeaderModel<NoTab>
 
     // MARK: - Body
