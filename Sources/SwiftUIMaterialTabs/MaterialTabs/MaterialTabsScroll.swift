@@ -49,6 +49,39 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         #endif
     }
 
+    /// Constructs a scroll for the given tab without regard for the context
+    ///
+    /// - Parameters:
+    ///   - tab: The tab that this scroll belongs to.
+    ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
+    ///
+    /// Never apply the `scrollPosition()` view modifier to this view because it is already being applied internally. You are free to apply
+    /// `scrollTargetLayout()` to your content as needed.
+    public init(
+        tab: Tab,
+        @ViewBuilder content: @escaping () -> Content
+    ) where Item == ScrollItem {
+        #if canImport(ScrollPosition)
+        self.init(
+            tab: tab,
+            scrollPosition: scrollPosition
+        )
+        #else
+        self.tab = tab
+        self.reservedItem = .item
+        _scrollItem = .constant(nil)
+        _scrollUnitPoint = .constant(.top)
+        _scrollModel = StateObject(
+            wrappedValue: ScrollModel(
+                tab: tab,
+                scrollMode: .scrollAnchor,
+                reservedItem: .item
+            )
+        )
+        self.content = { _ in content() }
+        #endif
+    }
+
     /// Constructs a scroll for the given tab with external bindings for joint manipulation of the scroll position.
     ///
     /// - Parameters:
@@ -102,7 +135,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         reservedItem: Item,
         scrollItem: Binding<Item?>,
         scrollUnitPoint: Binding<UnitPoint>,
-        @ViewBuilder content: @escaping (_ context: MaterialTabsScrollContext<Tab>) -> Content
+        @ViewBuilder content _content: @escaping (_ context: MaterialTabsScrollContext<Tab>) -> Content
     ) {
         self.tab = tab
         self.reservedItem = reservedItem
@@ -115,7 +148,15 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
                 reservedItem: reservedItem
             )
         )
-        self.content = content
+        self.content = {
+            ContentWrapperView(
+                context: MaterialTabsScrollContext<Tab>(
+                    headerContext: headerModel.state.headerContext,
+                    safeHeight: headerModel.state.safeHeight
+                ),
+                content: _content
+            )
+        }
     }
 
     // MARK: - Constants
@@ -131,7 +172,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     @Binding private var scrollItem: Item?
     @Binding private var scrollUnitPoint: UnitPoint
     @StateObject private var scrollModel: ScrollModel<Item, Tab>
-    @ViewBuilder private var content: (_ context: MaterialTabsScrollContext<Tab>) -> Content
+    @ViewBuilder private var content: (MaterialTabsScrollContext<Tab>) -> Content
     @EnvironmentObject private var headerModel: HeaderModel<Tab>
 
     // MARK: - Body
@@ -156,17 +197,12 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
                     Color.clear
                         .frame(height: 1)
                         .id(reservedItem)
-                    content(
-                        MaterialTabsScrollContext<Tab>(
-                            headerContext: headerModel.state.headerContext,
-                            safeHeight: headerModel.state.safeHeight
-                        )
-                    )
-                    .background {
-                        GeometryReader(content: { proxy in
-                            Color.clear.preference(key: ScrollViewContentSizeKey.self, value: proxy.size)
-                        })
-                    }
+                    content()
+                        .background {
+                            GeometryReader(content: { proxy in
+                                Color.clear.preference(key: ScrollViewContentSizeKey.self, value: proxy.size)
+                            })
+                        }
                 }
                 Color.clear.frame(height: scrollModel.bottomMargin)
             }
