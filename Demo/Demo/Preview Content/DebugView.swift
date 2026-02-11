@@ -185,6 +185,11 @@ struct DebugView: View {
 // ParentView2 re-evaluates → ChildView2 (with @Query) is reconstructed →
 // @self changed on every tick.
 
+@Observable
+private class Driver {
+    @Published var tick: Int = 0
+}
+
 private class Driver: ObservableObject {
     @Published var tick: Int = 0
 }

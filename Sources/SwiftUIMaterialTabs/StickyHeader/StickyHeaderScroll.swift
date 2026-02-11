@@ -7,7 +7,7 @@ import SwiftUI
 /// A lightweight scroll view wrapper required for sticky header scroll effects. For most intents and purposes, you should use `StickyHeaderScroll` as you
 /// would a vertically-oriented `ScrollView`, with typical content being a `VStack` or `LazyVStack`. The main task that `StickyHeaderScroll`
 /// performs is to track the content offset.
-public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item: Hashable {
+public struct StickyHeaderScroll<Content>: View where Content: View {
 
     // MARK: - API
 
@@ -17,7 +17,7 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
     ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
     public init(
         @ViewBuilder content: @escaping (_ context: StickyHeaderScrollContext) -> Content
-    ) where Item == ScrollItem {
+    ) {
         self.content = content
     }
 

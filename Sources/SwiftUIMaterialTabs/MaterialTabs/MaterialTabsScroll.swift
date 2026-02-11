@@ -8,11 +8,11 @@ import SwiftUI
 /// `MaterialTabsScroll` as you would a vertically-oriented `ScrollView`, with typical content being a `VStack` or `LazyVStack`.
 ///
 /// `MaterialTabs` adjusts the scroll position when switching tabs to ensure continuity when switching tabs after collapsing or expanding the header.
-/// However, joint maniuplation of scroll position is supported, provided that you supply the scroll position binding.
+/// However, joint manipulation of scroll position is supported, provided that you supply the scroll position binding.
 ///
 /// Never apply the `scrollPosition()` view modifier to this view because it is already being applied internally. You are free to apply
 /// `scrollTargetLayout()` to your content as needed.
-public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, Tab: Hashable, Item: Hashable {
+public struct MaterialTabsScroll<Content, Tab>: View where Content: View, Tab: Hashable {
 
     // MARK: - API
 
@@ -27,98 +27,55 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     public init(
         tab: Tab,
         @ViewBuilder content: @escaping (_ context: MaterialTabsScrollContext<Tab>) -> Content
-    ) where Item == ScrollItem {
+    ) {
         self.tab = tab
-        self.reservedItem = .item
-        _scrollItem = .constant(nil)
-        _scrollUnitPoint = .constant(.top)
-        _scrollModel = State(
-            wrappedValue: ScrollModel(
-                tab: tab,
-                scrollMode: .scrollAnchor,
-                reservedItem: .item
-            )
-        )
+        self.hasExternalScrollPosition = false
+        _externalScrollPosition = .constant(ScrollPosition())
+        _scrollModel = State(wrappedValue: ScrollModel(tab: tab))
         self.content = content
     }
 
-    /// Constructs a scroll for the given tab with external bindings for joint manipulation of the scroll position.
+    /// Constructs a scroll for the given tab with an external scroll position binding for joint manipulation.
     ///
     /// - Parameters:
     ///   - tab: The tab that this scroll belongs to.
-    ///   - reservedItem: A reserved item identifier used internally.
-    ///   - scrollItem: The binding to the scroll item identifier.
-    ///   - scrollUnitPoint: The binding to the scroll unit point.
+    ///   - scrollPosition: The binding to the scroll position, enabling joint manipulation from the consumer.
     ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
     ///
-    ////// `MaterialTabs` adjusts the scroll position when switching tabs to ensure continuity when switching tabs after collapsing or expanding the header.
-    /// However, joint maniuplation of scroll position is supported, provided that you supply the scroll item and unit point bindings. However, when
-    /// using joint manipulation, you must supply a `reservedItem` identifier for `MaterialTabs` to use internally on its own hidden view. This approach was
-    /// adopted because precise manipulation of scroll position requires knowing the height the view associated with the scroll item and using our own internal
-    /// view for that seemed the easiest solution.
+    /// `MaterialTabs` adjusts the scroll position when switching tabs to ensure continuity when switching tabs after collapsing or expanding the header.
+    /// Joint manipulation of scroll position is supported via the `scrollPosition` binding, allowing the consumer to programmatically
+    /// scroll to items, offsets, or edges using the `ScrollPosition` API.
     ///
     /// Never apply the `scrollPosition()` view modifier to this view because it is already being applied internally. You are free to apply
     /// `scrollTargetLayout()` to your content as needed.
     public init(
         tab: Tab,
-        reservedItem: Item,
-        scrollItem: Binding<Item?>,
-        scrollUnitPoint: Binding<UnitPoint>,
+        scrollPosition: Binding<ScrollPosition>,
         @ViewBuilder content: @escaping (_ context: MaterialTabsScrollContext<Tab>) -> Content
     ) {
         self.tab = tab
-        self.reservedItem = reservedItem
-        _scrollItem = scrollItem
-        _scrollUnitPoint = scrollUnitPoint
-        _scrollModel = State(
-            wrappedValue: ScrollModel(
-                tab: tab,
-                scrollMode: .scrollAnchor,
-                reservedItem: reservedItem
-            )
-        )
+        self.hasExternalScrollPosition = true
+        _externalScrollPosition = scrollPosition
+        _scrollModel = State(wrappedValue: ScrollModel(tab: tab))
         self.content = content
     }
-
-    // TODO: Fix for iOS 18. `canImport(ScrollPosition)` cannot succeed, so this is dead code.
-//    #if canImport(ScrollPosition)
-//    public init(
-//        tab: Tab,
-//        scrollPosition: Binding<ScrollPosition>,
-//        @ViewBuilder content: @escaping (_ context: MaterialTabsScrollContext<Tab>) -> Content
-//    ) {
-//        self.tab = tab
-//        _scrollPosition = scrollPosition
-//        _scrollModel = State(
-//            wrappedValue: ScrollModel(
-//                tab: tab,
-//                reservedItem: reservedItem
-//            )
-//        )
-//        self.content = content
-//    }
-//    #endif
 
     // MARK: - Constants
 
     // MARK: - Variables
 
     private let tab: Tab
-    private let reservedItem: Item?
+    private let hasExternalScrollPosition: Bool
     @State private var coordinateSpaceName = UUID()
-    // TODO: Fix for iOS 18. `canImport(ScrollPosition)` cannot succeed, so this is dead code.
-//    #if canImport(ScrollPosition)
-//    @Binding private var scrollPosition = ScrollPosition(idType: Item.self)
-//    #endif
-    @Binding private var scrollItem: Item?
-    @Binding private var scrollUnitPoint: UnitPoint
-    @State private var scrollModel: ScrollModel<Item, Tab>
+    @Binding private var externalScrollPosition: ScrollPosition
+    @State private var scrollModel: ScrollModel<Tab>
     @ViewBuilder private var content: (_ context: MaterialTabsScrollContext<Tab>) -> Content
     @Environment(HeaderModel<Tab>.self) private var headerModel
 
     // MARK: - Body
 
     public var body: some View {
+        @Bindable var scrollModel = scrollModel
         ScrollView {
             VStack(spacing: 0) {
                 Color.clear
@@ -134,68 +91,35 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
                     .onPreferenceChange(ScrollOffsetPreferenceKey.self) { offset in
                         scrollModel.contentOffsetChanged(offset)
                     }
-                ZStack(alignment: .top) {
-                    Color.clear
-                        .frame(height: 1)
-                        .id(reservedItem)
-                    ContentBridgeView(
-                        headerContext: headerModel.headerContext,
-                        safeHeight: headerModel.safeHeight,
-                        content: content
-                    )
-                    .background {
-                        GeometryReader(content: { proxy in
-                            Color.clear.preference(key: ScrollViewContentSizeKey.self, value: proxy.size)
-                        })
-                    }
+                ContentBridgeView(
+                    headerContext: headerModel.headerContext,
+                    safeHeight: headerModel.safeHeight,
+                    content: content
+                )
+                .background {
+                    GeometryReader(content: { proxy in
+                        Color.clear.preference(key: ScrollViewContentSizeKey.self, value: proxy.size)
+                    })
                 }
                 Color.clear.frame(height: scrollModel.bottomMargin)
             }
         }
         .coordinateSpace(name: coordinateSpaceName)
-        .map { content in
-            switch scrollModel.scrollMode {
-            case .scrollAnchor:
-                content
-                    .scrollPosition(id: $scrollModel.scrollItem, anchor: scrollModel.scrollUnitPoint)
-            // TODO: Fix for iOS 18. `canImport(ScrollPosition)` cannot succeed, so this is dead code.
-            case .scrollPosition:
-//                #if canImport(ScrollPosition)
-//                content
-//                    .scrollPosition(scrollPosition)
-//                #else
-                content
-//                #endif
-            }
-        }
-        .transaction(value: scrollModel.scrollItem) { transation in
-            // Sometimes this happens in an animation context, but this prevents animation
-            transation.animation = nil
+        .scrollPosition($scrollModel.scrollPosition)
+        .transaction(value: scrollModel.scrollPosition) { transaction in
+            // Programmatic scroll position changes (e.g. syncing across tabs) sometimes happen
+            // in an animation context. Suppress animation to prevent unwanted scroll animations.
+            transaction.animation = nil
         }
         .onPreferenceChange(ScrollViewContentSizeKey.self) { size in
             guard let size else { return }
             scrollModel.contentSizeChanged(size)
         }
         .onAppear {
-            switch scrollModel.scrollMode {
-            case .scrollAnchor:
-                // It is important not to attempt to adjust the scroll position until after the view has appeared
-                // and this task seems to accomplish that.
-                Task {
-                    scrollModel.appeared(headerModel: headerModel)
-                }
-            case .scrollPosition:
-                scrollModel.appeared(headerModel: headerModel)
-            }
+            scrollModel.appeared(headerModel: headerModel)
         }
         .onChange(of: headerModel.headerContext.selectedTab, initial: true) {
             scrollModel.selectedTabChanged()
-        }
-        .onChange(of: scrollItem, initial: true) {
-            scrollModel.scrollItemChanged(scrollItem)
-        }
-        .onChange(of: scrollUnitPoint, initial: true) {
-            scrollModel.scrollUnitPointChanged(scrollUnitPoint)
         }
         .onChange(of: headerModel.headerContext.height) {
             scrollModel.headerHeightChanged()
@@ -208,6 +132,18 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         }
         .onChange(of: headerModel.headerContext.minTotalHeight) {
             scrollModel.headerStateChanged()
+        }
+        .onChange(of: scrollModel.scrollPosition) {
+            // Sync model → external binding
+            if hasExternalScrollPosition {
+                externalScrollPosition = scrollModel.scrollPosition
+            }
+        }
+        .onChange(of: externalScrollPosition) {
+            // Sync external binding → model
+            if hasExternalScrollPosition && externalScrollPosition != scrollModel.scrollPosition {
+                scrollModel.scrollPosition = externalScrollPosition
+            }
         }
         .onDisappear() {
             scrollModel.disappeared()
@@ -236,7 +172,7 @@ private struct ContentBridgeView<Content: View, Tab: Hashable>: View {
 
 private struct ScrollViewContentSizeKey: PreferenceKey {
     typealias Value = CGSize?
-    static var defaultValue: CGSize? = nil
+    static let defaultValue: CGSize? = nil
     public static func reduce(value: inout CGSize?, nextValue: () -> CGSize?) {
         guard let next = nextValue() else { return }
         value = next
