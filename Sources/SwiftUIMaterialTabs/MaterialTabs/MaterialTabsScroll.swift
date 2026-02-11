@@ -26,30 +26,20 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     /// `scrollTargetLayout()` to your content as needed.
     public init(
         tab: Tab,
-        @ViewBuilder content content: @escaping () -> Content
+        @ViewBuilder content: @escaping (_ context: MaterialTabsScrollContext<Tab>) -> Content
     ) where Item == ScrollItem {
-        // TODO: Fix for iOS 18. `canImport(ScrollPosition)` cannot succeed, so this is dead code.
-//        #if canImport(ScrollPosition)
-//        self.init(
-//            tab: tab,
-//            scrollPosition: scrollPosition
-//        )
-//        #else
         self.tab = tab
         self.reservedItem = .item
         _scrollItem = .constant(nil)
         _scrollUnitPoint = .constant(.top)
-        _scrollModel = StateObject(
+        _scrollModel = State(
             wrappedValue: ScrollModel(
                 tab: tab,
                 scrollMode: .scrollAnchor,
                 reservedItem: .item
             )
         )
-        self.content = { _ in
-            ContentWrapperView(tab: tab, content: content)
-        }
-//        #endif
+        self.content = content
     }
 
     /// Constructs a scroll for the given tab with external bindings for joint manipulation of the scroll position.
@@ -74,127 +64,23 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         reservedItem: Item,
         scrollItem: Binding<Item?>,
         scrollUnitPoint: Binding<UnitPoint>,
-        @ViewBuilder content content: @escaping () -> Content
-    ) {
-        self.tab = tab
-        self.reservedItem = reservedItem
-        _scrollItem = scrollItem
-        _scrollUnitPoint = scrollUnitPoint
-        _scrollModel = StateObject(
-            wrappedValue: ScrollModel(
-                tab: tab,
-                scrollMode: .scrollAnchor,
-                reservedItem: reservedItem
-            )
-        )
-        self.content = { _ in
-            ContentWrapperView(tab: tab, content: content)
-        }
-    }
-
-    /// Constructs a scroll for the given tab.
-    ///
-    /// - Parameters:
-    ///   - tab: The tab that this scroll belongs to.
-    ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
-    ///
-    /// - Important: Because the context is passed to the content view builder, the content `body` will be re-evaluated
-    /// on every scroll offset change. If your content does not need the context, prefer the initializer that omits it to
-    /// avoid unnecessary view body evaluations during scrolling.
-    ///
-    /// Never apply the `scrollPosition()` view modifier to this view because it is already being applied internally. You are free to apply
-    /// `scrollTargetLayout()` to your content as needed.
-    public init(
-        tab: Tab,
-        @ViewBuilder content: @escaping (_ context: MaterialTabsScrollContext<Tab>) -> Content
-    ) where Item == ScrollItem {
-        // TODO: Fix for iOS 18. `canImport(ScrollPosition)` cannot succeed, so this is dead code.
-//        #if canImport(ScrollPosition)
-//        self.init(
-//            tab: tab,
-//            scrollPosition: scrollPosition
-//        )
-//        #else
-        self.tab = tab
-        self.reservedItem = .item
-        _scrollItem = .constant(nil)
-        _scrollUnitPoint = .constant(.top)
-        _scrollModel = StateObject(
-            wrappedValue: ScrollModel(
-                tab: tab,
-                scrollMode: .scrollAnchor,
-                reservedItem: .item
-            )
-        )
-        self.content = { context in
-            ContentWrapperView(
-                context: context,
-                content: content
-            )
-        }
-//        #endif
-    }
-
-    /// Constructs a scroll for the given tab with external bindings for joint manipulation of the scroll position.
-    ///
-    /// - Parameters:
-    ///   - tab: The tab that this scroll belongs to.
-    ///   - reservedItem: A reserved item identifier used internally.
-    ///   - scrollItem: The binding to the scroll item identifier.
-    ///   - scrollUnitPoint: The binding to the scroll unit point.
-    ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
-    ///
-    /// - Important: Because the context is passed to the content view builder, the content `body` will be re-evaluated
-    /// on every scroll offset change. If your content does not need the context, prefer the initializer that omits it to
-    /// avoid unnecessary view body evaluations during scrolling.
-    ///
-    ////// `MaterialTabs` adjusts the scroll position when switching tabs to ensure continuity when switching tabs after collapsing or expanding the header.
-    /// However, joint maniuplation of scroll position is supported, provided that you supply the scroll item and unit point bindings. However, when
-    /// using joint manipulation, you must supply a `reservedItem` identifier for `MaterialTabs` to use internally on its own hidden view. This approach was
-    /// adopted because precise manipulation of scroll position requires knowing the height the view associated with the scroll item and using our own internal
-    /// view for that seemed the easiest solution.
-    ///
-    /// Never apply the `scrollPosition()` view modifier to this view because it is already being applied internally. You are free to apply
-    /// `scrollTargetLayout()` to your content as needed.
-    public init(
-        tab: Tab,
-        reservedItem: Item,
-        scrollItem: Binding<Item?>,
-        scrollUnitPoint: Binding<UnitPoint>,
         @ViewBuilder content: @escaping (_ context: MaterialTabsScrollContext<Tab>) -> Content
     ) {
         self.tab = tab
         self.reservedItem = reservedItem
         _scrollItem = scrollItem
         _scrollUnitPoint = scrollUnitPoint
-        _scrollModel = StateObject(
+        _scrollModel = State(
             wrappedValue: ScrollModel(
                 tab: tab,
                 scrollMode: .scrollAnchor,
                 reservedItem: reservedItem
             )
         )
-        self.content = { context in
-            ContentWrapperView(
-                context: context,
-                content: content
-            )
-        }
+        self.content = content
     }
 
     // TODO: Fix for iOS 18. `canImport(ScrollPosition)` cannot succeed, so this is dead code.
-//    /// Constructs a scroll for the given tab with external bindings for joint manipulation of the scroll position.
-//    ///
-//    /// - Parameters:
-//    ///   - tab: The tab that this scroll belongs to.
-//    ///   - scrollPosition: The binding to the scroll position.
-//    ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
-//    ///
-//    ////// `MaterialTabs` adjusts the scroll position when switching tabs to ensure continuity when switching tabs after collapsing or expanding the header.
-//    /// However, joint maniuplation of scroll position is supported, provided that you supply the scroll position binding.
-//    ///
-//    /// Never apply the `scrollPosition()` view modifier to this view because it is already being applied internally. You are free to apply
-//    /// `scrollTargetLayout()` to your content as needed.
 //    #if canImport(ScrollPosition)
 //    public init(
 //        tab: Tab,
@@ -203,50 +89,13 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
 //    ) {
 //        self.tab = tab
 //        _scrollPosition = scrollPosition
-//        _scrollModel = StateObject(
+//        _scrollModel = State(
 //            wrappedValue: ScrollModel(
 //                tab: tab,
 //                reservedItem: reservedItem
 //            )
 //        )
-//        self.content = { context in
-//            ContentWrapperView(
-//                context: context,
-//                content: content
-//            )
-//        }
-//    }
-//    #endif
-//
-//    /// Constructs a scroll for the given tab with external bindings for joint manipulation of the scroll position.
-//    ///
-//    /// - Parameters:
-//    ///   - tab: The tab that this scroll belongs to.
-//    ///   - scrollPosition: The binding to the scroll position.
-//    ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
-//    ///
-//    ////// `MaterialTabs` adjusts the scroll position when switching tabs to ensure continuity when switching tabs after collapsing or expanding the header.
-//    /// However, joint maniuplation of scroll position is supported, provided that you supply the scroll position binding.
-//    ///
-//    /// Never apply the `scrollPosition()` view modifier to this view because it is already being applied internally. You are free to apply
-//    /// `scrollTargetLayout()` to your content as needed.
-//    #if canImport(ScrollPosition)
-//    public init(
-//        tab: Tab,
-//        scrollPosition: Binding<ScrollPosition>,
-//        @ViewBuilder content content: @escaping () -> Content
-//    ) {
-//        self.tab = tab
-//        _scrollPosition = scrollPosition
-//        _scrollModel = StateObject(
-//            wrappedValue: ScrollModel(
-//                tab: tab,
-//                reservedItem: reservedItem
-//            )
-//        )
-//        self.content = { _ in
-//            ContentWrapperView(tab: tab, content: content)
-//        }
+//        self.content = content
 //    }
 //    #endif
 
@@ -263,9 +112,9 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
 //    #endif
     @Binding private var scrollItem: Item?
     @Binding private var scrollUnitPoint: UnitPoint
-    @StateObject private var scrollModel: ScrollModel<Item, Tab>
-    @ViewBuilder private var content: (MaterialTabsScrollContext<Tab>) -> ContentWrapperView<Content, Tab>
-    @EnvironmentObject private var headerModel: HeaderModel<Tab>
+    @State private var scrollModel: ScrollModel<Item, Tab>
+    @ViewBuilder private var content: (_ context: MaterialTabsScrollContext<Tab>) -> Content
+    @Environment(HeaderModel<Tab>.self) private var headerModel
 
     // MARK: - Body
 
@@ -273,7 +122,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         ScrollView {
             VStack(spacing: 0) {
                 Color.clear
-                    .frame(height: headerModel.state.headerContext.maxOffset)
+                    .frame(height: headerModel.headerContext.maxOffset)
                     .background {
                         GeometryReader { proxy in
                             Color.clear.preference(
@@ -289,11 +138,10 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
                     Color.clear
                         .frame(height: 1)
                         .id(reservedItem)
-                    content(
-                        MaterialTabsScrollContext<Tab>(
-                            headerContext: headerModel.state.headerContext,
-                            safeHeight: headerModel.state.safeHeight
-                        )
+                    ContentBridgeView(
+                        headerContext: headerModel.headerContext,
+                        safeHeight: headerModel.safeHeight,
+                        content: content
                     )
                     .background {
                         GeometryReader(content: { proxy in
@@ -340,7 +188,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
                 scrollModel.appeared(headerModel: headerModel)
             }
         }
-        .onChange(of: headerModel.state.headerContext.selectedTab, initial: true) {
+        .onChange(of: headerModel.headerContext.selectedTab, initial: true) {
             scrollModel.selectedTabChanged()
         }
         .onChange(of: scrollItem, initial: true) {
@@ -349,29 +197,40 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
         .onChange(of: scrollUnitPoint, initial: true) {
             scrollModel.scrollUnitPointChanged(scrollUnitPoint)
         }
-        // TODO: Fix for iOS 18. `canImport(ScrollPosition)` cannot succeed, so this is dead code.
-//        .map { content in
-//            #if canImport(ScrollPosition)
-//            content
-//                .onChange(of: scrollPosition, intial: true) {
-//                    scrollModel.scrollPositionChanged(scrollPosition)
-//                }
-//            #else
-//            content
-//            #endif
-//        }
-        .onChange(of: headerModel.state.headerContext.height) {
+        .onChange(of: headerModel.headerContext.height) {
             scrollModel.headerHeightChanged()
         }
-        .onChange(of: headerModel.state.headerContext.safeArea.top) {
+        .onChange(of: headerModel.headerContext.safeArea.top) {
             scrollModel.headerHeightChanged()
         }
-        .onChange(of: headerModel.state) {
+        .onChange(of: headerModel.height) {
+            scrollModel.headerStateChanged()
+        }
+        .onChange(of: headerModel.headerContext.minTotalHeight) {
             scrollModel.headerStateChanged()
         }
         .onDisappear() {
             scrollModel.disappeared()
         }
+    }
+}
+
+/// Bridge view that invokes the content closure in its own body scope.
+/// This isolates @Observable property tracking — reads of scroll-related
+/// properties (like offset) inside the content closure are tracked here,
+/// not in MaterialTabsScroll.body.
+private struct ContentBridgeView<Content: View, Tab: Hashable>: View {
+    let headerContext: HeaderContext<Tab>
+    let safeHeight: CGFloat
+    @ViewBuilder let content: (_ context: MaterialTabsScrollContext<Tab>) -> Content
+
+    var body: some View {
+        content(
+            MaterialTabsScrollContext<Tab>(
+                headerContext: headerContext,
+                safeHeight: safeHeight
+            )
+        )
     }
 }
 

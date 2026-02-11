@@ -5,77 +5,72 @@
 import SwiftUI
 
 @MainActor
-class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
+@Observable
+class HeaderModel<Tab> where Tab: Hashable {
 
     // MARK: - API
 
-    struct State: Equatable {
-        var headerContext: HeaderContext<Tab>
+    let headerContext: HeaderContext<Tab>
 
-        /// The height reported by the geometry reader. Includes the additional safe area padding we apply.
-        var height: CGFloat = 0
+    /// The height reported by the geometry reader. Includes the additional safe area padding we apply.
+    var height: CGFloat = 0
 
-        var tabsRegistered: Bool = false
+    var tabsRegistered: Bool = false
 
-        /// The height factoring in the additional safe area padding we apply.
-        var safeHeight: CGFloat {
-            height - headerContext.minTotalHeight
-        }
-
-        var config: MaterialTabsConfig = MaterialTabsConfig()
+    /// The height factoring in the additional safe area padding we apply.
+    var safeHeight: CGFloat {
+        height - headerContext.minTotalHeight
     }
 
-    @Published fileprivate(set) var state: State
+    var config: MaterialTabsConfig = MaterialTabsConfig()
 
     init(selectedTab: Tab) {
-        _state = Published(
-            wrappedValue: State(headerContext: HeaderContext(selectedTab: selectedTab))
-        )
+        self.headerContext = HeaderContext(selectedTab: selectedTab)
     }
 
     func configChanged(_ config: MaterialTabsConfig) {
-        state.config = config
+        self.config = config
     }
 
     func sizeChanged(_ size: CGSize) {
-        state.height = size.height
-        state.headerContext.width = size.width
+        height = size.height
+        headerContext.width = size.width
     }
 
     func titleHeightChanged(_ height: CGFloat) {
-        state.headerContext.titleHeight = height
+        headerContext.titleHeight = height
     }
 
     func minTitleHeightChanged(_ metric: MinTitleHeightPreferenceKey.Metric) {
-        state.headerContext.minTitleMetric = metric
+        headerContext.minTitleMetric = metric
     }
 
     func tabBarHeightChanged(_ height: CGFloat) {
-        state.headerContext.tabBarHeight = height
+        headerContext.tabBarHeight = height
     }
 
     func selected(tab: Tab) {
         hasScrolledSinceSelected = false
-        self.state.headerContext.selectedTab = tab
+        headerContext.selectedTab = tab
     }
 
     func safeAreaChanged(_ safeArea: EdgeInsets) {
-        self.state.headerContext.safeArea = safeArea
+        headerContext.safeArea = safeArea
     }
 
     func animationNamespaceChanged(_ animationNamespace: Namespace.ID) {
-        state.headerContext.animationNamespace = animationNamespace
+        headerContext.animationNamespace = animationNamespace
     }
 
-    func tabsRegistered() {
+    func onTabsRegistered() {
         Task {
-            guard !state.tabsRegistered else { return }
-            state.tabsRegistered = true
+            guard !tabsRegistered else { return }
+            self.tabsRegistered = true
         }
     }
 
     func contentOffsetChanged(_ contentOffset: CGFloat) {
-        state.headerContext.contentOffset = contentOffset
+        headerContext.contentOffset = contentOffset
     }
 
     // MARK: - Constants
@@ -93,28 +88,28 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
     /// In the basic case, the header offset matches the scroll view up calculated max offset. However, in a multi-tab environment, scrolling on another tab
     /// can change the header offset, introducing edge cases that need to be handled.
     func scrolled(tab: Tab, contentOffset: CGFloat, deltaContentOffset: CGFloat) {
-        guard tab == state.headerContext.selectedTab else { return }
-        switch state.config.crossTabSyncMode {
+        guard tab == headerContext.selectedTab else { return }
+        switch config.crossTabSyncMode {
         case .resetTitleOnScroll where !hasScrolledSinceSelected:
             withAnimation(.snappy(duration: 0.3)) {
-                state.headerContext.offset = min(state.headerContext.maxOffset, contentOffset)
+                headerContext.offset = min(headerContext.maxOffset, contentOffset)
             }
         default:
-            state.headerContext.contentOffset = contentOffset
+            headerContext.contentOffset = contentOffset
             // When scrolling down (a.k.a. swiping up), the header offset matches the scroll view until it reaches the
             // max offset, at which point it is fully collapsed.
             if deltaContentOffset > 0 {
                 // If the scroll view offset is less than the max offset, then the scroll and header offsets should
                 // match.
-                if contentOffset < state.headerContext.maxOffset {
-                    state.headerContext.offset = contentOffset
+                if contentOffset < headerContext.maxOffset {
+                    headerContext.offset = contentOffset
                 }
                 // However, if the scroll view is past the max offset, the header must move by the same amount until
                 // it reaches the max offset.
                 else {
-                    state.headerContext.offset = min(
-                        state.headerContext.offset + deltaContentOffset,
-                        state.headerContext.maxOffset
+                    headerContext.offset = min(
+                        headerContext.offset + deltaContentOffset,
+                        headerContext.maxOffset
                     )
                 }
             // When scrolling up (a.k.a. swiping down), the header offset remains fixed unless it needs to change to
@@ -123,8 +118,8 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
             } else {
                 // If the scroll view's offset is less than the header's offset, the header must match the scroll view
                 // offset to avoid separation.
-                if contentOffset < state.headerContext.offset {
-                    state.headerContext.offset = contentOffset
+                if contentOffset < headerContext.offset {
+                    headerContext.offset = contentOffset
                 }
             }
         }

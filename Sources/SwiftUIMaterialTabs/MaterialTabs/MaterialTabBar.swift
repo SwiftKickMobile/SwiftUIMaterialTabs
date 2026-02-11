@@ -85,8 +85,8 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     @Binding private var selectedTab: Tab
     @State private var selectedTabScroll: Tab?
     private let sizing: Sizing
-    @EnvironmentObject private var tabBarModel: TabBarModel<Tab>
-    @EnvironmentObject private var headerModel: HeaderModel<Tab>
+    @Environment(TabBarModel<Tab>.self) private var tabBarModel
+    @Environment(HeaderModel<Tab>.self) private var headerModel
     @State private var height: CGFloat = 0
     private let context: MaterialTabsHeaderContext<Tab>
     private let spacing: CGFloat
@@ -106,7 +106,7 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
                     ForEach(tabBarModel.tabs, id: \.self) { tab in
                         tabBarModel.labels[tab]?(
                             tab,
-                            headerModel.state.headerContext,
+                            headerModel.headerContext,
                             {
                                 headerModel.selected(tab: tab)
                             }

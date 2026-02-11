@@ -144,7 +144,7 @@ Scrollable tab content must be contained within a `MaterialTabsScroll`, a lightw
 
 ````swift
 content: {
-    MaterialTabsScroll(tab: Tab.first) {
+    MaterialTabsScroll(tab: Tab.first) { _ in
         LazyVStack {
             ForEach(0..<10) { index in
                 Text("Row \(index)")
@@ -167,7 +167,7 @@ Joint manipulation of the scroll position is supported if you need it. You suppl
 ...
 
 content: {
-    MaterialTabsScroll(tab: Tab.first, reservedItem: -1, scrollItem: $scrollItem, scrollUnitPoint: $scrollUnitPoint) {
+    MaterialTabsScroll(tab: Tab.first, reservedItem: -1, scrollItem: $scrollItem, scrollUnitPoint: $scrollUnitPoint) { _ in
         LazyVStack(spacing: 0) {
             ForEach(0..<10) { index in
                 Text("Row \(index)")

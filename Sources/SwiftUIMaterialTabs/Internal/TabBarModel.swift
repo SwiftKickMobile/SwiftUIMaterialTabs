@@ -5,7 +5,8 @@
 import SwiftUI
 
 @MainActor
-class TabBarModel<Tab>: ObservableObject where Tab: Hashable {
+@Observable
+class TabBarModel<Tab> where Tab: Hashable {
 
     // MARK: - API
 
@@ -13,9 +14,11 @@ class TabBarModel<Tab>: ObservableObject where Tab: Hashable {
     var labels: [Tab: MaterialTabBar<Tab>.CustomLabel] = [:]
 
     func register(tab: Tab, @ViewBuilder label: @escaping MaterialTabBar<Tab>.CustomLabel) {
-        if !tabs.contains(tab) {
-            tabs.append(tab)
-        }
+        // With @Observable, every mutation triggers re-evaluation of observing views.
+        // Guard against re-registration to prevent infinite loops when called during
+        // body evaluation (TabRegisteringView.init).
+        guard !tabs.contains(tab) else { return }
+        tabs.append(tab)
         labels[tab] = label
     }
 

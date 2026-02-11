@@ -28,7 +28,7 @@ struct TestStickyHeaderScroll: View {
         } headerBackground: { _ in
             Color.yellow.opacity(0.25)
         } content: {
-            StickyHeaderScroll() {
+            StickyHeaderScroll() { _ in
                 LazyVStack(spacing: 0) {
                     ForEach(0..<25) { index in
                         VStack(spacing: 0) {

@@ -4,7 +4,7 @@
 
 import Foundation
 
-public struct MaterialTabsScrollContext<Tab>: Equatable where Tab: Hashable {
+public struct MaterialTabsScrollContext<Tab> where Tab: Hashable {
     /// The header context
     public var headerContext: MaterialTabsHeaderContext<Tab>
 

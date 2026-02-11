@@ -16,7 +16,8 @@ import SwiftUI
 /// Although the collapsed state of the header is just an offset, applying the `headerStyle()` view modifier to header elements can give the
 /// impression of shrinking, fading, parallax, etc. All of these effects are achived by manipulating the views based on the `HeaderContext`
 /// values provided to the various header view builders. You may also manipulate header elements directly without using `headerStyle()` if you wish.
-public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
+@Observable
+public class HeaderContext<Tab> where Tab: Hashable {
 
     // MARK: - API
 
@@ -49,9 +50,6 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
     /// 1 corresponding to an absolute offset of `maxOffset`. Negative values occur when the scroll is
     /// rubber-banding and need to be accounted for in any dynamic header effects.
     public var unitOffset: CGFloat {
-        // The formula is different based on the sign of the header offset.
-        // When positive, the header is moving off of the screen up to some maximum amount.
-        // When negative, the title view is stretching.
         switch offset >= 0 {
         case true: maxOffset == 0 ? 0 : 1 - (maxOffset - offset) / maxOffset
         case false: titleHeight == 0 ? 0 : 1 - (titleHeight - offset) / titleHeight
@@ -70,9 +68,7 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
     }
 
     /// The minimum effective height of the header in the fully collapsed position.
-    public var minTotalHeight: CGFloat {
-        tabBarHeight + minTitleHeight
-    }
+    public var minTotalHeight: CGFloat { tabBarHeight + minTitleHeight }
 
     public init(selectedTab: Tab) {
         self.selectedTab = selectedTab

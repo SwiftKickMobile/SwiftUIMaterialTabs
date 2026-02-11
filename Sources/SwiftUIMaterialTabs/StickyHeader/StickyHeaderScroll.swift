@@ -16,30 +16,9 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
     /// - Parameters:
     ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
     public init(
-        @ViewBuilder content content: @escaping () -> Content
-    ) where Item == ScrollItem {
-        self.content = { _ in
-            ContentWrapperView(tab: NoTab.none, content: content)
-        }
-    }
-
-    /// Constructs a sticky header scroll.
-    ///
-    /// - Parameters:
-    ///   - content: The scroll content view builder, typically a `VStack` or `LazyVStack`.
-    ///
-    /// - Important: Because the context is passed to the content view builder, the content `body` will be re-evaluated
-    /// on every scroll offset change. If your content does not need the context, prefer the initializer that omits it to
-    /// avoid unnecessary view body evaluations during scrolling.
-    public init(
         @ViewBuilder content: @escaping (_ context: StickyHeaderScrollContext) -> Content
     ) where Item == ScrollItem {
-        self.content = { context in
-            ContentWrapperView(
-                context: context,
-                content: content
-            )
-        }
+        self.content = content
     }
 
     public struct Context {
@@ -61,8 +40,8 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
 
     @State private var coordinateSpaceName = UUID()
     @State private var contentOffset: CGFloat = 0
-    @ViewBuilder private var content: (_ context: StickyHeaderScrollContext) -> ContentWrapperView<Content, NoTab>
-    @EnvironmentObject private var headerModel: HeaderModel<NoTab>
+    @ViewBuilder private var content: (_ context: StickyHeaderScrollContext) -> Content
+    @Environment(HeaderModel<NoTab>.self) private var headerModel
 
     // MARK: - Body
 
@@ -70,7 +49,7 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
         ScrollView {
             VStack(spacing: 0) {
                 Color.clear
-                    .frame(height: headerModel.state.headerContext.maxOffset)
+                    .frame(height: headerModel.headerContext.maxOffset)
                     .background {
                         GeometryReader { proxy in
                             Color.clear.preference(
@@ -87,14 +66,30 @@ public struct StickyHeaderScroll<Content, Item>: View where Content: View, Item:
                         )
                         contentOffset = offset
                     }
-                content(
-                    StickyHeaderScrollContext(
-                        headerContext: headerModel.state.headerContext,
-                        safeHeight: headerModel.state.safeHeight
-                    )
+                // Bridge view — content closure invoked in its own scope
+                StickyHeaderContentBridgeView(
+                    headerContext: headerModel.headerContext,
+                    safeHeight: headerModel.safeHeight,
+                    content: content
                 )
             }
         }
         .coordinateSpace(name: coordinateSpaceName)
+    }
+}
+
+/// Bridge view for StickyHeaderScroll content — isolates @Observable tracking.
+private struct StickyHeaderContentBridgeView<Content: View>: View {
+    let headerContext: HeaderContext<NoTab>
+    let safeHeight: CGFloat
+    @ViewBuilder let content: (_ context: StickyHeaderScrollContext) -> Content
+
+    var body: some View {
+        content(
+            StickyHeaderScrollContext(
+                headerContext: headerContext,
+                safeHeight: safeHeight
+            )
+        )
     }
 }
