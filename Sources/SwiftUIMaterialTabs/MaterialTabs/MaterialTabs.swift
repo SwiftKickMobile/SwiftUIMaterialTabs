@@ -108,17 +108,11 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     ) {
         _selectedTab = selectedTab
         self.config = config
-        self.header = { context in
-            HeaderView(
-                context: context,
-                title: headerTitle,
-                tabBar: headerTabBar,
-                background: headerBackground
-            )
-        }
-        self.config = config
+        self.headerTitle = headerTitle
+        self.headerTabBar = headerTabBar
+        self.headerBackground = headerBackground
         self.content = content
-        _headerModel = StateObject(wrappedValue: HeaderModel(selectedTab: selectedTab.wrappedValue))
+        _headerModel = State(wrappedValue: HeaderModel(selectedTab: selectedTab.wrappedValue))
     }
 
     // MARK: - Constants
@@ -128,10 +122,12 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     @Binding private var selectedTab: Tab
     @State private var selectedTabScroll: Tab?
     @State private var config: MaterialTabsConfig
-    @ViewBuilder private let header: (MaterialTabsHeaderContext<Tab>) -> HeaderView<HeaderTitle, HeaderTabBar, HeaderBackground, Tab>
+    @ViewBuilder private let headerTitle: (MaterialTabsHeaderContext<Tab>) -> HeaderTitle
+    @ViewBuilder private let headerTabBar: (MaterialTabsHeaderContext<Tab>) -> HeaderTabBar
+    @ViewBuilder private let headerBackground: (MaterialTabsHeaderContext<Tab>) -> HeaderBackground
     @ViewBuilder private let content: () -> Content
-    @StateObject private var headerModel: HeaderModel<Tab>
-    @StateObject private var tabBarModel = TabBarModel<Tab>()
+    @State private var headerModel: HeaderModel<Tab>
+    @State private var tabBarModel = TabBarModel<Tab>()
 
     // MARK: - Body
 
@@ -144,11 +140,7 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                             .scrollClipDisabled()
                             .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
                             .safeAreaPadding(proxy.safeAreaInsets)
-                            // Padding the top safe area by the minimum header height makes scrolling
-                            // calculations work out better. For example, scrolling an item to `.top`
-                            // results in a fully collapsed header with the item touching the header
-                            // as one would expect.
-                            .safeAreaPadding(.top, headerModel.state.headerContext.minTotalHeight)
+                            .safeAreaPadding(.top, headerModel.headerContext.minTotalHeight)
                     }
                     .scrollTargetLayout()
                 }
@@ -161,31 +153,30 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                 .onChange(of: proxy.size, initial: true) {
                     headerModel.sizeChanged(proxy.size)
                 }
-                header(headerModel.state.headerContext)
-                    .background {
-                            if !headerModel.state.tabsRegistered {
-                                /// This is a somewhat elaborate workaround for using a horizontal paged `ScrollView` instead of a `TabView`.
-                                /// The `TabView` had some insurmountable inconsistency issues when used in different context, such as
-                                /// within a `NavigationStack`. The issue with `ScrollView` is that it is using a `LazyHStack`
-                                /// and, due to the laziness, tabs that are off-screen do not get registered. Whent he same content
-                                /// is placed in a `TabView`, all of the tabs get registered. So what we're doing here is briefly
-                                /// including a `TabView` with the tab content and then removing it after the tabs get registered.
-                                /// Making the frame zero height ensures that nothing actually gets rendered.
-                                TabView {
-                                    content()
-                                }
-                                .tabViewStyle(.page(indexDisplayMode: .never))
-                                .frame(height: 0)
-                            }
+                HeaderBridgeView(
+                    headerContext: headerModel.headerContext,
+                    headerTitle: headerTitle,
+                    headerTabBar: headerTabBar,
+                    headerBackground: headerBackground
+                )
+                .background {
+                    if !headerModel.tabsRegistered {
+                        TabView {
+                            content()
+                        }
+                        .tabViewStyle(.page(indexDisplayMode: .never))
+                        .frame(height: 0)
                     }
+                }
             }
             .onChange(of: proxy.safeAreaInsets, initial: true) {
                 headerModel.safeAreaChanged(proxy.safeAreaInsets)
             }
         }
         .animation(.default, value: selectedTab)
-        .environmentObject(headerModel)
-        .environmentObject(tabBarModel)
+        .environment(headerModel)
+        .environment(headerModel.headerContext)
+        .environment(tabBarModel)
         .onPreferenceChange(TitleHeightPreferenceKey.self, perform: headerModel.titleHeightChanged(_:))
         .onPreferenceChange(TabBarHeightPreferenceKey.self, perform: headerModel.tabBarHeightChanged(_:))
         .onPreferenceChange(MinTitleHeightPreferenceKey.self, perform: headerModel.minTitleHeightChanged(_:))
@@ -199,9 +190,28 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
             guard let selectedTab = selectedTabScroll else { return }
             headerModel.selected(tab: selectedTab)
         }
-        .onChange(of: headerModel.state.headerContext.selectedTab, initial: true) {
-            selectedTab = headerModel.state.headerContext.selectedTab
+        .onChange(of: headerModel.headerContext.selectedTab, initial: true) {
+            selectedTab = headerModel.headerContext.selectedTab
             selectedTabScroll = selectedTab
         }
+    }
+}
+
+/// Bridge view that invokes header closures in its own body scope.
+/// This ensures that reads of scroll-related context properties (like `offset`)
+/// are tracked here, not in `MaterialTabs.body`.
+private struct HeaderBridgeView<HeaderTitle: View, HeaderTabBar: View, HeaderBackground: View, Tab: Hashable>: View {
+    let headerContext: HeaderContext<Tab>
+    @ViewBuilder let headerTitle: (HeaderContext<Tab>) -> HeaderTitle
+    @ViewBuilder let headerTabBar: (HeaderContext<Tab>) -> HeaderTabBar
+    @ViewBuilder let headerBackground: (HeaderContext<Tab>) -> HeaderBackground
+
+    var body: some View {
+        HeaderView(
+            context: headerContext,
+            title: headerTitle,
+            tabBar: headerTabBar,
+            background: headerBackground
+        )
     }
 }

@@ -44,6 +44,14 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
         case proportionalWidth
     }
 
+    /// Options for horizontal alignment of tab selectors when `fillAvailableSpace` is `false` and tabs don't fill the tab bar width.
+    /// Has no effect when `fillAvailableSpace` is `true` or when tabs overflow the available width.
+    public enum Alignment {
+        case leading
+        case center
+        case trailing
+    }
+
     /// A closure for providing a custom tab selector labels. Custom labels should have greedy width and height
     /// using `.frame(maxWidth: .infinity, maxHeight: .infinity)`. The tab bar layout will automatically detmerine their intrinsic content sizes
     /// and set their frames based on the `Sizing` option and available space. All labels will be given the same height, determined by the maximum
@@ -61,21 +69,23 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     ///   - spacing: The amount of horizontal spacing to use between tab labels. Primary and Secondary tabs should use the default spacing of 0 to
     ///     form a continuous line across the bottom of the tab bar.
     ///   - fillAvailableSpace: Applicable when tab labels don't inherently fill the width of the tab bar. When `true` (the default), the label widths are
-    ///     expanded proportinally to fill the tab bar. When `false`, the labels are not expanded and centered horizontally within the tab bar.
+    ///     expanded proportionally to fill the tab bar. When `false`, the labels are self-sized and positioned according to `alignment`.
+    ///   - alignment: The horizontal alignment of self-sized tabs when `fillAvailableSpace` is `false`. Has no effect when `fillAvailableSpace` is
+    ///     `true` or when tabs overflow the available width. Defaults to `.center`.
     ///   - context: The current context value.
     public init(
         selectedTab: Binding<Tab>,
         sizing: Sizing = .proportionalWidth,
         spacing: CGFloat = 0,
         fillAvailableSpace: Bool = true,
+        alignment: Alignment = .center,
         context: MaterialTabsHeaderContext<Tab>
     ) {
         _selectedTab = selectedTab
-        _selectedTabScroll = State(initialValue: selectedTab.wrappedValue)
         self.sizing = sizing
-        self.context = context
         self.spacing = spacing
         self.fillAvailableSpace = fillAvailableSpace
+        self.alignment = alignment
     }
 
     // MARK: - Constants
@@ -83,58 +93,21 @@ public struct MaterialTabBar<Tab>: View where Tab: Hashable {
     // MARK: - Variables
 
     @Binding private var selectedTab: Tab
-    @State private var selectedTabScroll: Tab?
     private let sizing: Sizing
-    @EnvironmentObject private var tabBarModel: TabBarModel<Tab>
-    @EnvironmentObject private var headerModel: HeaderModel<Tab>
-    @State private var height: CGFloat = 0
-    private let context: MaterialTabsHeaderContext<Tab>
     private let spacing: CGFloat
     private let fillAvailableSpace: Bool
+    private let alignment: Alignment
 
     // MARK: - Body
 
     public var body: some View {
-        GeometryReader { proxy in
-            ScrollView(.horizontal) {
-                TabBarLayout(
-                    fittingWidth: proxy.size.width,
-                    sizing: sizing,
-                    spacing: spacing,
-                    fillAvailableSpace: fillAvailableSpace
-                ) {
-                    ForEach(tabBarModel.tabs, id: \.self) { tab in
-                        tabBarModel.labels[tab]?(
-                            tab,
-                            headerModel.state.headerContext,
-                            {
-                                headerModel.selected(tab: tab)
-                            }
-                        )
-                        .id(tab)
-                    }
-                }
-                .scrollTargetLayout()
-                .frame(minWidth: proxy.size.width)
-                .background {
-                    GeometryReader { proxy in
-                        Color.clear
-                            .preference(key: TabBarHeightPreferenceKey.self, value: proxy.size.height)
-                    }
-                }
-            }
-            .scrollPosition(id: $selectedTabScroll, anchor: .center)
-            .scrollIndicators(.never)
-            .scrollBounceBehavior(.basedOnSize)
-            .animation(.default, value: selectedTabScroll)
-        }
-        .frame(height: height)
-        .onPreferenceChange(TabBarHeightPreferenceKey.self) { height in
-            self.height = height
-        }
-        .onChange(of: selectedTab) {
-            selectedTabScroll = selectedTab
-        }
+        MaterialTabBarContent(
+            selectedTab: $selectedTab,
+            sizing: sizing,
+            spacing: spacing,
+            fillAvailableSpace: fillAvailableSpace,
+            alignment: alignment
+        )
     }
 }
 
@@ -146,9 +119,16 @@ struct MaterialTabBarPreviewView: View {
         self.init(tabs: Array(0..<tabCount).map { MaterialTabBar<Int>.Label.secondary("Tab Number \($0)") }, sizing: sizing)
     }
     
-    init(tabs: [MaterialTabBar<Int>.Label], sizing: MaterialTabBar<Int>.Sizing) {
+    init(
+        tabs: [MaterialTabBar<Int>.Label],
+        sizing: MaterialTabBar<Int>.Sizing,
+        fillAvailableSpace: Bool = true,
+        alignment: MaterialTabBar<Int>.Alignment = .center
+    ) {
         self.tabs = tabs
         self.sizing = sizing
+        self.fillAvailableSpace = fillAvailableSpace
+        self.alignment = alignment
     }
 
     // MARK: - Constants
@@ -157,6 +137,8 @@ struct MaterialTabBarPreviewView: View {
 
     private let tabs: [MaterialTabBar<Int>.Label]
     private let sizing: MaterialTabBar<Int>.Sizing
+    private let fillAvailableSpace: Bool
+    private let alignment: MaterialTabBar<Int>.Alignment
     @State private var selectedTab: Int = 0
 
     // MARK: - Body
@@ -165,7 +147,13 @@ struct MaterialTabBarPreviewView: View {
         MaterialTabs(
             selectedTab: $selectedTab,
             headerTabBar: { context in
-                MaterialTabBar(selectedTab: $selectedTab, sizing: sizing, context: context)
+                MaterialTabBar(
+                    selectedTab: $selectedTab,
+                    sizing: sizing,
+                    fillAvailableSpace: fillAvailableSpace,
+                    alignment: alignment,
+                    context: context
+                )
             },
             content: {
                 ForEach(Array(tabs.enumerated()), id: \.offset) { (offset, tab) in
@@ -220,5 +208,41 @@ struct MaterialTabBarPreviewView: View {
             .primary("SSSSSSSSS", icon: Image(systemName: "cloud.sun")),
         ],
         sizing: .equalWidth
+    )
+}
+
+#Preview("Self-sized, leading") {
+    MaterialTabBarPreviewView(
+        tabs: [
+            .secondary("First"),
+            .secondary("Second"),
+        ],
+        sizing: .proportionalWidth,
+        fillAvailableSpace: false,
+        alignment: .leading
+    )
+}
+
+#Preview("Self-sized, trailing") {
+    MaterialTabBarPreviewView(
+        tabs: [
+            .secondary("First"),
+            .secondary("Second"),
+        ],
+        sizing: .proportionalWidth,
+        fillAvailableSpace: false,
+        alignment: .trailing
+    )
+}
+
+#Preview("Self-sized, center") {
+    MaterialTabBarPreviewView(
+        tabs: [
+            .secondary("First"),
+            .secondary("Second"),
+        ],
+        sizing: .proportionalWidth,
+        fillAvailableSpace: false,
+        alignment: .center
     )
 }
