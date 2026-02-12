@@ -50,6 +50,9 @@ public class HeaderContext<Tab> where Tab: Hashable {
     /// 1 corresponding to an absolute offset of `maxOffset`. Negative values occur when the scroll is
     /// rubber-banding and need to be accounted for in any dynamic header effects.
     public var unitOffset: CGFloat {
+        // The formula is different based on the sign of the header offset.
+        // When positive, the header is moving off of the screen up to some maximum amount.
+        // When negative, the title view is stretching.
         switch offset >= 0 {
         case true: maxOffset == 0 ? 0 : 1 - (maxOffset - offset) / maxOffset
         case false: titleHeight == 0 ? 0 : 1 - (titleHeight - offset) / titleHeight

@@ -9,8 +9,9 @@ import SwiftUIMaterialTabs
 struct DemoApp: App {
     var body: some Scene {
         WindowGroup {
-//            DebugView4()
-            DemoView()
+//            ScrollPositionDebug()
+            TestMaterialTabsScroll()
+//            DemoView()
         }
     }
 }

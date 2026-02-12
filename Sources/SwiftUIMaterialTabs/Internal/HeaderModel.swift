@@ -4,13 +4,20 @@
 
 import SwiftUI
 
+/// The model that manages header state, including offset tracking and tab selection. This class is available in the
+/// environment within `MaterialTabs` to support building custom tab bars. Read it with `@Environment(HeaderModel<Tab>.self)`.
+///
+/// For custom tab bars, the key members are:
+/// - ``headerContext``: The header context to pass to tab label closures from `TabBarModel`.
+/// - ``selected(tab:)``: Call this when a tab is tapped to notify the library of the selection.
 @MainActor
 @Observable
-class HeaderModel<Tab> where Tab: Hashable {
+public final class HeaderModel<Tab> where Tab: Hashable {
 
     // MARK: - API
 
-    let headerContext: HeaderContext<Tab>
+    /// The header context containing metrics for sticky header effects and the current selected tab.
+    public let headerContext: HeaderContext<Tab>
 
     /// The height reported by the geometry reader. Includes the additional safe area padding we apply.
     var height: CGFloat = 0
@@ -49,7 +56,8 @@ class HeaderModel<Tab> where Tab: Hashable {
         headerContext.tabBarHeight = height
     }
 
-    func selected(tab: Tab) {
+    /// Notify the library that a tab was selected. Call this from custom tab bar implementations when a tab is tapped.
+    public func selected(tab: Tab) {
         hasScrolledSinceSelected = false
         headerContext.selectedTab = tab
     }
