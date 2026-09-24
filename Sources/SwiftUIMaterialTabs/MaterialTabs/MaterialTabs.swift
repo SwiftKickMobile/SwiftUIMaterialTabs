@@ -132,52 +132,28 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     @ViewBuilder private let content: () -> Content
     @StateObject private var headerModel: HeaderModel<Tab>
     @StateObject private var tabBarModel = TabBarModel<Tab>()
+    @Environment(\.materialTabsNativeScrollEdgeEffect) private var nativeScrollEdgeEffect
 
     // MARK: - Body
 
     public var body: some View {
         GeometryReader { proxy in
             ZStack(alignment: .top) {
-                ScrollView(.horizontal) {
-                    LazyHStack(spacing: 0) {
-                        content()
-                            .scrollClipDisabled()
-                            .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
-                            .safeAreaPadding(proxy.safeAreaInsets)
-                            // Padding the top safe area by the minimum header height makes scrolling
-                            // calculations work out better. For example, scrolling an item to `.top`
-                            // results in a fully collapsed header with the item touching the header
-                            // as one would expect.
-                            .safeAreaPadding(.top, headerModel.state.headerContext.minTotalHeight)
-                    }
-                    .scrollTargetLayout()
-                }
-                .scrollPosition(id: $selectedTabScroll, anchor: .center)
-                .scrollTargetBehavior(.paging)
-                .scrollClipDisabled()
-                .scrollIndicators(.never)
-                .scrollBounceBehavior(.basedOnSize)
-                .ignoresSafeArea()
-                .onChange(of: proxy.size, initial: true) {
-                    headerModel.sizeChanged(proxy.size)
-                }
+                pager(proxy: proxy)
                 header(headerModel.state.headerContext)
-                    .background {
-                            if !headerModel.state.tabsRegistered {
-                                /// This is a somewhat elaborate workaround for using a horizontal paged `ScrollView` instead of a `TabView`.
-                                /// The `TabView` had some insurmountable inconsistency issues when used in different context, such as
-                                /// within a `NavigationStack`. The issue with `ScrollView` is that it is using a `LazyHStack`
-                                /// and, due to the laziness, tabs that are off-screen do not get registered. Whent he same content
-                                /// is placed in a `TabView`, all of the tabs get registered. So what we're doing here is briefly
-                                /// including a `TabView` with the tab content and then removing it after the tabs get registered.
-                                /// Making the frame zero height ensures that nothing actually gets rendered.
-                                TabView {
-                                    content()
-                                }
-                                .tabViewStyle(.page(indexDisplayMode: .never))
-                                .frame(height: 0)
-                            }
+                    .map { header in
+                        if #available(iOS 26.0, *), nativeScrollEdgeEffect {
+                            // Only the content pages should own a top edge effect;
+                            // MaterialTabBar also contains a horizontal scroll view.
+                            header.scrollEdgeEffectHidden(true, for: .top)
+                        } else {
+                            header
+                        }
                     }
+            }
+            .background { tabRegistration }
+            .onChange(of: proxy.size, initial: true) {
+                headerModel.sizeChanged(proxy.size)
             }
             .onChange(of: proxy.safeAreaInsets, initial: true) {
                 headerModel.safeAreaChanged(proxy.safeAreaInsets)
@@ -203,5 +179,75 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
             selectedTab = headerModel.state.headerContext.selectedTab
             selectedTabScroll = selectedTab
         }
+    }
+
+    private func pager(proxy: GeometryProxy) -> some View {
+        ScrollView(.horizontal) {
+            LazyHStack(spacing: 0) {
+                content()
+                    .scrollClipDisabled()
+                    .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
+                    .map { pages in
+                        if #available(iOS 26.0, *), nativeScrollEdgeEffect {
+                            // MaterialTabsScroll reserves the native bar height.
+                            // Preserve the inherited system safe area in this mode.
+                            pages
+                        } else {
+                            pages
+                                .safeAreaPadding(proxy.safeAreaInsets)
+                                .safeAreaPadding(.top, headerModel.state.headerContext.minTotalHeight)
+                        }
+                    }
+            }
+            .scrollTargetLayout()
+        }
+        .scrollPosition(id: $selectedTabScroll, anchor: .center)
+        .scrollTargetBehavior(.paging)
+        .scrollClipDisabled()
+        .scrollIndicators(.never)
+        .scrollBounceBehavior(.basedOnSize)
+        .map { pager in
+            if #available(iOS 26.0, *), nativeScrollEdgeEffect {
+                // Otherwise safeAreaBar/navigation can attach a permanently visible
+                // top effect to this horizontal scroll view instead of a vertical page.
+                pager.scrollEdgeEffectHidden(true, for: .top)
+            } else {
+                pager.ignoresSafeArea()
+            }
+        }
+    }
+
+    @ViewBuilder private var tabRegistration: some View {
+        if !headerModel.state.tabsRegistered {
+            // Register off-screen tabs without constructing additional native bars.
+            TabView {
+                content()
+            }
+            .environment(\.materialTabsNativeScrollEdgeEffect, false)
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .frame(height: 0)
+        }
+    }
+}
+
+private struct MaterialTabsNativeScrollEdgeEffectKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+extension EnvironmentValues {
+    var materialTabsNativeScrollEdgeEffect: Bool {
+        get { self[MaterialTabsNativeScrollEdgeEffectKey.self] }
+        set { self[MaterialTabsNativeScrollEdgeEffectKey.self] = newValue }
+    }
+}
+
+public extension View {
+    /// Prototype: reserves native scroll-edge regions in the vertical pages while
+    /// keeping one persistent titleless header and its selection animation above them.
+    /// Use without an opaque header background. Configure the effect with SwiftUI's
+    /// scrollEdgeEffectStyle(_:for:) modifier.
+    @available(iOS 26.0, *)
+    func materialTabsScrollEdgeEffect(_ enabled: Bool = true) -> some View {
+        environment(\.materialTabsNativeScrollEdgeEffect, enabled)
     }
 }

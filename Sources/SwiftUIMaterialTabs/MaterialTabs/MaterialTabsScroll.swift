@@ -133,6 +133,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     @StateObject private var scrollModel: ScrollModel<Item, Tab>
     @ViewBuilder private var content: (_ context: MaterialTabsScrollContext<Tab>) -> Content
     @EnvironmentObject private var headerModel: HeaderModel<Tab>
+    @Environment(\.materialTabsNativeScrollEdgeEffect) private var nativeScrollEdgeEffect
 
     // MARK: - Body
 
@@ -169,6 +170,26 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
                     }
                 }
                 Color.clear.frame(height: scrollModel.bottomMargin)
+            }
+        }
+        .map { scroll in
+            if #available(iOS 26.0, *), nativeScrollEdgeEffect {
+                scroll
+                    .safeAreaBar(edge: .top, spacing: 0) {
+                        // Registration-only marker; the real header stays outside
+                        // the pager. On the tested iOS 27 runtime, Color.clear and
+                        // Color.black.opacity(0.0001) did not activate the edge effect,
+                        // while transparent Text did. Recheck on other OS versions.
+                        Text(verbatim: "Scroll edge")
+                            .frame(maxWidth: .infinity)
+                            .frame(height: headerModel.state.headerContext.minTotalHeight)
+                            .foregroundStyle(.clear)
+                            .allowsHitTesting(false)
+                            .accessibilityHidden(true)
+                    }
+                    .scrollEdgeEffectHidden(false, for: .top)
+            } else {
+                scroll
             }
         }
         .coordinateSpace(name: coordinateSpaceName)

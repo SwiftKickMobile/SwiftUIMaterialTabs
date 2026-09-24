@@ -9,7 +9,11 @@ import SwiftUIMaterialTabs
 struct DemoApp: App {
     var body: some Scene {
         WindowGroup {
-            DemoView()
+            if #available(iOS 26.0, *) {
+                NativeScrollEdgeDemoView()
+            } else {
+                DemoView()
+            }
         }
     }
 }
