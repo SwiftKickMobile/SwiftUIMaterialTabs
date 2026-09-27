@@ -25,12 +25,26 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
         var config: MaterialTabsConfig = MaterialTabsConfig()
     }
 
+    #if DEBUG
+    @Published fileprivate(set) var state: State {
+        didSet {
+            MaterialTabsTrace.context(id: traceID, old: oldValue.headerContext,
+                                      new: state.headerContext, mode: state.config.crossTabSyncMode)
+        }
+    }
+    let traceID = MaterialTabsTrace.isEnabled ? UUID().uuidString : ""
+    #else
     @Published fileprivate(set) var state: State
+    #endif
 
     init(selectedTab: Tab) {
         _state = Published(
             wrappedValue: State(headerContext: HeaderContext(selectedTab: selectedTab))
         )
+        #if DEBUG
+        MaterialTabsTrace.context(id: traceID, old: state.headerContext,
+                                  new: state.headerContext, mode: state.config.crossTabSyncMode)
+        #endif
     }
 
     func configChanged(_ config: MaterialTabsConfig) {
@@ -55,6 +69,9 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
     }
 
     func selected(tab: Tab) {
+        #if DEBUG
+        MaterialTabsTrace.input(kind: "selectionRequest", header: self, tab: tab)
+        #endif
         hasScrolledSinceSelected = false
         self.state.headerContext.selectedTab = tab
     }
@@ -93,6 +110,9 @@ class HeaderModel<Tab>: ObservableObject where Tab: Hashable {
     /// In the basic case, the header offset matches the scroll view up calculated max offset. However, in a multi-tab environment, scrolling on another tab
     /// can change the header offset, introducing edge cases that need to be handled.
     func scrolled(tab: Tab, contentOffset: CGFloat, deltaContentOffset: CGFloat) {
+        #if DEBUG
+        MaterialTabsTrace.input(kind: "scrollInput", header: self, tab: tab, offset: contentOffset)
+        #endif
         guard tab == state.headerContext.selectedTab else { return }
         switch state.config.crossTabSyncMode {
         case .resetTitleOnScroll where !hasScrolledSinceSelected:

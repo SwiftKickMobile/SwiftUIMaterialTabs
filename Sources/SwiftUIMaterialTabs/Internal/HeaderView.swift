@@ -49,6 +49,11 @@ struct HeaderView<Title, TabBar, Background, Tab>: View where Title: View, TabBa
         }
         .offset(CGSize(width: 0, height: -max(headerModel.state.headerContext.offset, 0)))
         .animation(.default, value: context.selectedTab)
+        #if DEBUG
+        .modifier(MaterialTabsContextObserver(context: context,
+                                              headerID: headerModel.traceID,
+                                              mode: headerModel.state.config.crossTabSyncMode))
+        #endif
         .onChange(of: animationNamespace, initial: true) {
             headerModel.animationNamespaceChanged(animationNamespace)
         }

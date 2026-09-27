@@ -1,6 +1,20 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.1.0
+
+### Improvements
+
+* Add `.materialTabsScrollEdgeEffect()` on iOS 26 and later. Transparent headers and tab bars can extend the navigation bar's native scroll-edge blur, including collapsible headers, without implementing custom blur values or transitions.
+* Document Liquid Glass setup and why opaque header backgrounds cover the scrolling content instead of being blurred by the modifier.
+* Add shared Core and Extended Xcode test plans with scroll-position, header-continuity, and tab-state regression checks. Validation runs inside XCTest; no command-line post-processing is required.
+
+### Fixes
+
+* Preserve tab content state and scroll position when returning to tabs on iOS 27.
+* Correct incoming-tab scroll alignment with the shared header, including taps to previously unvisited tabs.
+* Preserve header and scroll-position continuity when switching tabs during deceleration.
+
 ## 2.0.6
 
 ### Fixes

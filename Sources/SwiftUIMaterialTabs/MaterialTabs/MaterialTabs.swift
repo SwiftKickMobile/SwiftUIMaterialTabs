@@ -151,7 +151,9 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                         }
                     }
             }
-            .background { tabRegistration }
+            .background {
+                if #unavailable(iOS 26.0) { legacyTabRegistration }
+            }
             .onChange(of: proxy.size, initial: true) {
                 headerModel.sizeChanged(proxy.size)
             }
@@ -183,51 +185,71 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
 
     private func pager(proxy: GeometryProxy) -> some View {
         ScrollView(.horizontal) {
-            LazyHStack(spacing: 0) {
-                content()
-                    .scrollClipDisabled()
-                    .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
-                    .map { pages in
-                        if #available(iOS 26.0, *), nativeScrollEdgeEffect {
-                            // MaterialTabsScroll reserves the native bar height.
-                            // Preserve the inherited system safe area in this mode.
-                            pages
-                        } else {
-                            pages
-                                .safeAreaPadding(proxy.safeAreaInsets)
-                                .safeAreaPadding(.top, headerModel.state.headerContext.minTotalHeight)
-                        }
-                    }
+            if #available(iOS 26.0, *) {
+                HStack(spacing: 0) { pagerPages(proxy: proxy) }
+                    .scrollTargetLayout()
+                    .environment(\.materialTabsRetainsPages, true)
+            } else {
+                // HStack misses swipe selection on iOS 17 and can miss the
+                // initial non-first page on iOS 18. Both reproduce in native-only
+                // controls. Keep lazy layout on those runtimes while sharing the
+                // new loading/activation logic and preserving the original IDs.
+                LazyHStack(spacing: 0) { pagerPages(proxy: proxy) }
+                    .scrollTargetLayout()
+                    .environment(\.materialTabsRetainsPages, true)
             }
-            .scrollTargetLayout()
         }
         .scrollPosition(id: $selectedTabScroll, anchor: .center)
         .scrollTargetBehavior(.paging)
         .scrollClipDisabled()
         .scrollIndicators(.never)
         .scrollBounceBehavior(.basedOnSize)
+        .ignoresSafeArea()
         .map { pager in
             if #available(iOS 26.0, *), nativeScrollEdgeEffect {
                 // Otherwise safeAreaBar/navigation can attach a permanently visible
                 // top effect to this horizontal scroll view instead of a vertical page.
                 pager.scrollEdgeEffectHidden(true, for: .top)
             } else {
-                pager.ignoresSafeArea()
+                pager
             }
         }
     }
 
-    @ViewBuilder private var tabRegistration: some View {
-        if !headerModel.state.tabsRegistered {
-            // Register off-screen tabs without constructing additional native bars.
-            TabView {
-                content()
+    private func pagerPages(proxy: GeometryProxy) -> some View {
+        content()
+            .scrollClipDisabled()
+            .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
+            .safeAreaPadding(proxy.safeAreaInsets)
+            .map { pages in
+                if #available(iOS 26.0, *), nativeScrollEdgeEffect {
+                    pages
+                } else {
+                    pages.safeAreaPadding(.top, headerModel.state.headerContext.minTotalHeight)
+                }
             }
-            .environment(\.materialTabsNativeScrollEdgeEffect, false)
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .frame(height: 0)
+    }
+
+    @ViewBuilder private var legacyTabRegistration: some View {
+        if !headerModel.state.tabsRegistered {
+            TabView { content() }
+                .environment(\.materialTabsNativeScrollEdgeEffect, false)
+                #if DEBUG
+                .environment(\.materialTabsTraceRegistration, true)
+                #endif
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .frame(height: 0)
         }
     }
+
+}
+
+private struct MaterialTabsRetainsPagesKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+private struct MaterialTabsPageActiveKey: EnvironmentKey {
+    static let defaultValue: Bool? = nil
 }
 
 private struct MaterialTabsNativeScrollEdgeEffectKey: EnvironmentKey {
@@ -235,6 +257,16 @@ private struct MaterialTabsNativeScrollEdgeEffectKey: EnvironmentKey {
 }
 
 extension EnvironmentValues {
+    var materialTabsRetainsPages: Bool {
+        get { self[MaterialTabsRetainsPagesKey.self] }
+        set { self[MaterialTabsRetainsPagesKey.self] = newValue }
+    }
+
+    var materialTabsPageActive: Bool? {
+        get { self[MaterialTabsPageActiveKey.self] }
+        set { self[MaterialTabsPageActiveKey.self] = newValue }
+    }
+
     var materialTabsNativeScrollEdgeEffect: Bool {
         get { self[MaterialTabsNativeScrollEdgeEffectKey.self] }
         set { self[MaterialTabsNativeScrollEdgeEffectKey.self] = newValue }
@@ -242,12 +274,21 @@ extension EnvironmentValues {
 }
 
 public extension View {
-    /// Prototype: reserves native scroll-edge regions in the vertical pages while
-    /// keeping one persistent titleless header and its selection animation above them.
-    /// Use without an opaque header background. Configure the effect with SwiftUI's
-    /// scrollEdgeEffectStyle(_:for:) modifier.
-    @available(iOS 26.0, *)
+    /// Extends the native top scroll-edge effect behind a MaterialTabs header.
+    ///
+    /// Apply to the MaterialTabs container inside a NavigationStack, with transparent
+    /// header and tab-bar backgrounds. The system supplies the blur and transition;
+    /// the visible header and its selection animation remain outside the pager.
+    /// An opaque header background covers the effect rather than being blurred by it.
+    /// Configure the effect with SwiftUI's scrollEdgeEffectStyle(_:for:) modifier.
+    /// Has no effect before iOS 26; callers do not need an availability check.
     func materialTabsScrollEdgeEffect(_ enabled: Bool = true) -> some View {
-        environment(\.materialTabsNativeScrollEdgeEffect, enabled)
+        let effectiveEnabled: Bool
+        if #available(iOS 26.0, *) {
+            effectiveEnabled = enabled
+        } else {
+            effectiveEnabled = false
+        }
+        return environment(\.materialTabsNativeScrollEdgeEffect, effectiveEnabled)
     }
 }

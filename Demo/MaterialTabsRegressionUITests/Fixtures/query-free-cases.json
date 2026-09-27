@@ -1,0 +1,7435 @@
+{
+  "cold-notes-tap": {
+    "method": "testQueryFreeColdNotesTap",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 142,
+        "screenshotBefore": "Collapsed Activity before first Notes tap"
+      }
+    ]
+  },
+  "notes-four-step": {
+    "method": "testQueryFreeNotesFourStep",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "headerRange": [
+          0,
+          0
+        ],
+        "pauseAfter": 2.5
+      },
+      {
+        "kind": "up",
+        "scale": 1.5,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 142,
+        "screenshotBefore": "Notes before leaving"
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 142
+      }
+    ]
+  },
+  "expanded-taps": {
+    "method": "testQueryFreeExpandedTaps",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292
+      }
+    ]
+  },
+  "partial-taps": {
+    "method": "testQueryFreePartialTaps",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.4
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 213
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 213
+      }
+    ]
+  },
+  "collapsed-taps": {
+    "method": "testQueryFreeCollapsedTaps",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up"
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 142
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 142
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 142
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 142
+      }
+    ]
+  },
+  "partial-swipes": {
+    "method": "testQueryFreePartialSwipes",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.4
+      },
+      {
+        "kind": "right",
+        "tab": "overview"
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "screenshotBefore": "After swipe to Overview before returning"
+      }
+    ]
+  },
+  "collapsed-swipes": {
+    "method": "testQueryFreeCollapsedSwipes",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up"
+      },
+      {
+        "kind": "right",
+        "tab": "overview"
+      },
+      {
+        "kind": "left",
+        "tab": "activity"
+      },
+      {
+        "kind": "left",
+        "tab": "notes"
+      },
+      {
+        "kind": "right",
+        "tab": "activity"
+      }
+    ]
+  },
+  "repeated-header-changes": {
+    "method": "testQueryFreeRepeatedHeaderChanges",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up"
+      },
+      {
+        "kind": "up"
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 142,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down"
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up"
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 142,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 142,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ]
+  },
+  "matrix-cold-tap-1-0-expanded-off": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap10ExpandedOff",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-1-0-partial-off": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap10PartialOff",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-1-0-collapsed-off": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap10CollapsedOff",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-1-2-expanded-off": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap12ExpandedOff",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-1-2-partial-off": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap12PartialOff",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-1-2-collapsed-off": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap12CollapsedOff",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-0-2-expanded-off": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap02ExpandedOff",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "overview",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-0-2-partial-off": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap02PartialOff",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "overview",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-0-2-collapsed-off": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap02CollapsedOff",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "overview",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-2-0-expanded-off": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap20ExpandedOff",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-2-0-partial-off": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap20PartialOff",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-2-0-collapsed-off": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap20CollapsedOff",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-relative-resetTitle-tap-off": {
+    "suite": "broad",
+    "family": "relative",
+    "method": "testMatrixRelativeResettitleTapOff",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-relative-preserve-tap-off": {
+    "suite": "broad",
+    "family": "relative",
+    "method": "testMatrixRelativePreserveTapOff",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "preserve",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-bottom-1-tap-off": {
+    "suite": "broad",
+    "family": "bottom",
+    "method": "testMatrixBottom1TapOff",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "first"
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "confirm"
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 12,
+      "titleHeight": 150
+    }
+  },
+  "matrix-bottom-2-tap-off": {
+    "suite": "broad",
+    "family": "bottom",
+    "method": "testMatrixBottom2TapOff",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "first"
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "confirm"
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 12,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-1-0-expanded-off": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe10ExpandedOff",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-1-0-partial-off": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe10PartialOff",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-1-0-collapsed-off": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe10CollapsedOff",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-1-2-expanded-off": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe12ExpandedOff",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-1-2-partial-off": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe12PartialOff",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-1-2-collapsed-off": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe12CollapsedOff",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-0-2-expanded-off": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe02ExpandedOff",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "overview",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-0-2-partial-off": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe02PartialOff",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "overview",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-0-2-collapsed-off": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe02CollapsedOff",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "overview",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-2-0-expanded-off": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe20ExpandedOff",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-2-0-partial-off": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe20PartialOff",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-2-0-collapsed-off": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe20CollapsedOff",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-relative-resetTitle-swipe-off": {
+    "suite": "broad",
+    "family": "relative",
+    "method": "testMatrixRelativeResettitleSwipeOff",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-relative-preserve-swipe-off": {
+    "suite": "broad",
+    "family": "relative",
+    "method": "testMatrixRelativePreserveSwipeOff",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "preserve",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-bottom-1-swipe-off": {
+    "suite": "broad",
+    "family": "bottom",
+    "method": "testMatrixBottom1SwipeOff",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "first"
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "confirm"
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 12,
+      "titleHeight": 150
+    }
+  },
+  "matrix-bottom-2-swipe-off": {
+    "suite": "broad",
+    "family": "bottom",
+    "method": "testMatrixBottom2SwipeOff",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "first"
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "confirm"
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 12,
+      "titleHeight": 150
+    }
+  },
+  "matrix-seed-20260925-off": {
+    "suite": "broad",
+    "family": "seeded",
+    "method": "testMatrixSeed20260925Off",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 12,
+      "titleHeight": 150
+    }
+  },
+  "matrix-seed-927-off": {
+    "suite": "broad",
+    "family": "seeded",
+    "method": "testMatrixSeed927Off",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "down",
+        "scale": 0.4477611940298507,
+        "startY": 400
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 0.4477611940298507,
+        "startY": 400
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 12,
+      "titleHeight": 150
+    }
+  },
+  "matrix-smoke-collapsed-tap-off": {
+    "suite": "broad",
+    "family": "smoke",
+    "method": "testMatrixSmokeCollapsedTapOff",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-smoke-collapsed-swipe-off": {
+    "suite": "broad",
+    "family": "smoke",
+    "method": "testMatrixSmokeCollapsedSwipeOff",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-smoke-returning-off": {
+    "suite": "broad",
+    "family": "smoke",
+    "method": "testMatrixSmokeReturningOff",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-1-0-expanded-on": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap10ExpandedOn",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-1-0-partial-on": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap10PartialOn",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-1-0-collapsed-on": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap10CollapsedOn",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-1-2-expanded-on": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap12ExpandedOn",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-1-2-partial-on": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap12PartialOn",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-1-2-collapsed-on": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap12CollapsedOn",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-0-2-expanded-on": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap02ExpandedOn",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "overview",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-0-2-partial-on": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap02PartialOn",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "overview",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-0-2-collapsed-on": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap02CollapsedOn",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "overview",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-2-0-expanded-on": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap20ExpandedOn",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-2-0-partial-on": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap20PartialOn",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-tap-2-0-collapsed-on": {
+    "suite": "broad",
+    "family": "cold-tap",
+    "method": "testMatrixColdTap20CollapsedOn",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-relative-resetTitle-tap-on": {
+    "suite": "broad",
+    "family": "relative",
+    "method": "testMatrixRelativeResettitleTapOn",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-relative-preserve-tap-on": {
+    "suite": "broad",
+    "family": "relative",
+    "method": "testMatrixRelativePreserveTapOn",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "preserve",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-bottom-1-tap-on": {
+    "suite": "broad",
+    "family": "bottom",
+    "method": "testMatrixBottom1TapOn",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "first"
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "confirm"
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 12,
+      "titleHeight": 150
+    }
+  },
+  "matrix-bottom-2-tap-on": {
+    "suite": "broad",
+    "family": "bottom",
+    "method": "testMatrixBottom2TapOn",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "first"
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "confirm"
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 12,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-1-0-expanded-on": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe10ExpandedOn",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-1-0-partial-on": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe10PartialOn",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-1-0-collapsed-on": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe10CollapsedOn",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-1-2-expanded-on": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe12ExpandedOn",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-1-2-partial-on": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe12PartialOn",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-1-2-collapsed-on": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe12CollapsedOn",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-0-2-expanded-on": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe02ExpandedOn",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "overview",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-0-2-partial-on": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe02PartialOn",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "overview",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-0-2-collapsed-on": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe02CollapsedOn",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "overview",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-2-0-expanded-on": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe20ExpandedOn",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-2-0-partial-on": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe20PartialOn",
+    "headerRange": [
+      60,
+      100
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          60,
+          100
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          60,
+          100
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-cold-swipe-2-0-collapsed-on": {
+    "suite": "broad",
+    "family": "cold-swipe",
+    "method": "testMatrixColdSwipe20CollapsedOn",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-relative-resetTitle-swipe-on": {
+    "suite": "broad",
+    "family": "relative",
+    "method": "testMatrixRelativeResettitleSwipeOn",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-relative-preserve-swipe-on": {
+    "suite": "broad",
+    "family": "relative",
+    "method": "testMatrixRelativePreserveSwipeOn",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "preserve",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-bottom-1-swipe-on": {
+    "suite": "broad",
+    "family": "bottom",
+    "method": "testMatrixBottom1SwipeOn",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "first"
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "confirm"
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 12,
+      "titleHeight": 150
+    }
+  },
+  "matrix-bottom-2-swipe-on": {
+    "suite": "broad",
+    "family": "bottom",
+    "method": "testMatrixBottom2SwipeOn",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "first"
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650,
+        "bottomCheckpoint": "confirm"
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "notes",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 12,
+      "titleHeight": 150
+    }
+  },
+  "matrix-seed-20260925-on": {
+    "suite": "broad",
+    "family": "seeded",
+    "method": "testMatrixSeed20260925On",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 12,
+      "titleHeight": 150
+    }
+  },
+  "matrix-seed-927-on": {
+    "suite": "broad",
+    "family": "seeded",
+    "method": "testMatrixSeed927On",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "left",
+        "tab": "notes",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "right",
+        "tab": "activity",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "down",
+        "scale": 0.4477611940298507,
+        "startY": 400
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          0,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 0.4477611940298507,
+        "startY": 400
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 12,
+      "titleHeight": 150
+    }
+  },
+  "matrix-smoke-collapsed-tap-on": {
+    "suite": "broad",
+    "family": "smoke",
+    "method": "testMatrixSmokeCollapsedTapOn",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-smoke-collapsed-swipe-on": {
+    "suite": "broad",
+    "family": "smoke",
+    "method": "testMatrixSmokeCollapsedSwipeOn",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "right",
+        "tab": "overview",
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-smoke-returning-on": {
+    "suite": "broad",
+    "family": "smoke",
+    "method": "testMatrixSmokeReturningOn",
+    "headerRange": [
+      0,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.5671641791044775,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "matrix-smoke-normal-demo": {
+    "suite": "broad",
+    "family": "smoke",
+    "method": "testMatrixSmokeNormalDemo",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150
+    }
+  },
+  "header-fixed-off": {
+    "suite": "extended",
+    "family": "header-configuration",
+    "method": "testHeaderFixedOff",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 0.6716417910447761,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.15671641791044774,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "down",
+        "scale": 0.4477611940298507,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 150
+    }
+  },
+  "header-retained-off": {
+    "suite": "extended",
+    "family": "header-configuration",
+    "method": "testHeaderRetainedOff",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 0.6716417910447761,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          100,
+          100
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.15671641791044774,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          100,
+          100
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "down",
+        "scale": 0.4477611940298507,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 50
+    }
+  },
+  "header-titleless-off": {
+    "suite": "extended",
+    "family": "header-configuration",
+    "method": "testHeaderTitlelessOff",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 0.6716417910447761,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.15671641791044774,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "down",
+        "scale": 0.4477611940298507,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 0,
+      "minimumTitleHeight": 0
+    }
+  },
+  "header-fixed-on": {
+    "suite": "extended",
+    "family": "header-configuration",
+    "method": "testHeaderFixedOn",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 0.6716417910447761,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.15671641791044774,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "down",
+        "scale": 0.4477611940298507,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 150
+    }
+  },
+  "header-retained-on": {
+    "suite": "extended",
+    "family": "header-configuration",
+    "method": "testHeaderRetainedOn",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 0.6716417910447761,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          100,
+          100
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.15671641791044774,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          100,
+          100
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "down",
+        "scale": 0.4477611940298507,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 50
+    }
+  },
+  "header-titleless-on": {
+    "suite": "extended",
+    "family": "header-configuration",
+    "method": "testHeaderTitlelessOn",
+    "headerRange": [
+      0,
+      0
+    ],
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 0.6716417910447761,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.15671641791044774,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "down",
+        "scale": 0.4477611940298507,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 0,
+      "minimumTitleHeight": 0
+    }
+  },
+  "reset-position-off": {
+    "suite": "extended",
+    "family": "reset-position",
+    "method": "testResetPositionOff",
+    "headerRange": [
+      0,
+      0
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetPosition",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 0
+    },
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 0.6716417910447761,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          75,
+          75
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          75,
+          75
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "reset-position-on": {
+    "suite": "extended",
+    "family": "reset-position",
+    "method": "testResetPositionOn",
+    "headerRange": [
+      0,
+      0
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetPosition",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 0
+    },
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 0.6716417910447761,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          75,
+          75
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          75,
+          75
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "short-content-off": {
+    "suite": "extended",
+    "family": "short-content",
+    "method": "testShortContentOff",
+    "headerRange": [
+      0,
+      0
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 1,
+      "titleHeight": 150,
+      "minimumTitleHeight": 0,
+      "shortContent": true
+    },
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          75,
+          75
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650,
+        "bottomCheckpoint": "first"
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650,
+        "bottomCheckpoint": "confirm"
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.15671641791044774,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          25,
+          25
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "short-content-on": {
+    "suite": "extended",
+    "family": "short-content",
+    "method": "testShortContentOn",
+    "headerRange": [
+      0,
+      0
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 1,
+      "titleHeight": 150,
+      "minimumTitleHeight": 0,
+      "shortContent": true
+    },
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          75,
+          75
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650,
+        "bottomCheckpoint": "first"
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650,
+        "bottomCheckpoint": "confirm"
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "up",
+        "scale": 0.15671641791044774,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          25,
+          25
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "external-position-off": {
+    "suite": "extended",
+    "family": "external-position",
+    "method": "testExternalPositionOff",
+    "headerRange": [
+      150,
+      150
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 0,
+      "externalPosition": true
+    },
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "x": 345,
+        "y": 84,
+        "commandRow": 10,
+        "commandTab": "overview"
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "x": 45,
+        "y": 84,
+        "commandRow": 0,
+        "commandTab": "activity"
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "x": 45,
+        "y": 84,
+        "commandRow": 0,
+        "commandTab": "overview"
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "x": 345,
+        "y": 84,
+        "commandRow": 10,
+        "commandTab": "notes"
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ]
+  },
+  "external-position-on": {
+    "suite": "extended",
+    "family": "external-position",
+    "method": "testExternalPositionOn",
+    "headerRange": [
+      150,
+      150
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 0,
+      "externalPosition": true
+    },
+    "steps": [
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "x": 345,
+        "y": 84,
+        "commandRow": 10,
+        "commandTab": "overview"
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "x": 45,
+        "y": 84,
+        "commandRow": 0,
+        "commandTab": "activity"
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "x": 45,
+        "y": 84,
+        "commandRow": 0,
+        "commandTab": "overview"
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "x": 345,
+        "y": 84,
+        "commandRow": 10,
+        "commandTab": "notes"
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "notes",
+        "x": 335,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ]
+  },
+  "flick-settled-off": {
+    "suite": "extended",
+    "family": "flick",
+    "captureInitial": true,
+    "method": "testFlickSettledOff",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "flickUp",
+        "startY": 650,
+        "distance": 400,
+        "duration": 0.25,
+        "pauseAfter": 5,
+        "checkpointDelay": 4.5
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ],
+        "restoreParkedSource": false
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 0,
+      "flickFixture": true,
+      "phaseSwitch": false
+    }
+  },
+  "flick-switch-off": {
+    "suite": "extended",
+    "family": "flick",
+    "captureInitial": true,
+    "method": "testFlickSwitchOff",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "flickUp",
+        "startY": 650,
+        "distance": 400,
+        "duration": 0.25,
+        "pauseAfter": 5,
+        "checkpointDelay": 0.5,
+        "autoSwitch": true,
+        "tab": "overview",
+        "requireDeceleratingSource": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ],
+        "restoreParkedSource": true
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": false,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 0,
+      "flickFixture": true,
+      "phaseSwitch": true
+    }
+  },
+  "flick-settled-on": {
+    "suite": "extended",
+    "family": "flick",
+    "captureInitial": true,
+    "method": "testFlickSettledOn",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "flickUp",
+        "startY": 650,
+        "distance": 400,
+        "duration": 0.25,
+        "pauseAfter": 5,
+        "checkpointDelay": 4.5
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ],
+        "restoreParkedSource": false
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 0,
+      "flickFixture": true,
+      "phaseSwitch": false
+    }
+  },
+  "flick-switch-on": {
+    "suite": "extended",
+    "family": "flick",
+    "captureInitial": true,
+    "method": "testFlickSwitchOn",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "flickUp",
+        "startY": 650,
+        "distance": 400,
+        "duration": 0.25,
+        "pauseAfter": 5,
+        "checkpointDelay": 0.5,
+        "autoSwitch": true,
+        "tab": "overview",
+        "requireDeceleratingSource": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ],
+        "restoreParkedSource": true
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 0,
+      "flickFixture": true,
+      "phaseSwitch": true
+    }
+  },
+  "flick-touch-probe": {
+    "suite": "extended",
+    "family": "flick-diagnostic",
+    "captureInitial": true,
+    "method": "testFlickTouchProbe",
+    "headerRange": [
+      150,
+      150
+    ],
+    "steps": [
+      {
+        "kind": "flickUp",
+        "startY": 650,
+        "distance": 300,
+        "duration": 0.2,
+        "pauseAfter": 0.2,
+        "checkpointDelay": 4.5,
+        "skipCheckpointAfter": true
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ],
+        "requireDeceleratingSource": true,
+        "pauseAfter": 5
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ],
+        "restoreParkedSource": true
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 142,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      }
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "resetTitle",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 0,
+      "flickFixture": false,
+      "phaseSwitch": false
+    }
+  },
+  "visual-expanded-header": {
+    "suite": "extended",
+    "family": "visual",
+    "captureInitial": true,
+    "method": "testVisualExpandedHeader",
+    "headerRange": [
+      0,
+      0
+    ],
+    "fixture": {
+      "initialTab": "activity",
+      "mode": "preserve",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 0
+    },
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 0.3805970149253731,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 0.4477611940298507,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "up",
+        "scale": 0.6716417910447761,
+        "startY": 650
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          150,
+          150
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "down",
+        "scale": 1.7910447761194028,
+        "startY": 400
+      },
+      {
+        "kind": "down",
+        "scale": 1.7910447761194028,
+        "startY": 400
+      },
+      {
+        "kind": "down",
+        "scale": 1.7910447761194028,
+        "startY": 400
+      },
+      {
+        "kind": "tap",
+        "tab": "overview",
+        "x": 75,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tap",
+        "tab": "activity",
+        "x": 201,
+        "y": 292,
+        "dynamicY": true,
+        "headerRange": [
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "visual-native-reference": {
+    "suite": "extended",
+    "family": "visual",
+    "captureInitial": true,
+    "method": "testVisualNativeReference",
+    "headerRange": [
+      0,
+      0
+    ],
+    "fixture": {
+      "initialTab": "overview",
+      "mode": "preserve",
+      "native": true,
+      "rowCount": 30,
+      "titleHeight": 150,
+      "minimumTitleHeight": 150,
+      "nativeReference": true
+    },
+    "steps": [
+      {
+        "kind": "up",
+        "scale": 1.3432835820895521,
+        "startY": 650
+      },
+      {
+        "kind": "down",
+        "scale": 1.5671641791044775,
+        "startY": 400
+      }
+    ]
+  }
+}

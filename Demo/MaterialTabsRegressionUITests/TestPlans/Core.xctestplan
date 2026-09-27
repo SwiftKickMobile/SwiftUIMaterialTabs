@@ -1,0 +1,66 @@
+{
+  "configurations": [
+    {
+      "id": "A1960000-2730-4000-8000-000000000001",
+      "name": "Default",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {
+    "codeCoverage": false,
+    "environmentVariableEntries": [
+      {
+        "key": "SUIMT_FAIL_FAST",
+        "value": "1"
+      },
+      {
+        "key": "SUIMT_XCODE_PLAN",
+        "value": "1"
+      }
+    ],
+    "executionOrdering": "lexical",
+    "testTimeoutsEnabled": true,
+    "defaultTestExecutionTimeAllowance": 120,
+    "maximumTestExecutionTimeAllowance": 180,
+    "targetForVariableExpansion": {
+      "containerPath": "container:Demo.xcodeproj",
+      "identifier": "22034C0F2B54777C008147F0",
+      "name": "Demo"
+    }
+  },
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:Demo.xcodeproj",
+        "identifier": "223CBF123069BF9C00BF6E0C",
+        "name": "MaterialTabsModelTests"
+      },
+      "parallelizable": false
+    },
+    {
+      "target": {
+        "containerPath": "container:Demo.xcodeproj",
+        "identifier": "223CBCC830660DAE00BF6E0C",
+        "name": "MaterialTabsRegressionUITests"
+      },
+      "parallelizable": false,
+      "selectedTests": [
+        "PagerReadinessTests",
+        "RecordedTraceCheckerTests",
+        "RegressionCatalogTests",
+        "ManualTouchReplayUITests/testRecordedManualDragAndOverviewTap",
+        "ManualTouchReplayUITests/testRecordedAdjacentExpandedReturn",
+        "ManualTouchReplayUITests/testNotesExpansionWithoutOverscroll",
+        "ManualTouchReplayUITests/testQueryFreeColdNotesTap",
+        "ManualTouchReplayUITests/testQueryFreeNotesFourStep",
+        "ManualTouchReplayUITests/testQueryFreeExpandedTaps",
+        "ManualTouchReplayUITests/testQueryFreePartialTaps",
+        "ManualTouchReplayUITests/testQueryFreeCollapsedTaps",
+        "ManualTouchReplayUITests/testQueryFreePartialSwipes",
+        "ManualTouchReplayUITests/testQueryFreeCollapsedSwipes",
+        "ManualTouchReplayUITests/testQueryFreeRepeatedHeaderChanges"
+      ]
+    }
+  ],
+  "version": 1
+}

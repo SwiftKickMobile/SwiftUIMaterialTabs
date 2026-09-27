@@ -20,8 +20,21 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     let scrollMode: ScrollMode
 
     func contentOffsetChanged(_ offset: CGFloat) {
+        #if DEBUG
+        trace("offsetObserved", reason: scrollItem == reservedItem ? "anchor-pending" : "anchor-clear", observedOffset: -offset)
+        #endif
+        // A returning page can report its initial geometry before onAppear has
+        // synchronized it with the shared header. That geometry must neither
+        // move the header nor overwrite the position needed for restoration.
+        // The raw measurement remains available in the DEBUG trace above.
+        guard appeared || headerModel?.state.headerContext.selectedTab != tab else { return }
         let oldContentOffset = contentOffset
         contentOffset = -offset
+        // An unselected page can still finish decelerating offscreen. Retain
+        // that final position, without allowing it to drive the shared header.
+        guard appeared else {
+            return
+        }
         let deltaOffset = contentOffset - oldContentOffset
         switch scrollMode {
         case .scrollAnchor:
@@ -40,8 +53,11 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     }
 
     func appeared(headerModel: HeaderModel<Tab>?) {
-        appeared = true
         self.headerModel = headerModel
+        appeared = true
+        #if DEBUG
+        trace("pageAppeared")
+        #endif
         selectedTab = headerModel?.state.headerContext.selectedTab
         syncContentOffsetWithHeader(appearance: true)
         configureBottomMargin()
@@ -49,6 +65,9 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
 
     func disappeared() {
         appeared = false
+        #if DEBUG
+        trace("pageDisappeared")
+        #endif
     }
 
     func selectedTabChanged() {
@@ -69,6 +88,9 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
     #endif
 
     func scrollItemChanged(_ item: Item?) {
+        #if DEBUG
+        trace("externalScrollItem", reason: item == nil ? "nil" : "value")
+        #endif
         scrollItem = item
     }
 
@@ -128,7 +150,17 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         }
     }
 
-    private var contentOffset: CGFloat = 0
+    private(set) var contentOffset: CGFloat = 0
+
+    #if DEBUG
+    private let traceID = MaterialTabsTrace.isEnabled ? UUID().uuidString : ""
+    var traceRegistration = false
+
+    private func trace(_ kind: String, reason: String? = nil, observedOffset: CGFloat? = nil) {
+        MaterialTabsTrace.page(kind: kind, id: traceID, tab: tab, header: headerModel,
+                               offset: observedOffset ?? contentOffset, appeared: appeared, registration: traceRegistration, reason: reason)
+    }
+    #endif
 
     // MARK: Configuring the bottom margin
 
@@ -150,6 +182,9 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         guard appeared, let headerModel,
                 tab == headerModel.state.headerContext.selectedTab || appearance,
                 headerModel.state.tabsRegistered else { return }
+        #if DEBUG
+        trace("syncBegin", reason: appearance ? "appearance" : "existing")
+        #endif
         let deltaHeaderOffset: CGFloat
         if let cachedTabsState {
             deltaHeaderOffset = headerModel.state.headerContext.offset - cachedTabsState.headerContext.offset
@@ -168,7 +203,14 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
             contentOffset = contentOffset + deltaHeaderOffset
         }
         // Update the header context with this tab's content offset during programmatic sync
-        headerModel.contentOffsetChanged(contentOffset)
+        #if DEBUG
+        trace("syncTarget", reason: appearance ? "appearance" : "existing")
+        #endif
+        // An incoming/intermediate page may synchronize before selection. Its
+        // geometry must not replace the selected page's public content context.
+        if tab == headerModel.state.headerContext.selectedTab {
+            headerModel.contentOffsetChanged(contentOffset)
+        }
         switch scrollMode {
         case .scrollAnchor:
             scrollUnitPoint = UnitPoint(
@@ -176,6 +218,9 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
                 y: (headerModel.state.headerContext.maxOffset - contentOffset) / (headerModel.state.safeHeight - 1)
             )
             scrollItem = reservedItem
+            #if DEBUG
+            trace("anchorSet")
+            #endif
             // It is essential to set the scroll item back to `nil` so that we can make
             // future scroll adjustments. Placing this in a task is sufficient for the
             // above scrolling to occur.
@@ -184,6 +229,9 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
                 // need to be able to do to avoid adjusting the header after a programatic scroll. So, sadly, we're going
                 // this instead and rely on checking the value of `scrollItem`.
                 try? await Task.sleep(for: .seconds(0.05))
+                #if DEBUG
+                trace("anchorCleared", reason: "timer")
+                #endif
                 scrollItem = nil
             }
         case .scrollPosition:
@@ -193,4 +241,3 @@ class ScrollModel<Item, Tab>: ObservableObject where Item: Hashable, Tab: Hashab
         }
     }
 }
-

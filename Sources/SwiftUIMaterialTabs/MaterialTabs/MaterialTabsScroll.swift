@@ -131,11 +131,42 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
     @Binding private var scrollItem: Item?
     @Binding private var scrollUnitPoint: UnitPoint
     @StateObject private var scrollModel: ScrollModel<Item, Tab>
+    @State private var activationTask: Task<Void, Never>?
     @ViewBuilder private var content: (_ context: MaterialTabsScrollContext<Tab>) -> Content
     @EnvironmentObject private var headerModel: HeaderModel<Tab>
     @Environment(\.materialTabsNativeScrollEdgeEffect) private var nativeScrollEdgeEffect
+    @Environment(\.materialTabsPageActive) private var pageIsActive
+    #if DEBUG
+    @Environment(\.materialTabsTraceRegistration) private var traceRegistration
+    #endif
+
+    private var nativeScrollEdgeOffset: CGFloat {
+        let context = headerModel.state.headerContext
+        let visibleTitleHeight = (context.rubberBandingTitleHeight ?? context.titleHeight) - max(context.offset, 0)
+        return max(0, visibleTitleHeight - context.minTitleHeight)
+    }
 
     // MARK: - Body
+
+    private func activate(_ active: Bool) {
+        activationTask?.cancel()
+        activationTask = nil
+        guard active else {
+            scrollModel.disappeared()
+            return
+        }
+        switch scrollModel.scrollMode {
+        case .scrollAnchor:
+            // Initial external binding callbacks must run before we issue an
+            // internal scroll request. A .task on the new page runs too early.
+            activationTask = Task {
+                guard !Task.isCancelled else { return }
+                scrollModel.appeared(headerModel: headerModel)
+            }
+        case .scrollPosition:
+            scrollModel.appeared(headerModel: headerModel)
+        }
+    }
 
     public var body: some View {
         ScrollView {
@@ -172,27 +203,44 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
                 Color.clear.frame(height: scrollModel.bottomMargin)
             }
         }
+        .coordinateSpace(name: coordinateSpaceName)
         .map { scroll in
             if #available(iOS 26.0, *), nativeScrollEdgeEffect {
+                let effectHeight = headerModel.state.headerContext.minTotalHeight + nativeScrollEdgeOffset
+                let effectWidth = headerModel.state.headerContext.width
                 scroll
                     .safeAreaBar(edge: .top, spacing: 0) {
-                        // Registration-only marker; the real header stays outside
-                        // the pager. On the tested iOS 27 runtime, Color.clear and
-                        // Color.black.opacity(0.0001) did not activate the edge effect,
-                        // while transparent Text did. Recheck on other OS versions.
+                        // Registration only; the real header stays outside the pager.
+                        // Transparent Text registers with the native bar where a clear
+                        // Color did not. Register the whole visible header, not just
+                        // a centered line of text or padding around it. Measured visual
+                        // scaling changes the effect bounds without changing insets.
                         Text(verbatim: "Scroll edge")
-                            .frame(maxWidth: .infinity)
-                            .frame(height: headerModel.state.headerContext.minTotalHeight)
+                            .font(.system(size: 1))
+                            .fixedSize()
+                            .visualEffect { content, geometry in
+                                content.scaleEffect(
+                                    x: geometry.size.width > 0 ? effectWidth / geometry.size.width : 1,
+                                    y: geometry.size.height > 0 ? effectHeight / geometry.size.height : 1,
+                                    anchor: .topLeading
+                                )
+                            }
+                            .frame(maxWidth: .infinity, alignment: .topLeading)
+                            // Transform the registered text bounds, not empty frame
+                            // space. Layout still reserves the fixed collapsed height.
+                            .frame(height: headerModel.state.headerContext.minTotalHeight, alignment: .top)
                             .foregroundStyle(.clear)
                             .allowsHitTesting(false)
                             .accessibilityHidden(true)
                     }
-                    .scrollEdgeEffectHidden(false, for: .top)
+                    .scrollEdgeEffectHidden(
+                        scrollModel.contentOffset <= headerModel.state.headerContext.offset,
+                        for: .top
+                    )
             } else {
                 scroll
             }
         }
-        .coordinateSpace(name: coordinateSpaceName)
         .map { content in
             switch scrollModel.scrollMode {
             case .scrollAnchor:
@@ -216,16 +264,14 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
             scrollModel.contentSizeChanged(size)
         }
         .onAppear {
-            switch scrollModel.scrollMode {
-            case .scrollAnchor:
-                // It is important not to attempt to adjust the scroll position until after the view has appeared
-                // and this task seems to accomplish that.
-                Task {
-                    scrollModel.appeared(headerModel: headerModel)
-                }
-            case .scrollPosition:
-                scrollModel.appeared(headerModel: headerModel)
-            }
+            #if DEBUG
+            scrollModel.traceRegistration = traceRegistration
+            #endif
+            activate(pageIsActive ?? true)
+        }
+        .onChange(of: pageIsActive) {
+            guard let active = pageIsActive else { return }
+            activate(active)
         }
         .onChange(of: headerModel.state.headerContext.selectedTab, initial: true) {
             scrollModel.selectedTabChanged()
@@ -256,7 +302,7 @@ public struct MaterialTabsScroll<Content, Tab, Item>: View where Content: View, 
             scrollModel.headerStateChanged()
         }
         .onDisappear() {
-            scrollModel.disappeared()
+            activate(false)
         }
     }
 }
