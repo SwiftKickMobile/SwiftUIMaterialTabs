@@ -2,7 +2,6 @@
 
 ![GitHub Release](https://img.shields.io/github/v/release/swiftkickmobile/SwiftUIMaterialTabs)
 ![iOS 18.0+](https://img.shields.io/badge/iOS-18.0%2B-yellow.svg)
-![Xcode 16.0+](https://img.shields.io/badge/Xcode-16.0%2B-blue.svg)
 ![Swift 6.0+](https://img.shields.io/badge/Swift-6.0%2B-purple)
 ![GitHub License](https://img.shields.io/github/license/swiftkickmobile/SwiftUIMaterialTabs)
 
@@ -278,6 +277,46 @@ scrollPosition.scrollTo(edge: .top)
 > won't move. Always update both together as shown above.
 
 It should be noted that `MaterialTabsScroll` inserts a spacer into the scroll to push your content below the header.
+
+## Liquid Glass
+
+### Extend the navigation bar's background
+
+Apply `.materialTabsScrollEdgeEffect()` to make a transparent header and tab bar
+appear as an extension of the navigation bar. The background stays clear at rest
+and uses the system's blur and transition as content scrolls behind it.
+
+````swift
+NavigationStack {
+    MaterialTabs(...)
+        .materialTabsScrollEdgeEffect()
+}
+````
+
+The modifier is a no-op on iOS versions before iOS 26.
+
+### Opaque header backgrounds
+
+An opaque `headerBackground`, such as an image, covers the scrolling content, so
+there is no visible scroll-edge blur behind it. The modifier does not blur the
+header image itself.
+
+To prevent the navigation bar from reacting to content hidden by the header,
+hide its background and top scroll-edge effect. On iOS 26 and later:
+
+````swift
+NavigationStack {
+    MaterialTabs(
+        ...,
+        headerBackground: { _ in
+            Image("Header").resizable().scaledToFill()
+        },
+        ...
+    )
+    .toolbarBackground(.hidden, for: .navigationBar)
+    .scrollEdgeEffectHidden(true, for: .top)
+}
+````
 
 ## Sticky Headers
 

@@ -19,8 +19,15 @@ class ScrollModel<Tab> where Tab: Hashable {
     private(set) var bottomMargin: CGFloat = 0
 
     func contentOffsetChanged(_ offset: CGFloat) {
+        #if DEBUG
+        trace("offsetObserved", reason: isSyncingWithHeader ? "anchor-pending" : "anchor-clear", observedOffset: -offset)
+        #endif
+        // Ignore initial geometry of a selected page until its saved position is restored.
+        guard appeared || headerModel?.headerContext.selectedTab != tab else { return }
         let oldContentOffset = contentOffset
         contentOffset = -offset
+        // An unselected page may finish decelerating, but cannot move the shared header.
+        guard appeared else { return }
         let deltaOffset = contentOffset - oldContentOffset
         // Only filter out library-internal programmatic scrolls (tab sync). Consumer-initiated
         // scrollTo(id:) should still notify the header model so it can collapse/expand.
@@ -34,6 +41,9 @@ class ScrollModel<Tab> where Tab: Hashable {
         self.headerModel = headerModel
         self.scrollPositionBinding = scrollPositionBinding
         self.anchorBinding = anchorBinding
+        #if DEBUG
+        trace("pageAppeared")
+        #endif
         selectedTab = headerModel?.headerContext.selectedTab
         syncContentOffsetWithHeader(appearance: true)
         configureBottomMargin()
@@ -41,6 +51,9 @@ class ScrollModel<Tab> where Tab: Hashable {
 
     func disappeared() {
         appeared = false
+        #if DEBUG
+        trace("pageDisappeared")
+        #endif
     }
 
     func selectedTabChanged() {
@@ -100,7 +113,17 @@ class ScrollModel<Tab> where Tab: Hashable {
         }
     }
 
-    private var contentOffset: CGFloat = 0
+    private(set) var contentOffset: CGFloat = 0
+
+    #if DEBUG
+    private let traceID = MaterialTabsTrace.isEnabled ? UUID().uuidString : ""
+    var traceRegistration = false
+    private func trace(_ kind: String, reason: String? = nil, observedOffset: CGFloat? = nil) {
+        MaterialTabsTrace.page(kind: kind, id: traceID, tab: tab, header: headerModel,
+                              offset: observedOffset ?? contentOffset, appeared: appeared,
+                              registration: traceRegistration, reason: reason)
+    }
+    #endif
     /// Set during library-internal programmatic scrolls (syncContentOffsetWithHeader) and cleared
     /// after a short delay. Prevents reporting programmatic scroll offsets to the header model.
     private var isSyncingWithHeader = false
@@ -133,6 +156,9 @@ class ScrollModel<Tab> where Tab: Hashable {
         guard appeared, let headerModel, let scrollPositionBinding,
                 tab == headerModel.headerContext.selectedTab || appearance,
                 headerModel.tabsRegistered else { return }
+        #if DEBUG
+        trace("syncBegin", reason: appearance ? "appearance" : "existing")
+        #endif
         let deltaHeaderOffset: CGFloat
         if let cachedOffset {
             deltaHeaderOffset = headerModel.headerContext.offset - cachedOffset
@@ -150,15 +176,26 @@ class ScrollModel<Tab> where Tab: Hashable {
         default:
             contentOffset = contentOffset + deltaHeaderOffset
         }
-        headerModel.contentOffsetChanged(contentOffset)
+        #if DEBUG
+        trace("syncTarget", reason: appearance ? "appearance" : "existing")
+        #endif
+        if tab == headerModel.headerContext.selectedTab {
+            headerModel.contentOffsetChanged(contentOffset)
+        }
         isSyncingWithHeader = true
         let unitPointY = (headerModel.headerContext.maxOffset - contentOffset) / (headerModel.safeHeight - 1)
         let syncAnchor = UnitPoint(x: UnitPoint.top.x, y: unitPointY)
         // The .scrollPosition() modifier's anchor must match the scrollTo anchor for positioning to work.
         anchorBinding?.wrappedValue = syncAnchor
         scrollPositionBinding.wrappedValue.scrollTo(id: reservedItemID, anchor: syncAnchor)
+        #if DEBUG
+        trace("anchorSet")
+        #endif
         Task {
             try? await Task.sleep(for: .seconds(0.05))
+            #if DEBUG
+            trace("anchorCleared", reason: "timer")
+            #endif
             isSyncingWithHeader = false
         }
     }

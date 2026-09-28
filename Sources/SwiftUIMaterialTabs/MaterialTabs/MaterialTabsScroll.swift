@@ -97,6 +97,19 @@ public struct MaterialTabsScroll<Content, Tab>: View where Content: View, Tab: H
     @ViewBuilder private var content: (_ context: MaterialTabsScrollContext<Tab>) -> Content
     @Environment(HeaderModel<Tab>.self) private var headerModel
 
+    @Environment(\.materialTabsNativeScrollEdgeEffect) private var nativeScrollEdgeEffect
+    @Environment(\.materialTabsPageActive) private var pageIsActive
+    #if DEBUG
+    @Environment(\.materialTabsTraceRegistration) private var traceRegistration
+    #endif
+
+    private var nativeScrollEdgeOffset: CGFloat {
+        let context = headerModel.headerContext
+        let visibleTitleHeight = (context.rubberBandingTitleHeight ?? context.titleHeight) - max(context.offset, 0)
+        return max(0, visibleTitleHeight - context.minTitleHeight)
+    }
+
+
     /// The active scroll position binding — either the consumer's external binding or our internal @State.
     private var activeScrollPosition: Binding<ScrollPosition> {
         hasExternalScrollPosition ? $externalScrollPosition : $internalScrollPosition
@@ -108,6 +121,17 @@ public struct MaterialTabsScroll<Content, Tab>: View where Content: View, Tab: H
     }
 
     // MARK: - Body
+
+    private func activate(_ active: Bool) {
+        if active {
+            #if DEBUG
+            scrollModel.traceRegistration = traceRegistration
+            #endif
+            scrollModel.appeared(headerModel: headerModel, scrollPositionBinding: activeScrollPosition, anchorBinding: activeAnchor)
+        } else {
+            scrollModel.disappeared()
+        }
+    }
 
     public var body: some View {
         ScrollView {
@@ -161,13 +185,52 @@ public struct MaterialTabsScroll<Content, Tab>: View where Content: View, Tab: H
             }
         }
         .coordinateSpace(name: coordinateSpaceName)
+        .map { scroll in
+            if #available(iOS 26.0, *), nativeScrollEdgeEffect {
+                let effectHeight = headerModel.headerContext.minTotalHeight + nativeScrollEdgeOffset
+                let effectWidth = headerModel.headerContext.width
+                scroll
+                    .safeAreaBar(edge: .top, spacing: 0) {
+                        // Registration only; the real header stays outside the pager.
+                        // Transparent Text registers with the native bar where a clear
+                        // Color did not. Register the whole visible header, not just
+                        // a centered line of text or padding around it. Measured visual
+                        // scaling changes the effect bounds without changing insets.
+                        Text(verbatim: "Scroll edge")
+                            .font(.system(size: 1))
+                            .fixedSize()
+                            .visualEffect { content, geometry in
+                                content.scaleEffect(
+                                    x: geometry.size.width > 0 ? effectWidth / geometry.size.width : 1,
+                                    y: geometry.size.height > 0 ? effectHeight / geometry.size.height : 1,
+                                    anchor: .topLeading
+                                )
+                            }
+                            .frame(maxWidth: .infinity, alignment: .topLeading)
+                            // Transform the registered text bounds, not empty frame
+                            // space. Layout still reserves the fixed collapsed height.
+                            .frame(height: headerModel.headerContext.minTotalHeight, alignment: .top)
+                            .foregroundStyle(.clear)
+                            .allowsHitTesting(false)
+                            .accessibilityHidden(true)
+                    }
+                    .scrollEdgeEffectHidden(
+                        scrollModel.contentOffset <= headerModel.headerContext.offset,
+                        for: .top
+                    )
+            } else {
+                scroll
+            }
+        }
         .scrollPosition(activeScrollPosition, anchor: activeAnchor.wrappedValue)
         .onPreferenceChange(ScrollViewContentSizeKey.self) { size in
             guard let size else { return }
             scrollModel.contentSizeChanged(size)
         }
-        .onAppear {
-            scrollModel.appeared(headerModel: headerModel, scrollPositionBinding: activeScrollPosition, anchorBinding: activeAnchor)
+        .onAppear { activate(pageIsActive ?? true) }
+        .onChange(of: pageIsActive) {
+            guard let active = pageIsActive else { return }
+            activate(active)
         }
         .onChange(of: headerModel.headerContext.selectedTab, initial: true) {
             scrollModel.selectedTabChanged()
@@ -184,9 +247,7 @@ public struct MaterialTabsScroll<Content, Tab>: View where Content: View, Tab: H
         .onChange(of: headerModel.headerContext.minTotalHeight) {
             scrollModel.headerStateChanged()
         }
-        .onDisappear() {
-            scrollModel.disappeared()
-        }
+        .onDisappear { activate(false) }
     }
 }
 

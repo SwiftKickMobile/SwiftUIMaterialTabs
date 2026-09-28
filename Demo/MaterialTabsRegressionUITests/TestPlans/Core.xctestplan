@@ -1,0 +1,68 @@
+{
+  "configurations": [
+    {
+      "id": "A1960000-2730-4000-8000-000000000001",
+      "name": "Default",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {
+    "codeCoverage": false,
+    "environmentVariableEntries": [
+      {
+        "key": "SUIMT_FAIL_FAST",
+        "value": "1"
+      },
+      {
+        "key": "SUIMT_XCODE_PLAN",
+        "value": "1"
+      }
+    ],
+    "executionOrdering": "lexical",
+    "testTimeoutsEnabled": true,
+    "defaultTestExecutionTimeAllowance": 120,
+    "maximumTestExecutionTimeAllowance": 180,
+    "targetForVariableExpansion": {
+      "containerPath": "container:Demo.xcodeproj",
+      "identifier": "223CBF573069F06700BF6E0C",
+      "name": "TestHost"
+    }
+  },
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:Demo.xcodeproj",
+        "identifier": "223CBF123069BF9C00BF6E0C",
+        "name": "MaterialTabsModelTests"
+      },
+      "parallelizable": false
+    },
+    {
+      "target": {
+        "containerPath": "container:Demo.xcodeproj",
+        "identifier": "223CBCC830660DAE00BF6E0C",
+        "name": "MaterialTabsRegressionUITests"
+      },
+      "parallelizable": false,
+      "selectedTests": [
+        "PagerReadinessTests",
+        "RecordedTraceCheckerTests",
+        "RegressionCatalogTests",
+        "ManualTouchReplayUITests/testRecordedManualDragAndOverviewTap",
+        "ManualTouchReplayUITests/testRecordedAdjacentExpandedReturn",
+        "ManualTouchReplayUITests/testNotesExpansionWithoutOverscroll",
+        "ManualTouchReplayUITests/testQueryFreeColdNotesTap",
+        "ManualTouchReplayUITests/testQueryFreeNotesFourStep",
+        "ManualTouchReplayUITests/testQueryFreeExpandedTaps",
+        "ManualTouchReplayUITests/testQueryFreePartialTaps",
+        "ManualTouchReplayUITests/testQueryFreeCollapsedTaps",
+        "ManualTouchReplayUITests/testQueryFreePartialSwipes",
+        "ManualTouchReplayUITests/testQueryFreeCollapsedSwipes",
+        "ManualTouchReplayUITests/testQueryFreeRepeatedHeaderChanges",
+        "ManualTouchReplayUITests/testIssue27ExternalPositionOff",
+        "ManualTouchReplayUITests/testIssue27ExternalPositionOn"
+      ]
+    }
+  ],
+  "version": 1
+}

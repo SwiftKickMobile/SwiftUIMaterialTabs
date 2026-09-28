@@ -112,12 +112,40 @@ public struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
 
     @Environment(HeaderModel<Tab>.self) private var headerModel
     @Environment(TabBarModel<Tab>.self) private var tabBarModel
-    @State private var foo = 0
+    @Environment(\.materialTabsRetainsPages) private var retainsPages
+    @State private var hasLoaded = false
+    @State private var intersectsViewport = false
 
     // MARK: - Body
 
     public func body(content: Content) -> some View {
-        content
+        Group {
+            if retainsPages {
+                Group {
+                    if hasLoaded || headerModel.headerContext.selectedTab == tab {
+                        content
+                    } else {
+                        Color.clear
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .environment(\.materialTabsPageActive,
+                              intersectsViewport || headerModel.headerContext.selectedTab == tab)
+                .onGeometryChange(for: Bool.self) { geometry in
+                    let frame = geometry.frame(in: .scrollView(axis: .horizontal))
+                    let width = geometry.bounds(of: .scrollView(axis: .horizontal))?.width ?? 0
+                    return width > 0 && frame.maxX > 0.5 && frame.minX < width - 0.5
+                } action: { visible in
+                    intersectsViewport = visible
+                    if visible { hasLoaded = true }
+                }
+                .onChange(of: headerModel.headerContext.selectedTab, initial: true) {
+                    if headerModel.headerContext.selectedTab == tab { hasLoaded = true }
+                }
+            } else {
+                content
+            }
+        }
             .background {
                 TabRegisteringView(tab: tab, label: label, tabBarModel: tabBarModel, headerModel: headerModel)
             }

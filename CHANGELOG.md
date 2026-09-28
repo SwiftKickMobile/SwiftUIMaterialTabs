@@ -11,15 +11,19 @@ All notable changes to this project will be documented in this file.
 
 ### Improvements
 
+* Add `.materialTabsScrollEdgeEffect()` on iOS 26 and later. Transparent headers and tab bars can extend the navigation bar's native scroll-edge blur, including collapsible headers, without implementing custom blur values or transitions.
+* Document Liquid Glass setup and why opaque header backgrounds cover the scrolling content instead of being blurred by the modifier.
+* Add shared Core and Extended Xcode test plans with scroll-position, header-continuity, and tab-state regression checks. Validation runs inside XCTest; no command-line post-processing is required.
+
 * #25 `MaterialTabBar` now supports an `alignment` parameter (`.leading`, `.center`, `.trailing`) for controlling horizontal positioning of self-sized tabs when `fillAvailableSpace` is `false`.
 * #25 New `MaterialAccessoryTabBar` component for adding optional leading and trailing accessory views alongside tab selectors. Accessories scroll horizontally with the tabs.
 * #25 `TabBarModel` and `HeaderModel` are now public, enabling fully custom tab bar implementations via the environment.
 
-## 2.0.7
+### Fixes
 
-### Improvements
-
-* Add context-free initializers to `MaterialTabsScroll` and `StickyHeaderScroll`. The existing initializers pass a `MaterialTabsScrollContext` (or `StickyHeaderScrollContext`) to the content view builder, which includes the content offset. Because the content offset changes on every frame during scrolling, this causes the content view `body` to be re-evaluated continuously. The new initializers omit the context, allowing the content to be shielded from these unnecessary re-evaluations via an internal `ContentWrapperView` with `Equatable` conformance. If your content does not need the context, prefer the new initializers for better scroll performance.
+* Preserve tab content state and scroll position when returning to tabs on iOS 27.
+* Correct incoming-tab scroll alignment with the shared header, including taps to previously unvisited tabs.
+* Preserve header and scroll-position continuity when switching tabs during deceleration.
 
 ## 2.0.6
 

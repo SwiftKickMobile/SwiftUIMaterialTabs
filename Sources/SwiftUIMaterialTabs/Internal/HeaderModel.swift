@@ -29,6 +29,13 @@ public final class HeaderModel<Tab> where Tab: Hashable {
         height - headerContext.minTotalHeight
     }
 
+    #if DEBUG
+    let traceID = MaterialTabsTrace.isEnabled ? UUID().uuidString : ""
+    private func traceContext() {
+        MaterialTabsTrace.context(id: traceID, new: headerContext, mode: config.crossTabSyncMode)
+    }
+    #endif
+
     var config: MaterialTabsConfig = MaterialTabsConfig()
 
     init(selectedTab: Tab) {
@@ -36,37 +43,64 @@ public final class HeaderModel<Tab> where Tab: Hashable {
     }
 
     func configChanged(_ config: MaterialTabsConfig) {
+        #if DEBUG
+        defer { traceContext() }
+        #endif
         self.config = config
     }
 
     func sizeChanged(_ size: CGSize) {
+        #if DEBUG
+        defer { traceContext() }
+        #endif
         height = size.height
         headerContext.width = size.width
     }
 
     func titleHeightChanged(_ height: CGFloat) {
+        #if DEBUG
+        defer { traceContext() }
+        #endif
         headerContext.titleHeight = height
     }
 
     func minTitleHeightChanged(_ metric: MinTitleHeightPreferenceKey.Metric) {
+        #if DEBUG
+        defer { traceContext() }
+        #endif
         headerContext.minTitleMetric = metric
     }
 
     func tabBarHeightChanged(_ height: CGFloat) {
+        #if DEBUG
+        defer { traceContext() }
+        #endif
         headerContext.tabBarHeight = height
     }
 
     /// Notify the library that a tab was selected. Call this from custom tab bar implementations when a tab is tapped.
     public func selected(tab: Tab) {
+        #if DEBUG
+        defer { traceContext() }
+        #endif
+        #if DEBUG
+        MaterialTabsTrace.input(kind: "selectionRequest", header: self, tab: tab)
+        #endif
         hasScrolledSinceSelected = false
         headerContext.selectedTab = tab
     }
 
     func safeAreaChanged(_ safeArea: EdgeInsets) {
+        #if DEBUG
+        defer { traceContext() }
+        #endif
         headerContext.safeArea = safeArea
     }
 
     func animationNamespaceChanged(_ animationNamespace: Namespace.ID) {
+        #if DEBUG
+        defer { traceContext() }
+        #endif
         headerContext.animationNamespace = animationNamespace
     }
 
@@ -78,6 +112,9 @@ public final class HeaderModel<Tab> where Tab: Hashable {
     }
 
     func contentOffsetChanged(_ contentOffset: CGFloat) {
+        #if DEBUG
+        defer { traceContext() }
+        #endif
         headerContext.contentOffset = contentOffset
     }
 
@@ -96,6 +133,12 @@ public final class HeaderModel<Tab> where Tab: Hashable {
     /// In the basic case, the header offset matches the scroll view up calculated max offset. However, in a multi-tab environment, scrolling on another tab
     /// can change the header offset, introducing edge cases that need to be handled.
     func scrolled(tab: Tab, contentOffset: CGFloat, deltaContentOffset: CGFloat) {
+        #if DEBUG
+        defer { traceContext() }
+        #endif
+        #if DEBUG
+        MaterialTabsTrace.input(kind: "scrollInput", header: self, tab: tab, offset: contentOffset)
+        #endif
         guard tab == headerContext.selectedTab else { return }
         switch config.crossTabSyncMode {
         case .resetTitleOnScroll where !hasScrolledSinceSelected:
