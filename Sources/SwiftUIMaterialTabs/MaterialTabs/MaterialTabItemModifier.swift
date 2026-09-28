@@ -100,7 +100,7 @@ public struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
 
         init(tab: Tab, label: @escaping MaterialTabBar<Tab>.CustomLabel, tabBarModel: TabBarModel<Tab>, headerModel: HeaderModel<Tab>) {
             tabBarModel.register(tab: tab, label: label)
-            headerModel.tabsRegistered()
+            headerModel.onTabsRegistered()
         }
 
         var body: some View {
@@ -110,8 +110,8 @@ public struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
 
     // MARK: - Variables
 
-    @EnvironmentObject private var headerModel: HeaderModel<Tab>
-    @EnvironmentObject private var tabBarModel: TabBarModel<Tab>
+    @Environment(HeaderModel<Tab>.self) private var headerModel
+    @Environment(TabBarModel<Tab>.self) private var tabBarModel
     @State private var foo = 0
 
     // MARK: - Body

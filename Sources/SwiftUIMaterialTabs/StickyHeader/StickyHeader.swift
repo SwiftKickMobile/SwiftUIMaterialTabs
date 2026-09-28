@@ -58,25 +58,20 @@ public struct StickyHeader<HeaderTitle, HeaderBackground, Content>: View
         @ViewBuilder headerBackground: @escaping (StickyHeaderContext) -> HeaderBackground,
         @ViewBuilder content: @escaping () -> Content
     ) {
-        self.header = { context in
-            HeaderView(
-                context: context,
-                title: headerTitle,
-                tabBar: { _ in EmptyView() },
-                background: headerBackground
-            )
-        }
+        self.headerTitle = headerTitle
+        self.headerBackground = headerBackground
         self.content = content
-        _headerModel = StateObject(wrappedValue: HeaderModel(selectedTab: .none))
+        _headerModel = State(wrappedValue: HeaderModel(selectedTab: .none))
     }
 
     // MARK: - Constants
 
     // MARK: - Variables
 
-    @ViewBuilder private let header: (StickyHeaderContext) -> HeaderView<HeaderTitle, EmptyView, HeaderBackground, NoTab>
+    @ViewBuilder private let headerTitle: (StickyHeaderContext) -> HeaderTitle
+    @ViewBuilder private let headerBackground: (StickyHeaderContext) -> HeaderBackground
     @ViewBuilder private let content: () -> Content
-    @StateObject private var headerModel: HeaderModel<NoTab>
+    @State private var headerModel: HeaderModel<NoTab>
 
     // MARK: - Body
 
@@ -88,21 +83,43 @@ public struct StickyHeader<HeaderTitle, HeaderBackground, Content>: View
                     // calculations work out better. For example, scrolling an item to `.top`
                     // results in a fully collapsed header with the item touching the header
                     // as one would expect.
-                    .safeAreaPadding(.top, headerModel.state.headerContext.minTotalHeight)
+                    .safeAreaPadding(.top, headerModel.headerContext.minTotalHeight)
                     .onChange(of: proxy.size.height, initial: true) {
                         headerModel.sizeChanged(proxy.size)
                     }
-                header(headerModel.state.headerContext)
+                // Bridge view — header closures invoked in their own scope
+                StickyHeaderBridgeView(
+                    headerContext: headerModel.headerContext,
+                    headerTitle: headerTitle,
+                    headerBackground: headerBackground
+                )
             }
             .onChange(of: proxy.safeAreaInsets, initial: true) {
                 headerModel.safeAreaChanged(proxy.safeAreaInsets)
             }
         }
-        .environmentObject(headerModel)
+        .environment(headerModel)
+        .environment(headerModel.headerContext)
         .onPreferenceChange(TitleHeightPreferenceKey.self, perform: headerModel.titleHeightChanged(_:))
         .onPreferenceChange(MinTitleHeightPreferenceKey.self, perform: headerModel.minTitleHeightChanged(_:))
         .onAppear {
-            headerModel.tabsRegistered()
+            headerModel.onTabsRegistered()
         }
+    }
+}
+
+/// Bridge view for StickyHeader — invokes header closures in its own body scope.
+private struct StickyHeaderBridgeView<HeaderTitle: View, HeaderBackground: View>: View {
+    let headerContext: HeaderContext<NoTab>
+    @ViewBuilder let headerTitle: (HeaderContext<NoTab>) -> HeaderTitle
+    @ViewBuilder let headerBackground: (HeaderContext<NoTab>) -> HeaderBackground
+
+    var body: some View {
+        HeaderView(
+            context: headerContext,
+            title: headerTitle,
+            tabBar: { _ in EmptyView() },
+            background: headerBackground
+        )
     }
 }

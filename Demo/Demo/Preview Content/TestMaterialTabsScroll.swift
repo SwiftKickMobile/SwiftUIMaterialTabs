@@ -18,8 +18,8 @@ struct TestMaterialTabsScroll: View {
     // MARK: - Variables
 
     @State private var selectedTab = 0
-    @State private var scrollItem: Int?
-    @State private var scrollUnitPoint: UnitPoint = .top
+    @State private var scrollPosition = ScrollPosition(idType: Int.self)
+    @State private var scrollAnchor: UnitPoint? = .top
 
     // MARK: - Body
 
@@ -30,7 +30,19 @@ struct TestMaterialTabsScroll: View {
                 Text("Title").frame(height: titleHeight)
             },
             headerTabBar: { context in
-                Text("Tab Bar").frame(height: tabBarHeight)
+                HStack(spacing: 0) {
+                    ForEach(0..<2) { tab in
+                        Button {
+                            selectedTab = tab
+                        } label: {
+                            Text("Tab \(tab)")
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 12)
+                                .background(selectedTab == tab ? Color.blue.opacity(0.2) : Color.clear)
+                        }
+                    }
+                }
+                .frame(height: tabBarHeight)
             },
             headerBackground: { _ in
                 Color.yellow.opacity(0.25)
@@ -38,20 +50,32 @@ struct TestMaterialTabsScroll: View {
         ) {
             MaterialTabsScroll(
                 tab: 0,
-                reservedItem: -1,
-                scrollItem: $scrollItem,
-                scrollUnitPoint: $scrollUnitPoint
+                scrollPosition: $scrollPosition,
+                anchor: $scrollAnchor
             ) { _ in
                 LazyVStack(spacing: 0) {
                     ForEach(0..<25) { index in
                         VStack(spacing: 0) {
                             Rectangle().fill(.black.opacity(0.2)).frame(height: 1)
                             Spacer()
-                            Button("Tap Row \(index)") {
-                                scrollUnitPoint = .top
-                                scrollItem = index
+                            HStack {
+                                Text("Row \(index)")
+                                Spacer()
+                                Button("Top") {
+                                    withAnimation {
+                                        scrollAnchor = .top
+                                        scrollPosition.scrollTo(id: index, anchor: .top)
+                                    }
+                                }
+                                Button("Bottom") {
+                                    withAnimation {
+                                        scrollAnchor = .bottom
+                                        scrollPosition.scrollTo(id: index, anchor: .bottom)
+                                    }
+                                }
                             }
                             .buttonStyle(.bordered)
+                            .padding(.horizontal)
                             Spacer()
                         }
                         .frame(height: rowHeight)
@@ -60,8 +84,22 @@ struct TestMaterialTabsScroll: View {
                 }
                 .scrollTargetLayout()
             }
+            .materialTabItem(tab: 0, label: .secondary("Tab 0"))
+            MaterialTabsScroll(tab: 1) { _ in
+                LazyVStack(spacing: 0) {
+                    ForEach(0..<25) { index in
+                        VStack(spacing: 0) {
+                            Rectangle().fill(.black.opacity(0.2)).frame(height: 1)
+                            Spacer()
+                            Text("Tab 1 — Row \(index)")
+                            Spacer()
+                        }
+                        .frame(height: rowHeight)
+                    }
+                }
+            }
+            .materialTabItem(tab: 1, label: .secondary("Tab 1"))
         }
-        .animation(.default, value: scrollItem)
     }
 }
 
