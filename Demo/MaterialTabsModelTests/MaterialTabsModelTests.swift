@@ -183,6 +183,21 @@ struct ScrollLifecycleChecks {
 
 }
 final class MaterialTabsModelTests: XCTestCase {
+    @MainActor func testTraceSnapshotDoesNotRetainMutableContext() {
+        let context = HeaderContext<Int>(selectedTab: 0)
+        context.offset = 150
+        context.contentOffset = 350
+        let before = TraceContextSnapshot(context)
+        context.selectedTab = 1
+        context.contentOffset = 150
+        let after = TraceContextSnapshot(context)
+        XCTAssertEqual(before.selectedTab, 0)
+        XCTAssertEqual(before.contentOffset, 350)
+        XCTAssertEqual(after.selectedTab, 1)
+        XCTAssertEqual(after.contentOffset, 150)
+        XCTAssertNotEqual(before, after)
+    }
+
     @MainActor func testColdReturnResetTitle0() async throws { try await ScrollLifecycleChecks.coldReturn(mode: .resetTitleOnScroll(), collapse: 0) }
     @MainActor func testRetainedPageResetTitle0() async throws { try await ScrollLifecycleChecks.retainedPage(mode: .resetTitleOnScroll(), collapse: 0, resets: false) }
     @MainActor func testInitialGeometryResetTitle0Measured0() async throws { try await ScrollLifecycleChecks.returningInitialGeometry(mode: .resetTitleOnScroll(), collapse: 0, measured: 0, resets: false) }

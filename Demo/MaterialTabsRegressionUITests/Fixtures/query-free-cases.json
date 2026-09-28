@@ -1191,30 +1191,6 @@
         "phaseSwitch": true
       }
     },
-    "flick-touch-probe": {
-      "suite": "extended",
-      "family": "flick-diagnostic",
-      "captureInitial": true,
-      "method": "testFlickTouchProbe",
-      "headerRange": [150,150],
-      "steps": [
-        {"kind":"flickUp","startY":650,"distance":300,"duration":0.2,"pauseAfter":0.2,"checkpointDelay":4.5,"skipCheckpointAfter":true},
-        {"kind":"tap","tab":"overview","x":75,"y":142,"dynamicY":true,"headerRange":[150,150],"requireDeceleratingSource":true,"pauseAfter":5},
-        {"kind":"tap","tab":"activity","x":201,"y":142,"dynamicY":true,"headerRange":[150,150],"restoreParkedSource":true},
-        {"kind":"tap","tab":"overview","x":75,"y":142,"dynamicY":true,"headerRange":[150,150]},
-        {"kind":"tap","tab":"activity","x":201,"y":142,"dynamicY":true,"headerRange":[150,150]}
-      ],
-      "fixture": {
-        "initialTab": "activity",
-        "mode": "resetTitle",
-        "native": true,
-        "rowCount": 30,
-        "titleHeight": 150,
-        "minimumTitleHeight": 0,
-        "flickFixture": false,
-        "phaseSwitch": false
-      }
-    },
     "visual-expanded-header": {
       "suite": "extended",
       "family": "visual",

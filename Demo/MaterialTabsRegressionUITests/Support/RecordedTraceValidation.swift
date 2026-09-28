@@ -33,6 +33,28 @@ enum RegressionResources {
 /// Objective-C replay driver calls this only after all recorded input is over.
 @objc(SUIMTRecordedTraceValidation)
 public final class RecordedTraceValidation: NSObject {
+    @objc(validateExternalCommandsInData:label:)
+    public static func validateExternalCommands(data: Data, label: String) -> String? {
+        do {
+            let report = try JSONDecoder().decode(TraceJSON.self, from: data)
+            let checker = RecordedTraceChecker(plans: try RegressionResources.json("query-free-cases"))
+            let plan = report["replayPlan"]
+            let gestures = checker.gestures(report)
+            let contexts = try checker.completedContexts(report["context"]["events"].array,
+                                                         sampling: report["contextSampling"].string)
+            var commands = 0
+            for (index, step) in plan["steps"].array.enumerated() where step["commandRow"].exists {
+                try checker.require(gestures.indices.contains(index), "Missing external-command gesture", evidence: true)
+                let end = index + 1 < gestures.count ? gestures[index + 1][0]["touchTimestamp"].number : report["savedAt"].number
+                try checker.external(report, contexts: contexts, step: step,
+                                     start: gestures[index][0]["touchTimestamp"].number, end: end)
+                commands += 1
+            }
+            try checker.require(commands == 2, "Issue #27 must verify both Row 10 and Top")
+            return nil
+        } catch { return "\(label): \(error)" }
+    }
+
     @objc public static func scenarioData() throws -> Data {
         try JSONEncoder().encode(RegressionResources.json("query-free-cases"))
     }

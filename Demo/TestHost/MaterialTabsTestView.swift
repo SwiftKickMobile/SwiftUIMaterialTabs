@@ -296,14 +296,6 @@ struct FlickRegressionView: View {
         }, headerTabBar: { context in
             MaterialTabBar(selectedTab: $selection, sizing: .equalWidth, spacing: 0,
                            fillAvailableSpace: true, context: context)
-                .overlay(alignment: .topTrailing) {
-                    if ProcessInfo.processInfo.environment["SUIMT_FLICK_CONTEXT_READOUT"] == "1" {
-                        Text("Context: \(context.contentOffset, specifier: "%.1f")")
-                            .font(.caption2.monospacedDigit())
-                            .foregroundStyle(.black).background(.white)
-                            .allowsHitTesting(false)
-                    }
-                }
         }, content: {
             ForEach(Tab.allCases) { tab in
                 MaterialTabsScroll(tab: tab) { _ in

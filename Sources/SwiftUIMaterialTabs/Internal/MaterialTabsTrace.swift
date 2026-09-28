@@ -76,8 +76,7 @@ extension EnvironmentValues {
     }
 
     static func viewContext<Tab>(id: String, new: TraceContextSnapshot<Tab>,
-                                 mode: MaterialTabsConfig.CrossTabSyncMode, consumer: String,
-                                 preference: Bool = false) {
+                                 mode: MaterialTabsConfig.CrossTabSyncMode, consumer: String) {
         guard isEnabled else { return }
         // Record the value delivered by SwiftUI, NOT a fresh read of model.state.
         // A later mutation can already have happened when the callback executes.
@@ -85,7 +84,7 @@ extension EnvironmentValues {
                      kind: "viewContext", headerID: id, selectedTab: String(reflecting: new.selectedTab),
                      headerOffset: Double(new.offset), contentOffset: Double(new.contentOffset),
                      maximumOffset: Double(new.maxOffset), mode: modeName(mode),
-                     reason: preference ? "SwiftUI.onPreferenceChange" : "SwiftUI.onChange",
+                     reason: "SwiftUI.body",
                      contentChanged: latestViewContexts["\(id)/\(consumer)"]?.contentOffset != Double(new.contentOffset),
                      consumer: consumer)
         append(event)
@@ -97,17 +96,6 @@ extension EnvironmentValues {
         latestViewContexts.removeValue(forKey: "\(id)/\(consumer)")
         append(Event(sequence: events.count, uptime: ProcessInfo.processInfo.systemUptime,
                      kind: "viewDetached", headerID: id, consumer: consumer))
-    }
-
-    /// Diagnostic only: distinguish a stale onChange cache from the value
-    /// actually supplied to the observer's body. This is NOT a render boundary.
-    static func viewEvaluated<Tab>(id: String, context: HeaderContext<Tab>, consumer: String) {
-        guard isEnabled, ProcessInfo.processInfo.environment["SUIMT_FLICK_FIXTURE"] == "1" else { return }
-        append(Event(sequence: events.count, uptime: ProcessInfo.processInfo.systemUptime,
-                     kind: "viewEvaluation", headerID: id,
-                     selectedTab: String(reflecting: context.selectedTab),
-                     headerOffset: Double(context.offset), contentOffset: Double(context.contentOffset),
-                     maximumOffset: Double(context.maxOffset), consumer: consumer))
     }
 
     /// Called ONLY by the demo's passive UIUpdateLink.afterUpdateComplete hook.
@@ -193,12 +181,6 @@ extension EnvironmentValues {
                      reason: "\(phase) state=\(stateID) visits=\(visits)", registration: registration))
     }
 
-    public static func scrollRange(tab: String, offset: Double, maximum: Double, viewport: Double) {
-        guard isEnabled, viewport > 0 else { return }
-        append(Event(sequence: events.count, uptime: ProcessInfo.processInfo.systemUptime,
-                     kind: "range", tab: tab, contentOffset: offset, maximumContentOffset: maximum))
-    }
-
     /// Called after the observed action; serialization is not on the emission path.
     public static func exportJSON() -> String {
         let report = Report(enabled: isEnabled, overflow: overflow, events: events)
@@ -206,20 +188,6 @@ extension EnvironmentValues {
             return "{\"error\":\"Trace encoding failed\"}"
         }
         return value
-    }
-
-    /// Exercises the recorder on a detached model in one synchronous call.
-    /// It never changes any model displayed by the demo.
-    public static func runRecorderSelfTest() {
-        guard isEnabled else { return }
-        let probe = HeaderModel<Int>(selectedTab: 0)
-        append(Event(sequence: events.count, uptime: ProcessInfo.processInfo.systemUptime,
-                     kind: "probeBegin", headerID: probe.traceID))
-        probe.titleHeightChanged(150)
-        probe.tabBarHeightChanged(46)
-        probe.scrolled(tab: 0, contentOffset: 175, deltaContentOffset: 175)
-        probe.scrolled(tab: 0, contentOffset: 0, deltaContentOffset: -175)
-        probe.scrolled(tab: 0, contentOffset: 175, deltaContentOffset: 175)
     }
 
     private static func modeName(_ mode: MaterialTabsConfig.CrossTabSyncMode) -> String {
@@ -247,85 +215,21 @@ struct TraceContextSnapshot<Tab: Hashable>: Equatable {
     }
 }
 
-/// SwiftUI preference observation, not a compositor/frame-presented callback.
-/// The callback appends data only; it never publishes state or schedules work.
+/// Captures values when the header consumes them, without scheduling work.
+/// Only the last consumed value is sampled by the existing passive update hook.
+/// Neither body evaluation nor an update boundary proves pixel presentation.
 struct MaterialTabsContextObserver<Tab: Hashable>: ViewModifier {
-    let context: HeaderContext<Tab>
+    let context: TraceContextSnapshot<Tab>
     let headerID: String
     let mode: MaterialTabsConfig.CrossTabSyncMode
     var consumer = "header"
 
-    private struct Input: Equatable {
-        let context: TraceContextSnapshot<Tab>
-        let headerID: String
-        let mode: MaterialTabsConfig.CrossTabSyncMode
-    }
-
-    private struct ObservedInput: PreferenceKey {
-        static var defaultValue: Input? { nil }
-        static func reduce(value: inout Input?, nextValue: () -> Input?) {
-            if let next = nextValue() { value = next }
-        }
-    }
-
     func body(content: Content) -> some View {
-        MaterialTabsTrace.viewEvaluated(id: headerID, context: context, consumer: consumer)
-        // A same-cycle restoration can update this body without delivering the
-        // corresponding onChange callback (captured in the phase-switch fixture).
-        // Propagate the value through SwiftUI's preference pass instead. Do not
-        // substitute a model read or treat body evaluation as a presented frame.
+        // onPreferenceChange can miss the final value of a same-update restore.
+        // Record consumption directly; do not replace it with a later model read.
+        MaterialTabsTrace.viewContext(id: headerID, new: context, mode: mode, consumer: consumer)
         return content
-        .preference(key: ObservedInput.self, value: Input(context: TraceContextSnapshot(context), headerID: headerID, mode: mode))
-        .onPreferenceChange(ObservedInput.self) { input in
-            guard let input else { return }
-            MaterialTabsTrace.viewContext(id: input.headerID, new: input.context,
-                                          mode: input.mode, consumer: consumer, preference: true)
-        }
-        .onDisappear { MaterialTabsTrace.viewDetached(id: headerID, consumer: consumer) }
-    }
-}
-
-/// End-to-end positive/negative controls for the SAME observer used by HeaderView.
-/// This detached model is never used to position the app's actual tabs.
-@_spi(Testing)
-@MainActor public struct MaterialTabsContextProbe: View {
-    @State private var model = MaterialTabsContextProbe.makeModel()
-
-    public init() {}
-
-    private static func makeModel() -> HeaderModel<Int> {
-        let model = HeaderModel<Int>(selectedTab: 0)
-        model.configChanged(.init(crossTabSyncMode: .preserveScrollPosition))
-        model.titleHeightChanged(150)
-        model.tabBarHeightChanged(46)
-        model.scrolled(tab: 0, contentOffset: 150, deltaContentOffset: 150)
-        return model
-    }
-
-    public var body: some View {
-        VStack {
-            Text("Probe offset: \(model.headerContext.offset)")
-            HStack {
-                Button("Between updates") {
-                    model.scrolled(tab: 0, contentOffset: 0, deltaContentOffset: -150)
-                    model.scrolled(tab: 0, contentOffset: 150, deltaContentOffset: 150)
-                }
-                .accessibilityIdentifier("context-probe-coalesced")
-                Button("Expose zero") {
-                    model.scrolled(tab: 0, contentOffset: 0, deltaContentOffset: -150)
-                }
-                .accessibilityIdentifier("context-probe-zero")
-                Button("Restore") {
-                    model.scrolled(tab: 0, contentOffset: 150, deltaContentOffset: 150)
-                }
-                .accessibilityIdentifier("context-probe-restore")
-            }
-        }
-        .font(.caption)
-        .modifier(MaterialTabsContextObserver(context: model.headerContext,
-                                              headerID: model.traceID,
-                                              mode: model.config.crossTabSyncMode,
-                                              consumer: "probe"))
+            .onDisappear { MaterialTabsTrace.viewDetached(id: headerID, consumer: consumer) }
     }
 }
 #endif

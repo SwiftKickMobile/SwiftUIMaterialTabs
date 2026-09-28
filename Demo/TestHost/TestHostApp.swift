@@ -29,20 +29,6 @@ struct TestHostApp: App {
                     MaterialTabsTestView()
                 }
             }
-            .background {
-                #if DEBUG
-                if MaterialTabsTrace.isEnabled, !ManualInteractionTrace.isEnabled {
-                    ContextUpdateBoundaryObserver().allowsHitTesting(false)
-                }
-                #endif
-            }
-            .overlay(alignment: .bottomTrailing) {
-                #if DEBUG
-                if MaterialTabsTrace.isEnabled, !ManualInteractionTrace.isEnabled {
-                    ContextTraceExportButton()
-                }
-                #endif
-            }
         }
     }
 }

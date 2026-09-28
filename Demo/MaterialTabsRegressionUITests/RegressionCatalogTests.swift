@@ -11,8 +11,8 @@ final class RegressionCatalogTests: XCTestCase {
     func testCoreHasThirteenScenarios() throws { XCTAssertEqual(try methods("Core").count, 13) }
     func testExtendedHas104Scenarios() throws { XCTAssertEqual(try methods("Extended").count, 104) }
     func testExtendedIncludesCore() throws { XCTAssertTrue(try methods("Core").isSubset(of: methods("Extended"))) }
-    func testExtendedMatchesAllNonDeferredDefinitions() throws {
-        let expected = try definitions().values.filter { !["external-position", "flick-diagnostic"].contains($0["family"].string) }.map { $0["method"].string }
+    func testExtendedMatchesAllDefinitions() throws {
+        let expected = try definitions().values.map { $0["method"].string }
         XCTAssertEqual(try methods("Extended"), Set(expected + recorded + ["testNormalDemoLaunch"]))
     }
     func testCoreMatchesFocusedDefinitions() throws {

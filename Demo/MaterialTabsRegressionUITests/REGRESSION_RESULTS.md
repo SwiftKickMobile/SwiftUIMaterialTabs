@@ -16,11 +16,27 @@ Two new cases cover Overview → Row 10 → Activity → Overview → Top, using
 new ScrollPosition API with Liquid Glass off/on. Row positions are measured
 independently of the context and screenshots are saved after each action.
 
-The first off case on iOS 26 failed a header-continuity assertion during the
-Overview → Activity transition (150 expected, 17.667 observed). The on case
-was skipped by fail-fast. Classification is pending trace/screenshot review.
-Issue #27 remains open. Per Tim's direction, failures of these two cases are
-to be documented as known failures, not fixed as part of this release effort.
+Both cases ran on all three runtimes with expected validation failures. All
+30 saved screenshots show the requested settled Row 10 / Top destinations.
+The failures concern context/native-offset agreement and transition samples;
+they do not establish persistence of the original settled-row alignment bug.
+Issue #27 records the results. Per Tim's direction, it remains deferred.
+Only the two cases' validation failures are expected; launch/input failures
+and missing evidence still fail normally.
+
+## Observer correction
+
+The first full iOS 27 run stopped after three UI passes when the deceleration
+switch case had no completed restored-context sample. The view had consumed
+offset 150, but its preference callback left the recorder at 351.667. Saved
+screenshots showed the expected positions. Copying earlier did not repair the
+missing callback. The DEBUG-only observer now captures immutable values when
+consumed and samples them at the existing passive update boundary; it does not
+drive scrolling or substitute a later model read. This check passed ten repeats,
+and all 50 saved screenshots were inspected. The full suite is restarting.
+
+The cleaned Extended plan contains 104 UI scenarios, 53 model tests, and
+105 validator/catalog tests. These categories must be reported separately.
 
 ## Remaining verification
 
