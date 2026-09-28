@@ -23,9 +23,9 @@ struct ScrollLifecycleChecks {
         header.titleHeightChanged(150)
         header.tabBarHeightChanged(46)
         header.sizeChanged(CGSize(width: 402, height: 874))
-        header.tabsRegistered()
+        header.onTabsRegistered()
         for _ in 0..<100 {
-            if header.state.tabsRegistered { return header }
+            if header.tabsRegistered { return header }
             await Task.yield()
         }
         throw Failure(description: "Registration fixture did not initialize")
@@ -33,53 +33,53 @@ struct ScrollLifecycleChecks {
 
     static func coldReturn(mode: MaterialTabsConfig.CrossTabSyncMode, collapse: CGFloat) async throws {
         let header = try await header(selected: 1, mode: mode)
-        let incoming = ScrollModel<Int, Int>(tab: 0, scrollMode: .scrollAnchor, reservedItem: -1)
-        incoming.appeared(headerModel: header)
-        incoming.scrollItemChanged(nil) // Prior programmatic alignment has finished.
+        let incoming = ScrollModel<Int>(tab: 0)
+        incoming.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
+        try await Task.sleep(for: .milliseconds(60)) // Let the internal sync suppression finish.
         incoming.disappeared()
         header.scrolled(tab: 1, contentOffset: collapse, deltaContentOffset: collapse)
-        try equal(header.state.headerContext.offset, collapse, "Setup header")
+        try equal(header.headerContext.offset, collapse, "Setup header")
         header.selected(tab: 0)
         incoming.selectedTabChanged()
         incoming.contentOffsetChanged(0) // Captured ordering: geometry BEFORE appearance.
-        try equal(header.state.headerContext.offset, collapse, "Pre-appearance callback moved header")
-        incoming.appeared(headerModel: header)
-        try equal(header.state.headerContext.offset, collapse, "Appearance moved header")
+        try equal(header.headerContext.offset, collapse, "Pre-appearance callback moved header")
+        incoming.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
+        try equal(header.headerContext.offset, collapse, "Appearance moved header")
         try equal(incoming.contentOffset, collapse, "Incoming content did not align")
     }
 
     static func scrolledReturn(mode: MaterialTabsConfig.CrossTabSyncMode, resets: Bool,
                                firstUserScrollHeader: CGFloat) async throws {
         let header = try await header(selected: 0, mode: mode)
-        let page = ScrollModel<Int, Int>(tab: 0, scrollMode: .scrollAnchor, reservedItem: -1)
-        page.appeared(headerModel: header)
-        page.scrollItemChanged(nil)
+        let page = ScrollModel<Int>(tab: 0)
+        page.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
+        try await Task.sleep(for: .milliseconds(60)) // Let the internal sync suppression finish.
         page.contentOffsetChanged(-500)
         page.contentOffsetChanged(-500)
-        try equal(header.state.headerContext.offset, 150, "Scrolled setup")
+        try equal(header.headerContext.offset, 150, "Scrolled setup")
         header.selected(tab: 1)
         page.selectedTabChanged()
         page.disappeared()
         header.scrolled(tab: 1, contentOffset: 0, deltaContentOffset: -150)
-        try equal(header.state.headerContext.offset, 0, "Expanded other tab")
+        try equal(header.headerContext.offset, 0, "Expanded other tab")
         header.selected(tab: 0)
         page.selectedTabChanged()
         page.contentOffsetChanged(-500)
-        try equal(header.state.headerContext.offset, 0, "Returning page collapsed header prematurely")
-        page.appeared(headerModel: header)
+        try equal(header.headerContext.offset, 0, "Returning page collapsed header prematurely")
+        page.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
         let restored: CGFloat = resets ? 0 : 350
         try equal(page.contentOffset, restored, "Restored content")
-        try equal(header.state.headerContext.offset, 0, "Return header")
-        page.scrollItemChanged(nil)
+        try equal(header.headerContext.offset, 0, "Return header")
+        try await Task.sleep(for: .milliseconds(60)) // Let the internal sync suppression finish.
         page.contentOffsetChanged(-(restored + 20))
-        try equal(header.state.headerContext.offset, firstUserScrollHeader, "Visible user scrolling was suppressed")
+        try equal(header.headerContext.offset, firstUserScrollHeader, "Visible user scrolling was suppressed")
     }
 
     static func inactiveDecelerationRemainsAvailable() async throws {
         let header = try await header(selected: 0, mode: .preserveScrollPosition)
-        let page = ScrollModel<Int, Int>(tab: 0, scrollMode: .scrollAnchor, reservedItem: -1)
-        page.appeared(headerModel: header)
-        page.scrollItemChanged(nil)
+        let page = ScrollModel<Int>(tab: 0)
+        page.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
+        try await Task.sleep(for: .milliseconds(60)) // Let the internal sync suppression finish.
         page.contentOffsetChanged(-500)
         header.selected(tab: 1)
         page.selectedTabChanged()
@@ -89,19 +89,19 @@ struct ScrollLifecycleChecks {
         // The unselected page can still finish decelerating. This is different
         // from initial layout arriving after it has been selected for return.
         try equal(page.contentOffset, 480, "Unselected page's final position was discarded")
-        try equal(header.state.headerContext.offset, 0, "Inactive page moved shared header")
+        try equal(header.headerContext.offset, 0, "Inactive page moved shared header")
         header.selected(tab: 0)
         page.selectedTabChanged()
-        page.appeared(headerModel: header)
+        page.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
         try equal(page.contentOffset, 330, "Final parked position was not preserved")
     }
 
     static func returningInitialGeometry(mode: MaterialTabsConfig.CrossTabSyncMode, collapse: CGFloat,
                                          measured: CGFloat, resets: Bool) async throws {
         let header = try await header(selected: 0, mode: mode)
-        let page = ScrollModel<Int, Int>(tab: 0, scrollMode: .scrollAnchor, reservedItem: -1)
-        page.appeared(headerModel: header)
-        page.scrollItemChanged(nil)
+        let page = ScrollModel<Int>(tab: 0)
+        page.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
+        try await Task.sleep(for: .milliseconds(60)) // Let the internal sync suppression finish.
         page.contentOffsetChanged(-213)
         page.contentOffsetChanged(-213)
         header.selected(tab: 1)
@@ -111,19 +111,19 @@ struct ScrollLifecycleChecks {
         header.selected(tab: 0)
         page.selectedTabChanged()
         page.contentOffsetChanged(-measured)
-        try equal(header.state.headerContext.offset, collapse, "Early geometry moved header")
-        page.appeared(headerModel: header)
+        try equal(header.headerContext.offset, collapse, "Early geometry moved header")
+        page.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
         let expected = resets && collapse < 150 ? collapse : 63 + collapse
         try equal(page.contentOffset, expected, "Early geometry erased remembered relative position")
-        try equal(header.state.headerContext.offset, collapse, "Returning content moved header")
+        try equal(header.headerContext.offset, collapse, "Returning content moved header")
     }
 
     static func retainedPage(mode: MaterialTabsConfig.CrossTabSyncMode, collapse: CGFloat,
                               resets: Bool) async throws {
         let header = try await header(selected: 0, mode: mode)
-        let original = ScrollModel<Int, Int>(tab: 0, scrollMode: .scrollAnchor, reservedItem: -1)
-        original.appeared(headerModel: header)
-        original.scrollItemChanged(nil)
+        let original = ScrollModel<Int>(tab: 0)
+        original.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
+        try await Task.sleep(for: .milliseconds(60)) // Let the internal sync suppression finish.
         original.contentOffsetChanged(-426)
         original.contentOffsetChanged(-426)
         header.selected(tab: 1)
@@ -135,49 +135,49 @@ struct ScrollLifecycleChecks {
         // activation of that SAME model after another tab changed the header.
         original.selectedTabChanged()
         original.contentOffsetChanged(0)
-        original.appeared(headerModel: header)
+        original.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
         let expected = resets && collapse < 150 ? collapse : 276 + collapse
         try equal(original.contentOffset, expected, "Retained page lost its relative position")
-        try equal(header.state.headerContext.offset, collapse, "Retained page moved shared header")
+        try equal(header.headerContext.offset, collapse, "Retained page moved shared header")
     }
 
     static func incomingPageCannotOverwriteSelectedContext() async throws {
         let header = try await header(selected: 0, mode: .preserveScrollPosition)
-        let page = ScrollModel<Int, Int>(tab: 0, scrollMode: .scrollAnchor, reservedItem: -1)
-        page.appeared(headerModel: header)
-        page.scrollItemChanged(nil)
+        let page = ScrollModel<Int>(tab: 0)
+        page.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
+        try await Task.sleep(for: .milliseconds(60)) // Let the internal sync suppression finish.
         page.contentOffsetChanged(-426)
-        let incoming = ScrollModel<Int, Int>(tab: 1, scrollMode: .scrollAnchor, reservedItem: -1)
-        incoming.appeared(headerModel: header)
+        let incoming = ScrollModel<Int>(tab: 1)
+        incoming.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
         try equal(incoming.contentOffset, 150, "Incoming page did not synchronize its own position")
-        try equal(header.state.headerContext.contentOffset, 426, "Incoming page overwrote selected context")
+        try equal(header.headerContext.contentOffset, 426, "Incoming page overwrote selected context")
     }
 
     static func inactivePageCannotOverwriteSelectedContext() async throws {
         let header = try await header(selected: 0, mode: .preserveScrollPosition)
-        let old = ScrollModel<Int, Int>(tab: 0, scrollMode: .scrollAnchor, reservedItem: -1)
-        old.appeared(headerModel: header)
-        old.scrollItemChanged(nil)
+        let old = ScrollModel<Int>(tab: 0)
+        old.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
+        try await Task.sleep(for: .milliseconds(60)) // Let the internal sync suppression finish.
         old.contentOffsetChanged(-426)
         header.selected(tab: 1)
         old.selectedTabChanged()
         old.disappeared()
-        let next = ScrollModel<Int, Int>(tab: 1, scrollMode: .scrollAnchor, reservedItem: -1)
-        next.appeared(headerModel: header)
+        let next = ScrollModel<Int>(tab: 1)
+        next.appeared(headerModel: header, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
         old.contentOffsetChanged(-900) // A departing page can still decelerate.
         try equal(old.contentOffset, 900, "Inactive page lost its latest position")
-        try equal(header.state.headerContext.contentOffset, 150, "Inactive page overwrote selected context")
+        try equal(header.headerContext.contentOffset, 150, "Inactive page overwrote selected context")
     }
 
     static func newContainerStartsFresh() async throws {
         let first = try await header(selected: 0, mode: .preserveScrollPosition)
-        let page = ScrollModel<Int, Int>(tab: 0, scrollMode: .scrollAnchor, reservedItem: -1)
-        page.appeared(headerModel: first)
-        page.scrollItemChanged(nil)
+        let page = ScrollModel<Int>(tab: 0)
+        page.appeared(headerModel: first, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
+        try await Task.sleep(for: .milliseconds(60)) // Let the internal sync suppression finish.
         page.contentOffsetChanged(-426)
         let second = try await header(selected: 0, mode: .preserveScrollPosition)
-        let fresh = ScrollModel<Int, Int>(tab: 0, scrollMode: .scrollAnchor, reservedItem: -1)
-        fresh.appeared(headerModel: second)
+        let fresh = ScrollModel<Int>(tab: 0)
+        fresh.appeared(headerModel: second, scrollPositionBinding: .constant(ScrollPosition()), anchorBinding: .constant(nil))
         try equal(fresh.contentOffset, 0, "Position leaked across MaterialTabs containers")
     }
 

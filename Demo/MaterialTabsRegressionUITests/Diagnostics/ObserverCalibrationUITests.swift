@@ -8,7 +8,7 @@ final class ObserverCalibrationUITests: XCTestCase {
     override func tearDownWithError() throws { app?.terminate() }
 
     private func launch(native: Bool, recorderProbe: Bool = false, viewProbe: Bool = false) throws {
-        app = XCUIApplication(bundleIdentifier: "com.swiftkickmobile.Demo")
+        app = XCUIApplication(bundleIdentifier: "com.swiftkickmobile.TestHost")
         app.launchEnvironment = [
             "SUIMT_CONTEXT_TRACE": "1", "SUIMT_UI_REGRESSION": "1",
             "SUIMT_NATIVE_EDGE": native ? "1" : "0", "SUIMT_INITIAL_TAB": "1",

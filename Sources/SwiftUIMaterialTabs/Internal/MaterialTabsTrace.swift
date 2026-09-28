@@ -55,25 +55,27 @@ extension EnvironmentValues {
     private static var overflow = false
     private static var latestViewContexts: [String: Event] = [:]
     private static var nextUpdateID = 0
+    private static var lastModelOffsets: [String: Double] = [:]
 
     private static func append(_ event: Event) {
         guard events.count < 100_000 else { overflow = true; return }
         events.append(event)
     }
 
-    static func context<Tab>(id: String, old: HeaderContext<Tab>, new: HeaderContext<Tab>,
+    static func context<Tab>(id: String, new: HeaderContext<Tab>,
                              mode: MaterialTabsConfig.CrossTabSyncMode) {
         guard isEnabled else { return }
+        defer { lastModelOffsets[id] = Double(new.contentOffset) }
         append(Event(sequence: events.count, uptime: ProcessInfo.processInfo.systemUptime,
                      kind: "context", headerID: id, selectedTab: String(reflecting: new.selectedTab),
                      headerOffset: Double(new.offset), contentOffset: Double(new.contentOffset),
                      maximumOffset: Double(new.maxOffset), mode: modeName(mode),
-                     contentChanged: old.contentOffset != new.contentOffset,
+                     contentChanged: lastModelOffsets[id] != Double(new.contentOffset),
                      safeAreaTop: Double(new.safeArea.top), tabBarHeight: Double(new.tabBarHeight),
                      headerWidth: Double(new.width)))
     }
 
-    static func viewContext<Tab>(id: String, old: HeaderContext<Tab>, new: HeaderContext<Tab>,
+    static func viewContext<Tab>(id: String, new: TraceContextSnapshot<Tab>,
                                  mode: MaterialTabsConfig.CrossTabSyncMode, consumer: String,
                                  preference: Bool = false) {
         guard isEnabled else { return }
@@ -84,9 +86,7 @@ extension EnvironmentValues {
                      headerOffset: Double(new.offset), contentOffset: Double(new.contentOffset),
                      maximumOffset: Double(new.maxOffset), mode: modeName(mode),
                      reason: preference ? "SwiftUI.onPreferenceChange" : "SwiftUI.onChange",
-                     contentChanged: preference
-                        ? latestViewContexts["\(id)/\(consumer)"]?.contentOffset != Double(new.contentOffset)
-                        : old.contentOffset != new.contentOffset,
+                     contentChanged: latestViewContexts["\(id)/\(consumer)"]?.contentOffset != Double(new.contentOffset),
                      consumer: consumer)
         append(event)
         latestViewContexts["\(id)/\(consumer)"] = event
@@ -151,24 +151,24 @@ extension EnvironmentValues {
     static func page<Tab>(kind: String, id: String, tab: Tab, header: HeaderModel<Tab>?,
                           offset: CGFloat, appeared: Bool, registration: Bool, reason: String? = nil) {
         guard isEnabled else { return }
-        let context = header?.state.headerContext
+        let context = header?.headerContext
         append(Event(sequence: events.count, uptime: ProcessInfo.processInfo.systemUptime,
                      kind: kind, headerID: header?.traceID, pageID: id, tab: String(reflecting: tab),
                      selectedTab: context.map { String(reflecting: $0.selectedTab) },
                      headerOffset: context.map { Double($0.offset) }, contentOffset: Double(offset),
                      maximumOffset: context.map { Double($0.maxOffset) },
-                     mode: header.map { modeName($0.state.config.crossTabSyncMode) },
+                     mode: header.map { modeName($0.config.crossTabSyncMode) },
                      appeared: appeared, reason: reason, registration: registration))
     }
 
     static func input<Tab>(kind: String, header: HeaderModel<Tab>, tab: Tab, offset: CGFloat? = nil) {
         guard isEnabled else { return }
-        let context = header.state.headerContext
+        let context = header.headerContext
         append(Event(sequence: events.count, uptime: ProcessInfo.processInfo.systemUptime,
                      kind: kind, headerID: header.traceID, tab: String(reflecting: tab),
                      selectedTab: String(reflecting: context.selectedTab),
                      headerOffset: Double(context.offset), contentOffset: offset.map { Double($0) },
-                     maximumOffset: Double(context.maxOffset), mode: modeName(header.state.config.crossTabSyncMode)))
+                     maximumOffset: Double(context.maxOffset), mode: modeName(header.config.crossTabSyncMode)))
     }
 
     public static func scrollPhase(tab: String, phase: String) {
@@ -231,6 +231,22 @@ extension EnvironmentValues {
     }
 }
 
+/// Immutable scalar copy: HeaderContext is observable reference storage. Retaining
+/// that reference in a preference would erase old values before delivery.
+struct TraceContextSnapshot<Tab: Hashable>: Equatable {
+    let selectedTab: Tab
+    let offset: CGFloat
+    let contentOffset: CGFloat
+    let maxOffset: CGFloat
+
+    init(_ context: HeaderContext<Tab>) {
+        selectedTab = context.selectedTab
+        offset = context.offset
+        contentOffset = context.contentOffset
+        maxOffset = context.maxOffset
+    }
+}
+
 /// SwiftUI preference observation, not a compositor/frame-presented callback.
 /// The callback appends data only; it never publishes state or schedules work.
 struct MaterialTabsContextObserver<Tab: Hashable>: ViewModifier {
@@ -240,7 +256,7 @@ struct MaterialTabsContextObserver<Tab: Hashable>: ViewModifier {
     var consumer = "header"
 
     private struct Input: Equatable {
-        let context: HeaderContext<Tab>
+        let context: TraceContextSnapshot<Tab>
         let headerID: String
         let mode: MaterialTabsConfig.CrossTabSyncMode
     }
@@ -259,10 +275,10 @@ struct MaterialTabsContextObserver<Tab: Hashable>: ViewModifier {
         // Propagate the value through SwiftUI's preference pass instead. Do not
         // substitute a model read or treat body evaluation as a presented frame.
         return content
-        .preference(key: ObservedInput.self, value: Input(context: context, headerID: headerID, mode: mode))
+        .preference(key: ObservedInput.self, value: Input(context: TraceContextSnapshot(context), headerID: headerID, mode: mode))
         .onPreferenceChange(ObservedInput.self) { input in
             guard let input else { return }
-            MaterialTabsTrace.viewContext(id: input.headerID, old: input.context, new: input.context,
+            MaterialTabsTrace.viewContext(id: input.headerID, new: input.context,
                                           mode: input.mode, consumer: consumer, preference: true)
         }
         .onDisappear { MaterialTabsTrace.viewDetached(id: headerID, consumer: consumer) }
@@ -273,7 +289,7 @@ struct MaterialTabsContextObserver<Tab: Hashable>: ViewModifier {
 /// This detached model is never used to position the app's actual tabs.
 @_spi(Testing)
 @MainActor public struct MaterialTabsContextProbe: View {
-    @StateObject private var model = MaterialTabsContextProbe.makeModel()
+    @State private var model = MaterialTabsContextProbe.makeModel()
 
     public init() {}
 
@@ -288,7 +304,7 @@ struct MaterialTabsContextObserver<Tab: Hashable>: ViewModifier {
 
     public var body: some View {
         VStack {
-            Text("Probe offset: \(model.state.headerContext.offset)")
+            Text("Probe offset: \(model.headerContext.offset)")
             HStack {
                 Button("Between updates") {
                     model.scrolled(tab: 0, contentOffset: 0, deltaContentOffset: -150)
@@ -306,9 +322,9 @@ struct MaterialTabsContextObserver<Tab: Hashable>: ViewModifier {
             }
         }
         .font(.caption)
-        .modifier(MaterialTabsContextObserver(context: model.state.headerContext,
+        .modifier(MaterialTabsContextObserver(context: model.headerContext,
                                               headerID: model.traceID,
-                                              mode: model.state.config.crossTabSyncMode,
+                                              mode: model.config.crossTabSyncMode,
                                               consumer: "probe"))
     }
 }

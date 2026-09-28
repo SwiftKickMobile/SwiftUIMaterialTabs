@@ -288,7 +288,7 @@ struct RecordedTraceChecker {
         let events = report["context"]["events"].array
         let contexts = try completedContexts(events, sampling: sampling), input = gestures(report)
         if plan.exists { try require(input.count == plan["steps"].array.count, "Missing or extra input gestures") }
-        let extended = ["broad", "extended"].contains(plan["suite"].string)
+        let extended = fixture.exists
         try require(!input.isEmpty, "No input gestures")
         if requireActual && extended {
             try initialPager(report, tab: fixture["initialTab"].string, firstInput: input[0][0]["touchTimestamp"].number)

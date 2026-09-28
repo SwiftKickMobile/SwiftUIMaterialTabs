@@ -16,7 +16,8 @@ import SwiftUI
 /// Although the collapsed state of the header is just an offset, applying the `headerStyle()` view modifier to header elements can give the
 /// impression of shrinking, fading, parallax, etc. All of these effects are achived by manipulating the views based on the `HeaderContext`
 /// values provided to the various header view builders. You may also manipulate header elements directly without using `headerStyle()` if you wish.
-public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
+@Observable
+public class HeaderContext<Tab> where Tab: Hashable {
 
     // MARK: - API
 
@@ -70,9 +71,7 @@ public struct HeaderContext<Tab>: Equatable where Tab: Hashable {
     }
 
     /// The minimum effective height of the header in the fully collapsed position.
-    public var minTotalHeight: CGFloat {
-        tabBarHeight + minTitleHeight
-    }
+    public var minTotalHeight: CGFloat { tabBarHeight + minTitleHeight }
 
     public init(selectedTab: Tab) {
         self.selectedTab = selectedTab

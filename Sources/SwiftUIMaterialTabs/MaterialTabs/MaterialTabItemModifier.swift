@@ -100,7 +100,7 @@ public struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
 
         init(tab: Tab, label: @escaping MaterialTabBar<Tab>.CustomLabel, tabBarModel: TabBarModel<Tab>, headerModel: HeaderModel<Tab>) {
             tabBarModel.register(tab: tab, label: label)
-            headerModel.tabsRegistered()
+            headerModel.onTabsRegistered()
         }
 
         var body: some View {
@@ -110,8 +110,8 @@ public struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
 
     // MARK: - Variables
 
-    @EnvironmentObject private var headerModel: HeaderModel<Tab>
-    @EnvironmentObject private var tabBarModel: TabBarModel<Tab>
+    @Environment(HeaderModel<Tab>.self) private var headerModel
+    @Environment(TabBarModel<Tab>.self) private var tabBarModel
     @Environment(\.materialTabsRetainsPages) private var retainsPages
     @State private var hasLoaded = false
     @State private var intersectsViewport = false
@@ -122,7 +122,7 @@ public struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
         Group {
             if retainsPages {
                 Group {
-                    if hasLoaded || headerModel.state.headerContext.selectedTab == tab {
+                    if hasLoaded || headerModel.headerContext.selectedTab == tab {
                         content
                     } else {
                         Color.clear
@@ -130,7 +130,7 @@ public struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .environment(\.materialTabsPageActive,
-                              intersectsViewport || headerModel.state.headerContext.selectedTab == tab)
+                              intersectsViewport || headerModel.headerContext.selectedTab == tab)
                 .onGeometryChange(for: Bool.self) { geometry in
                     let frame = geometry.frame(in: .scrollView(axis: .horizontal))
                     let width = geometry.bounds(of: .scrollView(axis: .horizontal))?.width ?? 0
@@ -139,8 +139,8 @@ public struct MaterialTabItemModifier<Tab>: ViewModifier where Tab: Hashable {
                     intersectsViewport = visible
                     if visible { hasLoaded = true }
                 }
-                .onChange(of: headerModel.state.headerContext.selectedTab, initial: true) {
-                    if headerModel.state.headerContext.selectedTab == tab { hasLoaded = true }
+                .onChange(of: headerModel.headerContext.selectedTab, initial: true) {
+                    if headerModel.headerContext.selectedTab == tab { hasLoaded = true }
                 }
             } else {
                 content

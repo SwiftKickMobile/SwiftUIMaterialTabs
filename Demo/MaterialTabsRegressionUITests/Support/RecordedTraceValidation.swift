@@ -9,12 +9,33 @@ enum RegressionResources {
         }
         return try Data(contentsOf: url)
     }
-    static func json(_ name: String) throws -> TraceJSON { try JSONDecoder().decode(TraceJSON.self, from: data(name)) }
+    static func json(_ name: String) throws -> TraceJSON {
+        let source = try JSONDecoder().decode(TraceJSON.self, from: data(name))
+        guard source["shared"].exists else { return source }
+        // Expand shared fixtures before replay; the checker receives complete values.
+        func expand(_ value: TraceJSON, ancestors: Set<String> = []) throws -> TraceJSON {
+            if case .string(let key) = value["$ref"] {
+                guard !ancestors.contains(key), let shared = source["shared"].object[key] else {
+                    throw RecordedTraceError(kind: .inconclusive, detail: "Missing or cyclic fixture reference: \(key)")
+                }
+                return try expand(shared, ancestors: ancestors.union([key]))
+            }
+            switch value {
+            case .array(let values): return .array(try values.map { try expand($0, ancestors: ancestors) })
+            case .object(let values): return .object(try values.mapValues { try expand($0, ancestors: ancestors) })
+            default: return value
+            }
+        }
+        return try expand(source["cases"])
+    }
 }
 
 /// Objective-C replay driver calls this only after all recorded input is over.
 @objc(SUIMTRecordedTraceValidation)
 public final class RecordedTraceValidation: NSObject {
+    @objc public static func scenarioData() throws -> Data {
+        try JSONEncoder().encode(RegressionResources.json("query-free-cases"))
+    }
     @objc(pagingStateInData:after:)
     public static func pagingState(data: Data, after request: Double) -> String {
         do {

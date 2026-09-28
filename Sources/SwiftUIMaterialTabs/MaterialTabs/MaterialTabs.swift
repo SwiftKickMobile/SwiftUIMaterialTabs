@@ -108,17 +108,11 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     ) {
         _selectedTab = selectedTab
         self.config = config
-        self.header = { context in
-            HeaderView(
-                context: context,
-                title: headerTitle,
-                tabBar: headerTabBar,
-                background: headerBackground
-            )
-        }
-        self.config = config
+        self.headerTitle = headerTitle
+        self.headerTabBar = headerTabBar
+        self.headerBackground = headerBackground
         self.content = content
-        _headerModel = StateObject(wrappedValue: HeaderModel(selectedTab: selectedTab.wrappedValue))
+        _headerModel = State(wrappedValue: HeaderModel(selectedTab: selectedTab.wrappedValue))
     }
 
     // MARK: - Constants
@@ -128,10 +122,12 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
     @Binding private var selectedTab: Tab
     @State private var selectedTabScroll: Tab?
     @State private var config: MaterialTabsConfig
-    @ViewBuilder private let header: (MaterialTabsHeaderContext<Tab>) -> HeaderView<HeaderTitle, HeaderTabBar, HeaderBackground, Tab>
+    @ViewBuilder private let headerTitle: (MaterialTabsHeaderContext<Tab>) -> HeaderTitle
+    @ViewBuilder private let headerTabBar: (MaterialTabsHeaderContext<Tab>) -> HeaderTabBar
+    @ViewBuilder private let headerBackground: (MaterialTabsHeaderContext<Tab>) -> HeaderBackground
     @ViewBuilder private let content: () -> Content
-    @StateObject private var headerModel: HeaderModel<Tab>
-    @StateObject private var tabBarModel = TabBarModel<Tab>()
+    @State private var headerModel: HeaderModel<Tab>
+    @State private var tabBarModel = TabBarModel<Tab>()
     @Environment(\.materialTabsNativeScrollEdgeEffect) private var nativeScrollEdgeEffect
 
     // MARK: - Body
@@ -140,7 +136,9 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
         GeometryReader { proxy in
             ZStack(alignment: .top) {
                 pager(proxy: proxy)
-                header(headerModel.state.headerContext)
+                HeaderBridgeView(headerContext: headerModel.headerContext,
+                                 headerTitle: headerTitle, headerTabBar: headerTabBar,
+                                 headerBackground: headerBackground)
                     .map { header in
                         if #available(iOS 26.0, *), nativeScrollEdgeEffect {
                             // Only the content pages should own a top edge effect;
@@ -162,8 +160,9 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
             }
         }
         .animation(.default, value: selectedTab)
-        .environmentObject(headerModel)
-        .environmentObject(tabBarModel)
+        .environment(headerModel)
+        .environment(headerModel.headerContext)
+        .environment(tabBarModel)
         .onPreferenceChange(TitleHeightPreferenceKey.self, perform: headerModel.titleHeightChanged(_:))
         .onPreferenceChange(TabBarHeightPreferenceKey.self, perform: headerModel.tabBarHeightChanged(_:))
         .onPreferenceChange(MinTitleHeightPreferenceKey.self, perform: headerModel.minTitleHeightChanged(_:))
@@ -177,8 +176,8 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
             guard let selectedTab = selectedTabScroll else { return }
             headerModel.selected(tab: selectedTab)
         }
-        .onChange(of: headerModel.state.headerContext.selectedTab, initial: true) {
-            selectedTab = headerModel.state.headerContext.selectedTab
+        .onChange(of: headerModel.headerContext.selectedTab, initial: true) {
+            selectedTab = headerModel.headerContext.selectedTab
             selectedTabScroll = selectedTab
         }
     }
@@ -225,13 +224,13 @@ public struct MaterialTabs<HeaderTitle, HeaderTabBar, HeaderBackground, Content,
                 if #available(iOS 26.0, *), nativeScrollEdgeEffect {
                     pages
                 } else {
-                    pages.safeAreaPadding(.top, headerModel.state.headerContext.minTotalHeight)
+                    pages.safeAreaPadding(.top, headerModel.headerContext.minTotalHeight)
                 }
             }
     }
 
     @ViewBuilder private var legacyTabRegistration: some View {
-        if !headerModel.state.tabsRegistered {
+        if !headerModel.tabsRegistered {
             TabView { content() }
                 .environment(\.materialTabsNativeScrollEdgeEffect, false)
                 #if DEBUG
@@ -290,5 +289,24 @@ public extension View {
             effectiveEnabled = false
         }
         return environment(\.materialTabsNativeScrollEdgeEffect, effectiveEnabled)
+    }
+}
+
+/// Bridge view that invokes header closures in its own body scope.
+/// This ensures that reads of scroll-related context properties (like `offset`)
+/// are tracked here, not in `MaterialTabs.body`.
+private struct HeaderBridgeView<HeaderTitle: View, HeaderTabBar: View, HeaderBackground: View, Tab: Hashable>: View {
+    let headerContext: HeaderContext<Tab>
+    @ViewBuilder let headerTitle: (HeaderContext<Tab>) -> HeaderTitle
+    @ViewBuilder let headerTabBar: (HeaderContext<Tab>) -> HeaderTabBar
+    @ViewBuilder let headerBackground: (HeaderContext<Tab>) -> HeaderBackground
+
+    var body: some View {
+        HeaderView(
+            context: headerContext,
+            title: headerTitle,
+            tabBar: headerTabBar,
+            background: headerBackground
+        )
     }
 }

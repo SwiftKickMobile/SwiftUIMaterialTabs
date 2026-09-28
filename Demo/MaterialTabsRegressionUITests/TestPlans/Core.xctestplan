@@ -24,8 +24,8 @@
     "maximumTestExecutionTimeAllowance": 180,
     "targetForVariableExpansion": {
       "containerPath": "container:Demo.xcodeproj",
-      "identifier": "22034C0F2B54777C008147F0",
-      "name": "Demo"
+      "identifier": "223CBF573069F06700BF6E0C",
+      "name": "TestHost"
     }
   },
   "testTargets": [
@@ -58,7 +58,9 @@
         "ManualTouchReplayUITests/testQueryFreeCollapsedTaps",
         "ManualTouchReplayUITests/testQueryFreePartialSwipes",
         "ManualTouchReplayUITests/testQueryFreeCollapsedSwipes",
-        "ManualTouchReplayUITests/testQueryFreeRepeatedHeaderChanges"
+        "ManualTouchReplayUITests/testQueryFreeRepeatedHeaderChanges",
+        "ManualTouchReplayUITests/testIssue27ExternalPositionOff",
+        "ManualTouchReplayUITests/testIssue27ExternalPositionOn"
       ]
     }
   ],

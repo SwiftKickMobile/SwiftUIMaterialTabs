@@ -1,13 +1,23 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 2.1.0
+## 3.0.0
+
+### Breaking Changes
+
+* Minimum deployment target raised to iOS 18. iOS 17 is no longer supported.
+* `HeaderContext` converted from a struct to an `@Observable` class to address performance issues related to SwiftData queries. The observable class shields content views from re-performing queries and re-evaluating `body` on every frame while scrolling. If you stored `HeaderContext` (or its typealiases `MaterialTabsHeaderContext` / `StickyHeaderContext`) by value, you will need to update to reference semantics.
+* #19 `MaterialTabsScroll` joint scroll position API replaced with iOS 18 `ScrollPosition`. The old `scrollAnchor` parameter is replaced by optional `scrollPosition` and `anchor` bindings for joint scroll position manipulation between the library and client code.
 
 ### Improvements
 
 * Add `.materialTabsScrollEdgeEffect()` on iOS 26 and later. Transparent headers and tab bars can extend the navigation bar's native scroll-edge blur, including collapsible headers, without implementing custom blur values or transitions.
 * Document Liquid Glass setup and why opaque header backgrounds cover the scrolling content instead of being blurred by the modifier.
 * Add shared Core and Extended Xcode test plans with scroll-position, header-continuity, and tab-state regression checks. Validation runs inside XCTest; no command-line post-processing is required.
+
+* #25 `MaterialTabBar` now supports an `alignment` parameter (`.leading`, `.center`, `.trailing`) for controlling horizontal positioning of self-sized tabs when `fillAvailableSpace` is `false`.
+* #25 New `MaterialAccessoryTabBar` component for adding optional leading and trailing accessory views alongside tab selectors. Accessories scroll horizontally with the tabs.
+* #25 `TabBarModel` and `HeaderModel` are now public, enabling fully custom tab bar implementations via the environment.
 
 ### Fixes
 

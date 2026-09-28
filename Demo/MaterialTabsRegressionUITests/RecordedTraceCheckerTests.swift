@@ -1,7 +1,7 @@
 import XCTest
 
 final class RecordedTraceCheckerTests: XCTestCase {
-    private static let vectors = Result { try RegressionResources.json("checker-migration-controls").array }
+    private static let vectors = Result { try RegressionResources.json("trace-validator-cases").array }
     private static let plans = Result { try RegressionResources.json("query-free-cases") }
 
     override func setUpWithError() throws {
@@ -15,7 +15,7 @@ final class RecordedTraceCheckerTests: XCTestCase {
         XCTAssertFalse(vectors.isEmpty, "No control vectors for \(name)", file: file, line: line)
         let checker = RecordedTraceChecker(plans: try Self.plans.get())
         for (index, vector) in vectors.enumerated() {
-            if let failure = CheckerControlReplay.mismatch(vector, checker: checker) {
+            if let failure = TraceValidatorCases.mismatch(vector, checker: checker) {
                 XCTFail("\(name) input \(index): \(failure)", file: file, line: line)
             }
         }
@@ -112,4 +112,3 @@ final class RecordedTraceCheckerTests: XCTestCase {
     func test_wrong_selected_tab_fails() throws { try verify("test_wrong_selected_tab_fails") }
     func test_wrong_viewport_fails() throws { try verify("test_wrong_viewport_fails") }
 }
-

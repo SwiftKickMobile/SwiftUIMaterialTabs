@@ -24,8 +24,8 @@
     "maximumTestExecutionTimeAllowance": 180,
     "targetForVariableExpansion": {
       "containerPath": "container:Demo.xcodeproj",
-      "identifier": "22034C0F2B54777C008147F0",
-      "name": "Demo"
+      "identifier": "223CBF573069F06700BF6E0C",
+      "name": "TestHost"
     }
   },
   "testTargets": [
@@ -133,7 +133,7 @@
         "ManualTouchReplayUITests/testMatrixSmokeCollapsedTapOn",
         "ManualTouchReplayUITests/testMatrixSmokeCollapsedSwipeOn",
         "ManualTouchReplayUITests/testMatrixSmokeReturningOn",
-        "ManualTouchReplayUITests/testMatrixSmokeNormalDemo",
+        "ManualTouchReplayUITests/testNormalDemoLaunch",
         "ManualTouchReplayUITests/testHeaderFixedOff",
         "ManualTouchReplayUITests/testHeaderRetainedOff",
         "ManualTouchReplayUITests/testHeaderTitlelessOff",
@@ -149,7 +149,9 @@
         "ManualTouchReplayUITests/testFlickSettledOn",
         "ManualTouchReplayUITests/testFlickSwitchOn",
         "ManualTouchReplayUITests/testVisualExpandedHeader",
-        "ManualTouchReplayUITests/testVisualNativeReference"
+        "ManualTouchReplayUITests/testVisualNativeReference",
+        "ManualTouchReplayUITests/testIssue27ExternalPositionOff",
+        "ManualTouchReplayUITests/testIssue27ExternalPositionOn"
       ]
     }
   ],

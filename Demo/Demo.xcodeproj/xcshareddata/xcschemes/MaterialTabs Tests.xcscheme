@@ -2,7 +2,8 @@
 <Scheme LastUpgradeVersion="2700" version="1.7">
   <BuildAction parallelizeBuildables="YES" buildImplicitDependencies="YES">
     <BuildActionEntries>
-      <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="22034C0F2B54777C008147F0" BuildableName="Demo.app" BlueprintName="Demo" ReferencedContainer="container:Demo.xcodeproj"/></BuildActionEntry>
+      <BuildActionEntry buildForTesting="YES" buildForRunning="NO" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="NO"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="22034C0F2B54777C008147F0" BuildableName="Demo.app" BlueprintName="Demo" ReferencedContainer="container:Demo.xcodeproj"/></BuildActionEntry>
+      <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="223CBF573069F06700BF6E0C" BuildableName="TestHost.app" BlueprintName="TestHost" ReferencedContainer="container:Demo.xcodeproj"/></BuildActionEntry>
       <BuildActionEntry buildForTesting="YES" buildForRunning="NO" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="223CBF123069BF9C00BF6E0C" BuildableName="MaterialTabsModelTests.xctest" BlueprintName="MaterialTabsModelTests" ReferencedContainer="container:Demo.xcodeproj"/></BuildActionEntry>
       <BuildActionEntry buildForTesting="YES" buildForRunning="NO" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="223CBCC830660DAE00BF6E0C" BuildableName="MaterialTabsRegressionUITests.xctest" BlueprintName="MaterialTabsRegressionUITests" ReferencedContainer="container:Demo.xcodeproj"/></BuildActionEntry>
     </BuildActionEntries>
@@ -22,7 +23,7 @@
     </Testables>
   </TestAction>
   <LaunchAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.IDEFoundation.Launcher.LLDB" launchStyle="0" useCustomWorkingDirectory="NO" ignoresPersistentStateOnLaunch="NO" debugDocumentVersioning="YES" allowLocationSimulation="YES">
-    <BuildableProductRunnable runnableDebuggingMode="0"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="22034C0F2B54777C008147F0" BuildableName="Demo.app" BlueprintName="Demo" ReferencedContainer="container:Demo.xcodeproj"/></BuildableProductRunnable>
+    <BuildableProductRunnable runnableDebuggingMode="0"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="223CBF573069F06700BF6E0C" BuildableName="TestHost.app" BlueprintName="TestHost" ReferencedContainer="container:Demo.xcodeproj"/></BuildableProductRunnable>
   </LaunchAction>
   <AnalyzeAction buildConfiguration="Debug"/>
   <ArchiveAction buildConfiguration="Release" revealArchiveInOrganizer="YES"/>

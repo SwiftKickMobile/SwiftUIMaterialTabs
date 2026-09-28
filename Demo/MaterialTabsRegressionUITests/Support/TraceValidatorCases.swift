@@ -1,8 +1,7 @@
 import Foundation
 
-/// Frozen inputs from the pre-migration checker controls. This adapter is also
-/// used for the one-time parity audit; the Xcode plans need only Swift and JSON.
-enum CheckerControlReplay {
+/// Positive, negative, and missing-evidence cases for recorded trace validation.
+enum TraceValidatorCases {
     static func evaluate(_ vector: TraceJSON, checker: RecordedTraceChecker) throws -> TraceJSON {
         let a = vector["arguments"]
         switch vector["function"].string {
@@ -25,14 +24,14 @@ enum CheckerControlReplay {
         case "check_short_content_range": try checker.shortRange(a["scroll"], maximum: a["maximum_collapse"].number); return .null
         case "expected_selection_offset": return .number(try checker.expectedOffset(mode: a["mode"].string, relative: a["relative"].number, header: a["header"].number, maximum: a["maximum"].number))
         case "check_native_reference": try checker.nativeReference(a["report"], plan: a["plan"], width: a["width"].number, height: a["height"].number); return .null
-        default: throw RecordedTraceError(kind: .inconclusive, detail: "Unmapped migration control: \(vector["function"].string)")
+        default: throw RecordedTraceError(kind: .inconclusive, detail: "Unknown validator operation: \(vector["function"].string)")
         }
     }
     static func mismatch(_ vector: TraceJSON, checker: RecordedTraceChecker) -> String? {
         do {
             let actual = try evaluate(vector, checker: checker)
             if vector["outcome"].string != "pass" { return "Expected \(vector["outcome"].string), but Swift accepted input" }
-            if actual != vector["value"] { return "Accepted input but helper result differs from frozen result" }
+            if actual != vector["value"] { return "Accepted input but helper result differs from expected result" }
         } catch let error as RecordedTraceError {
             if error.kind.rawValue != vector["outcome"].string { return "Expected \(vector["outcome"].string), got \(error)" }
         } catch { return "Unexpected validation error: \(error)" }

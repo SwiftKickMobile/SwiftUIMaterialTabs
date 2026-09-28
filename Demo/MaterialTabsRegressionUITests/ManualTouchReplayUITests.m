@@ -36,282 +36,151 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
               @"Stopped after earlier failure: %@", SUIMTRegressionRunObserver.precedingFailure);
 }
 // Header-configuration migration, separate from the frozen 75-case matrix.
-- (void)testHeaderFixedOff { [self replayVariant:@"planned" label:@"header-fixed-off" experiment:NO]; }
-- (void)testHeaderRetainedOff { [self replayVariant:@"planned" label:@"header-retained-off" experiment:NO]; }
-- (void)testHeaderTitlelessOff { [self replayVariant:@"planned" label:@"header-titleless-off" experiment:NO]; }
-- (void)testHeaderFixedOn { [self replayVariant:@"planned" label:@"header-fixed-on" experiment:NO]; }
-- (void)testHeaderRetainedOn { [self replayVariant:@"planned" label:@"header-retained-on" experiment:NO]; }
-- (void)testHeaderTitlelessOn { [self replayVariant:@"planned" label:@"header-titleless-on" experiment:NO]; }
-- (void)testResetPositionOff { [self replayVariant:@"planned" label:@"reset-position-off" experiment:NO]; }
-- (void)testResetPositionOn { [self replayVariant:@"planned" label:@"reset-position-on" experiment:NO]; }
-- (void)testShortContentOff { [self replayVariant:@"planned" label:@"short-content-off" experiment:NO]; }
-- (void)testShortContentOn { [self replayVariant:@"planned" label:@"short-content-on" experiment:NO]; }
-- (void)testVisualExpandedHeader { [self replayVariant:@"planned" label:@"visual-expanded-header" experiment:NO]; }
+- (void)testHeaderFixedOff { [self replayVariant:@"planned" label:@"header-fixed-off"]; }
+- (void)testHeaderRetainedOff { [self replayVariant:@"planned" label:@"header-retained-off"]; }
+- (void)testHeaderTitlelessOff { [self replayVariant:@"planned" label:@"header-titleless-off"]; }
+- (void)testHeaderFixedOn { [self replayVariant:@"planned" label:@"header-fixed-on"]; }
+- (void)testHeaderRetainedOn { [self replayVariant:@"planned" label:@"header-retained-on"]; }
+- (void)testHeaderTitlelessOn { [self replayVariant:@"planned" label:@"header-titleless-on"]; }
+- (void)testResetPositionOff { [self replayVariant:@"planned" label:@"reset-position-off"]; }
+- (void)testResetPositionOn { [self replayVariant:@"planned" label:@"reset-position-on"]; }
+- (void)testShortContentOff { [self replayVariant:@"planned" label:@"short-content-off"]; }
+- (void)testShortContentOn { [self replayVariant:@"planned" label:@"short-content-on"]; }
+- (void)testVisualExpandedHeader { [self replayVariant:@"planned" label:@"visual-expanded-header"]; }
 - (void)testVisualNativeReference {
     XCTSkipIf(NSProcessInfo.processInfo.operatingSystemVersion.majorVersion < 26, @"Native safeAreaBar reference requires iOS 26+");
-    [self replayVariant:@"planned" label:@"visual-native-reference" experiment:NO];
+    [self replayVariant:@"planned" label:@"visual-native-reference"];
 }
-- (void)testExternalPositionOff { [self replayVariant:@"planned" label:@"external-position-off" experiment:NO]; }
-- (void)testExternalPositionOn { [self replayVariant:@"planned" label:@"external-position-on" experiment:NO]; }
-- (void)testFlickSettledOff { [self replayVariant:@"planned" label:@"flick-settled-off" experiment:NO]; }
-- (void)testFlickSettledOn { [self replayVariant:@"planned" label:@"flick-settled-on" experiment:NO]; }
-- (void)testFlickSwitchOff { [self replayVariant:@"planned" label:@"flick-switch-off" experiment:NO]; }
-- (void)testFlickSwitchOn { [self replayVariant:@"planned" label:@"flick-switch-on" experiment:NO]; }
-- (void)testNativeFlickRoutingControl { [self replayVariant:@"nativeFlickControl" label:@"flick-touch-probe" experiment:YES]; }
-- (void)testNativeFlickScaledRoutingControl { [self replayVariant:@"nativeFlickScaledControl" label:@"flick-touch-probe" experiment:YES]; }
-- (void)testNativeFlickHeaderScrollControl { [self replayVariant:@"nativeFlickHeaderScrollControl" label:@"flick-touch-probe" experiment:YES]; }
-- (void)testFlickPairedRouting { [self replayVariant:@"pairedFlick" label:@"flick-touch-probe" experiment:NO]; }
-- (void)testFlickTouchProbe { [self replayVariant:@"planned" label:@"flick-touch-probe" experiment:NO]; }
-// Generated matrix entry points. Plans are in Fixtures/query-free-cases.json.
-- (void)testMatrixColdTap10ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-0-expanded-off" experiment:NO]; }
-- (void)testMatrixColdTap10PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-0-partial-off" experiment:NO]; }
-- (void)testMatrixColdTap10CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-0-collapsed-off" experiment:NO]; }
-- (void)testMatrixColdTap12ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-2-expanded-off" experiment:NO]; }
-- (void)testMatrixColdTap12PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-2-partial-off" experiment:NO]; }
-- (void)testMatrixColdTap12CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-2-collapsed-off" experiment:NO]; }
-- (void)testMatrixColdTap02ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-0-2-expanded-off" experiment:NO]; }
-- (void)testMatrixColdTap02PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-0-2-partial-off" experiment:NO]; }
-- (void)testMatrixColdTap02CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-0-2-collapsed-off" experiment:NO]; }
-- (void)testMatrixColdTap20ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-2-0-expanded-off" experiment:NO]; }
-- (void)testMatrixColdTap20PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-2-0-partial-off" experiment:NO]; }
-- (void)testMatrixColdTap20CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-2-0-collapsed-off" experiment:NO]; }
-- (void)testMatrixRelativeResettitleTapOff { [self replayVariant:@"planned" label:@"matrix-relative-resetTitle-tap-off" experiment:NO]; }
-- (void)testMatrixRelativePreserveTapOff { [self replayVariant:@"planned" label:@"matrix-relative-preserve-tap-off" experiment:NO]; }
-- (void)testMatrixBottom1TapOff { [self replayVariant:@"planned" label:@"matrix-bottom-1-tap-off" experiment:NO]; }
-- (void)testMatrixBottom2TapOff { [self replayVariant:@"planned" label:@"matrix-bottom-2-tap-off" experiment:NO]; }
-- (void)testMatrixColdSwipe10ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-0-expanded-off" experiment:NO]; }
-- (void)testMatrixColdSwipe10PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-0-partial-off" experiment:NO]; }
-- (void)testMatrixColdSwipe10CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-0-collapsed-off" experiment:NO]; }
-- (void)testMatrixColdSwipe12ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-2-expanded-off" experiment:NO]; }
-- (void)testMatrixColdSwipe12PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-2-partial-off" experiment:NO]; }
-- (void)testMatrixColdSwipe12CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-2-collapsed-off" experiment:NO]; }
-- (void)testMatrixColdSwipe02ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-0-2-expanded-off" experiment:NO]; }
-- (void)testMatrixColdSwipe02PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-0-2-partial-off" experiment:NO]; }
-- (void)testMatrixColdSwipe02CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-0-2-collapsed-off" experiment:NO]; }
-- (void)testMatrixColdSwipe20ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-2-0-expanded-off" experiment:NO]; }
-- (void)testMatrixColdSwipe20PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-2-0-partial-off" experiment:NO]; }
-- (void)testMatrixColdSwipe20CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-2-0-collapsed-off" experiment:NO]; }
-- (void)testMatrixRelativeResettitleSwipeOff { [self replayVariant:@"planned" label:@"matrix-relative-resetTitle-swipe-off" experiment:NO]; }
-- (void)testMatrixRelativePreserveSwipeOff { [self replayVariant:@"planned" label:@"matrix-relative-preserve-swipe-off" experiment:NO]; }
-- (void)testMatrixBottom1SwipeOff { [self replayVariant:@"planned" label:@"matrix-bottom-1-swipe-off" experiment:NO]; }
-- (void)testMatrixBottom2SwipeOff { [self replayVariant:@"planned" label:@"matrix-bottom-2-swipe-off" experiment:NO]; }
-- (void)testMatrixSeed20260925Off { [self replayVariant:@"planned" label:@"matrix-seed-20260925-off" experiment:NO]; }
-- (void)testMatrixSeed927Off { [self replayVariant:@"planned" label:@"matrix-seed-927-off" experiment:NO]; }
-- (void)testMatrixSmokeCollapsedTapOff { [self replayVariant:@"planned" label:@"matrix-smoke-collapsed-tap-off" experiment:NO]; }
-- (void)testMatrixSmokeCollapsedSwipeOff { [self replayVariant:@"planned" label:@"matrix-smoke-collapsed-swipe-off" experiment:NO]; }
-- (void)testMatrixSmokeReturningOff { [self replayVariant:@"planned" label:@"matrix-smoke-returning-off" experiment:NO]; }
-- (void)testMatrixColdTap10ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-0-expanded-on" experiment:NO]; }
-- (void)testMatrixColdTap10PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-0-partial-on" experiment:NO]; }
-- (void)testMatrixColdTap10CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-0-collapsed-on" experiment:NO]; }
-- (void)testMatrixColdTap12ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-2-expanded-on" experiment:NO]; }
-- (void)testMatrixColdTap12PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-2-partial-on" experiment:NO]; }
-- (void)testMatrixColdTap12CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-2-collapsed-on" experiment:NO]; }
-- (void)testMatrixColdTap02ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-0-2-expanded-on" experiment:NO]; }
-- (void)testMatrixColdTap02PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-0-2-partial-on" experiment:NO]; }
-- (void)testMatrixColdTap02CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-0-2-collapsed-on" experiment:NO]; }
-- (void)testMatrixColdTap20ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-2-0-expanded-on" experiment:NO]; }
-- (void)testMatrixColdTap20PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-2-0-partial-on" experiment:NO]; }
-- (void)testMatrixColdTap20CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-2-0-collapsed-on" experiment:NO]; }
-- (void)testMatrixRelativeResettitleTapOn { [self replayVariant:@"planned" label:@"matrix-relative-resetTitle-tap-on" experiment:NO]; }
-- (void)testMatrixRelativePreserveTapOn { [self replayVariant:@"planned" label:@"matrix-relative-preserve-tap-on" experiment:NO]; }
-- (void)testMatrixBottom1TapOn { [self replayVariant:@"planned" label:@"matrix-bottom-1-tap-on" experiment:NO]; }
-- (void)testMatrixBottom2TapOn { [self replayVariant:@"planned" label:@"matrix-bottom-2-tap-on" experiment:NO]; }
-- (void)testMatrixColdSwipe10ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-0-expanded-on" experiment:NO]; }
-- (void)testMatrixColdSwipe10PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-0-partial-on" experiment:NO]; }
-- (void)testMatrixColdSwipe10CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-0-collapsed-on" experiment:NO]; }
-- (void)testMatrixColdSwipe12ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-2-expanded-on" experiment:NO]; }
-- (void)testMatrixColdSwipe12PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-2-partial-on" experiment:NO]; }
-- (void)testMatrixColdSwipe12CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-2-collapsed-on" experiment:NO]; }
-- (void)testMatrixColdSwipe02ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-0-2-expanded-on" experiment:NO]; }
-- (void)testMatrixColdSwipe02PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-0-2-partial-on" experiment:NO]; }
-- (void)testMatrixColdSwipe02CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-0-2-collapsed-on" experiment:NO]; }
-- (void)testMatrixColdSwipe20ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-2-0-expanded-on" experiment:NO]; }
-- (void)testMatrixColdSwipe20PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-2-0-partial-on" experiment:NO]; }
-- (void)testMatrixColdSwipe20CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-2-0-collapsed-on" experiment:NO]; }
-- (void)testMatrixRelativeResettitleSwipeOn { [self replayVariant:@"planned" label:@"matrix-relative-resetTitle-swipe-on" experiment:NO]; }
-- (void)testMatrixRelativePreserveSwipeOn { [self replayVariant:@"planned" label:@"matrix-relative-preserve-swipe-on" experiment:NO]; }
-- (void)testMatrixBottom1SwipeOn { [self replayVariant:@"planned" label:@"matrix-bottom-1-swipe-on" experiment:NO]; }
-- (void)testMatrixBottom2SwipeOn { [self replayVariant:@"planned" label:@"matrix-bottom-2-swipe-on" experiment:NO]; }
-- (void)testMatrixSeed20260925On { [self replayVariant:@"planned" label:@"matrix-seed-20260925-on" experiment:NO]; }
-- (void)testMatrixSeed927On { [self replayVariant:@"planned" label:@"matrix-seed-927-on" experiment:NO]; }
-- (void)testMatrixSmokeCollapsedTapOn { [self replayVariant:@"planned" label:@"matrix-smoke-collapsed-tap-on" experiment:NO]; }
-- (void)testMatrixSmokeCollapsedSwipeOn { [self replayVariant:@"planned" label:@"matrix-smoke-collapsed-swipe-on" experiment:NO]; }
-- (void)testMatrixSmokeReturningOn { [self replayVariant:@"planned" label:@"matrix-smoke-returning-on" experiment:NO]; }
-- (void)testMatrixSmokeNormalDemo { [self replayVariant:@"planned" label:@"matrix-smoke-normal-demo" experiment:NO]; }
-- (void)testStandalonePagerBindingDiagnosis {
-    [self diagnoseBindingVariants:@[@"direct", @"custom-outer", @"custom-inner", @"lazy-inner"]];
-}
-- (void)testMinimalEagerPagerBindingDiagnosis {
-    [self diagnoseBindingVariants:@[@"minimal", @"minimal-raw"]];
-}
-- (void)testEagerPagerConfigurationDiagnosis {
-    [self diagnoseBindingVariants:@[@"minimal-aligned", @"minimal-noanchor"]];
-}
-- (void)testEagerPagerProgrammaticDiagnosis {
-    [self diagnoseBindingVariants:@[@"minimal-jump"]];
-}
-- (void)testEagerPagerIdentityDiagnosis {
-    [self diagnoseBindingVariants:@[@"identity-explicit", @"identity-foreach", @"identity-explicit"]];
-}
-- (void)testSingletonPagerIdentityDiagnosis {
-    [self diagnoseBindingVariants:@[@"removed-static", @"singleton-static", @"singleton-outer", @"singleton-inner-id"]];
-}
-- (void)testSingletonPagerStructureDiagnosis {
-    [self diagnoseBindingVariants:@[@"singleton-static", @"singleton-matching", @"singleton-outer", @"singleton-static-layout", @"singleton-outer-layout"]];
-}
-- (void)testPerPageTargetDiagnosis {
-    [self diagnoseBindingVariants:@[@"target-static", @"target-matching", @"target-outer", @"target-inner-id"]];
-}
-- (void)diagnoseBindingVariants:(NSArray<NSString *> *)variants {
-    // Diagnostic experiment: log binding writes and capture the displayed page.
-    // No accessibility query takes place until after the swipe and screenshot.
-    for (NSString *variant in variants) {
-        XCUIApplication *app = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.swiftkickmobile.Demo"];
-        app.launchEnvironment = @{@"SUIMT_BINDING_REPRO": variant};
-        [app launch];
-        [self waitUntilUptime:NSProcessInfo.processInfo.systemUptime + 1.0];
-        id path = [[NSClassFromString(@"XCPointerEventPath") alloc] initForTouchAtPoint:CGPointMake(330, 430) offset:0];
-        for (NSInteger step = 1; step <= 20; step++) {
-            [path moveToPoint:CGPointMake(330 - 270.0 * step / 20, 430) atOffset:0.6 * step / 20];
-        }
-        [path liftUpAtOffset:0.65];
-        id event = [[NSClassFromString(@"XCSynthesizedEventRecord") alloc] initWithName:@"Standalone pager swipe" interfaceOrientation:1];
-        [event addPointerEventPath:path];
-        XCTestExpectation *finished = [self expectationWithDescription:@"Standalone swipe delivered"];
-        [XCUIDevice.sharedDevice.eventSynthesizer synthesizeEvent:event completion:^(BOOL success, NSError *error) {
-            XCTAssertTrue(success, @"%@", error);
-            [finished fulfill];
-        }];
-        [self waitForExpectations:@[finished] timeout:10];
-        [self waitUntilUptime:NSProcessInfo.processInfo.systemUptime + 1.0];
-        if ([variant isEqualToString:@"minimal-jump"]) {
-            id tapPath = [[NSClassFromString(@"XCPointerEventPath") alloc] initForTouchAtPoint:CGPointMake(190, 110) offset:0];
-            [tapPath liftUpAtOffset:0.08];
-            id tapEvent = [[NSClassFromString(@"XCSynthesizedEventRecord") alloc] initWithName:@"Set selection to 2" interfaceOrientation:1];
-            [tapEvent addPointerEventPath:tapPath];
-            XCTestExpectation *tapDone = [self expectationWithDescription:@"Selection write delivered"];
-            [XCUIDevice.sharedDevice.eventSynthesizer synthesizeEvent:tapEvent completion:^(BOOL success, NSError *error) {
-                XCTAssertTrue(success, @"%@", error);
-                [tapDone fulfill];
-            }];
-            [self waitForExpectations:@[tapDone] timeout:10];
-            [self waitUntilUptime:NSProcessInfo.processInfo.systemUptime + 1.0];
-        }
-        XCTAttachment *screen = [XCTAttachment attachmentWithScreenshot:XCUIScreen.mainScreen.screenshot];
-        screen.name = [@"Binding diagnosis - " stringByAppendingString:variant];
-        screen.lifetime = XCTAttachmentLifetimeKeepAlways;
-        [self addAttachment:screen];
-        NSLog(@"BINDING_DIAGNOSIS %@", app.staticTexts[@"pager-diagnostic"].label);
-        [app terminate];
-    }
-}
-- (void)testViewportCalibration {
-    // Separate launch used ONLY for fixture calibration. Never query app/element
-    // frames before or between gestures in a recorded interaction test.
-    XCUIApplication *app = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.swiftkickmobile.Demo"];
-    app.launchEnvironment = @{@"SUIMT_UI_REGRESSION": @"0", @"SUIMT_CONTEXT_TRACE": @"0"};
-    [app launch];
-    XCTAssertTrue([app.buttons[@"Overview"] waitForExistenceWithTimeout:10]);
-    CGRect viewport = app.frame;
-    CGRect button = app.buttons[@"Overview"].frame;
-    NSDictionary *profile = @{@"width": @(viewport.size.width), @"height": @(viewport.size.height),
-                              @"collapsedTabTop": @(button.origin.y - 150),
-                              @"buttonHeight": @(button.size.height),
-                              @"os": NSProcessInfo.processInfo.operatingSystemVersionString};
-    NSData *data = [NSJSONSerialization dataWithJSONObject:profile options:NSJSONWritingSortedKeys error:nil];
-    NSLog(@"FIXTURE_CALIBRATION %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-    XCTAttachment *screen = [XCTAttachment attachmentWithScreenshot:XCUIScreen.mainScreen.screenshot];
-    screen.name = @"Calibration only - not a regression result";
-    screen.lifetime = XCTAttachmentLifetimeKeepAlways;
-    [self addAttachment:screen];
-    [app terminate];
+- (void)testIssue27ExternalPositionOff { [self replayVariant:@"planned" label:@"issue27-external-position-off"]; }
+- (void)testIssue27ExternalPositionOn { [self replayVariant:@"planned" label:@"issue27-external-position-on"]; }
+- (void)testFlickSettledOff { [self replayVariant:@"planned" label:@"flick-settled-off"]; }
+- (void)testFlickSettledOn { [self replayVariant:@"planned" label:@"flick-settled-on"]; }
+- (void)testFlickSwitchOff { [self replayVariant:@"planned" label:@"flick-switch-off"]; }
+- (void)testFlickSwitchOn { [self replayVariant:@"planned" label:@"flick-switch-on"]; }
+- (void)testMatrixColdTap10ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-0-expanded-off"]; }
+- (void)testMatrixColdTap10PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-0-partial-off"]; }
+- (void)testMatrixColdTap10CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-0-collapsed-off"]; }
+- (void)testMatrixColdTap12ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-2-expanded-off"]; }
+- (void)testMatrixColdTap12PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-2-partial-off"]; }
+- (void)testMatrixColdTap12CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-2-collapsed-off"]; }
+- (void)testMatrixColdTap02ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-0-2-expanded-off"]; }
+- (void)testMatrixColdTap02PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-0-2-partial-off"]; }
+- (void)testMatrixColdTap02CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-0-2-collapsed-off"]; }
+- (void)testMatrixColdTap20ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-2-0-expanded-off"]; }
+- (void)testMatrixColdTap20PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-2-0-partial-off"]; }
+- (void)testMatrixColdTap20CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-tap-2-0-collapsed-off"]; }
+- (void)testMatrixRelativeResettitleTapOff { [self replayVariant:@"planned" label:@"matrix-relative-resetTitle-tap-off"]; }
+- (void)testMatrixRelativePreserveTapOff { [self replayVariant:@"planned" label:@"matrix-relative-preserve-tap-off"]; }
+- (void)testMatrixBottom1TapOff { [self replayVariant:@"planned" label:@"matrix-bottom-1-tap-off"]; }
+- (void)testMatrixBottom2TapOff { [self replayVariant:@"planned" label:@"matrix-bottom-2-tap-off"]; }
+- (void)testMatrixColdSwipe10ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-0-expanded-off"]; }
+- (void)testMatrixColdSwipe10PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-0-partial-off"]; }
+- (void)testMatrixColdSwipe10CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-0-collapsed-off"]; }
+- (void)testMatrixColdSwipe12ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-2-expanded-off"]; }
+- (void)testMatrixColdSwipe12PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-2-partial-off"]; }
+- (void)testMatrixColdSwipe12CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-2-collapsed-off"]; }
+- (void)testMatrixColdSwipe02ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-0-2-expanded-off"]; }
+- (void)testMatrixColdSwipe02PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-0-2-partial-off"]; }
+- (void)testMatrixColdSwipe02CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-0-2-collapsed-off"]; }
+- (void)testMatrixColdSwipe20ExpandedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-2-0-expanded-off"]; }
+- (void)testMatrixColdSwipe20PartialOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-2-0-partial-off"]; }
+- (void)testMatrixColdSwipe20CollapsedOff { [self replayVariant:@"planned" label:@"matrix-cold-swipe-2-0-collapsed-off"]; }
+- (void)testMatrixRelativeResettitleSwipeOff { [self replayVariant:@"planned" label:@"matrix-relative-resetTitle-swipe-off"]; }
+- (void)testMatrixRelativePreserveSwipeOff { [self replayVariant:@"planned" label:@"matrix-relative-preserve-swipe-off"]; }
+- (void)testMatrixBottom1SwipeOff { [self replayVariant:@"planned" label:@"matrix-bottom-1-swipe-off"]; }
+- (void)testMatrixBottom2SwipeOff { [self replayVariant:@"planned" label:@"matrix-bottom-2-swipe-off"]; }
+- (void)testMatrixSeed20260925Off { [self replayVariant:@"planned" label:@"matrix-seed-20260925-off"]; }
+- (void)testMatrixSeed927Off { [self replayVariant:@"planned" label:@"matrix-seed-927-off"]; }
+- (void)testMatrixSmokeCollapsedTapOff { [self replayVariant:@"planned" label:@"matrix-smoke-collapsed-tap-off"]; }
+- (void)testMatrixSmokeCollapsedSwipeOff { [self replayVariant:@"planned" label:@"matrix-smoke-collapsed-swipe-off"]; }
+- (void)testMatrixSmokeReturningOff { [self replayVariant:@"planned" label:@"matrix-smoke-returning-off"]; }
+- (void)testMatrixColdTap10ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-0-expanded-on"]; }
+- (void)testMatrixColdTap10PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-0-partial-on"]; }
+- (void)testMatrixColdTap10CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-0-collapsed-on"]; }
+- (void)testMatrixColdTap12ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-2-expanded-on"]; }
+- (void)testMatrixColdTap12PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-2-partial-on"]; }
+- (void)testMatrixColdTap12CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-1-2-collapsed-on"]; }
+- (void)testMatrixColdTap02ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-0-2-expanded-on"]; }
+- (void)testMatrixColdTap02PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-0-2-partial-on"]; }
+- (void)testMatrixColdTap02CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-0-2-collapsed-on"]; }
+- (void)testMatrixColdTap20ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-2-0-expanded-on"]; }
+- (void)testMatrixColdTap20PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-2-0-partial-on"]; }
+- (void)testMatrixColdTap20CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-tap-2-0-collapsed-on"]; }
+- (void)testMatrixRelativeResettitleTapOn { [self replayVariant:@"planned" label:@"matrix-relative-resetTitle-tap-on"]; }
+- (void)testMatrixRelativePreserveTapOn { [self replayVariant:@"planned" label:@"matrix-relative-preserve-tap-on"]; }
+- (void)testMatrixBottom1TapOn { [self replayVariant:@"planned" label:@"matrix-bottom-1-tap-on"]; }
+- (void)testMatrixBottom2TapOn { [self replayVariant:@"planned" label:@"matrix-bottom-2-tap-on"]; }
+- (void)testMatrixColdSwipe10ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-0-expanded-on"]; }
+- (void)testMatrixColdSwipe10PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-0-partial-on"]; }
+- (void)testMatrixColdSwipe10CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-0-collapsed-on"]; }
+- (void)testMatrixColdSwipe12ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-2-expanded-on"]; }
+- (void)testMatrixColdSwipe12PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-2-partial-on"]; }
+- (void)testMatrixColdSwipe12CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-1-2-collapsed-on"]; }
+- (void)testMatrixColdSwipe02ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-0-2-expanded-on"]; }
+- (void)testMatrixColdSwipe02PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-0-2-partial-on"]; }
+- (void)testMatrixColdSwipe02CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-0-2-collapsed-on"]; }
+- (void)testMatrixColdSwipe20ExpandedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-2-0-expanded-on"]; }
+- (void)testMatrixColdSwipe20PartialOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-2-0-partial-on"]; }
+- (void)testMatrixColdSwipe20CollapsedOn { [self replayVariant:@"planned" label:@"matrix-cold-swipe-2-0-collapsed-on"]; }
+- (void)testMatrixRelativeResettitleSwipeOn { [self replayVariant:@"planned" label:@"matrix-relative-resetTitle-swipe-on"]; }
+- (void)testMatrixRelativePreserveSwipeOn { [self replayVariant:@"planned" label:@"matrix-relative-preserve-swipe-on"]; }
+- (void)testMatrixBottom1SwipeOn { [self replayVariant:@"planned" label:@"matrix-bottom-1-swipe-on"]; }
+- (void)testMatrixBottom2SwipeOn { [self replayVariant:@"planned" label:@"matrix-bottom-2-swipe-on"]; }
+- (void)testMatrixSeed20260925On { [self replayVariant:@"planned" label:@"matrix-seed-20260925-on"]; }
+- (void)testMatrixSeed927On { [self replayVariant:@"planned" label:@"matrix-seed-927-on"]; }
+- (void)testMatrixSmokeCollapsedTapOn { [self replayVariant:@"planned" label:@"matrix-smoke-collapsed-tap-on"]; }
+- (void)testMatrixSmokeCollapsedSwipeOn { [self replayVariant:@"planned" label:@"matrix-smoke-collapsed-swipe-on"]; }
+- (void)testMatrixSmokeReturningOn { [self replayVariant:@"planned" label:@"matrix-smoke-returning-on"]; }
+- (void)testNormalDemoLaunch {
+    XCUIApplication *demo = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.swiftkickmobile.Demo"];
+    demo.launchEnvironment = @{};
+    [demo launch];
+    XCTAssertTrue([demo.tabBars.buttons[@"Material Tabs"] waitForExistenceWithTimeout:5]);
+    XCTAssertTrue(demo.tabBars.buttons[@"Sticky Header"].exists);
+    [demo.tabBars.buttons[@"Sticky Header"] tap];
+    XCTAssertTrue(demo.tabBars.buttons[@"Sticky Header"].selected);
+    XCTAttachment *image = [XCTAttachment attachmentWithScreenshot:demo.screenshot];
+    image.name = @"Normal demo — Sticky Header";
+    image.lifetime = XCTAttachmentLifetimeKeepAlways;
+    [self addAttachment:image];
+    [demo terminate];
 }
 - (void)testQueryFreeColdNotesTap {
-    [self replayVariant:@"planned" label:@"cold-notes-tap" experiment:NO];
-}
-- (void)testMinimalStateResetReproduction {
-    [self replayVariant:@"minimal" label:@"minimal-state-reset" experiment:YES];
-}
-- (void)testLifecycleSUIMT {
-    [self replayVariant:@"nonAdjacentExactReturn" label:@"lifecycle-suimt" experiment:YES];
-}
-- (void)testLifecyclePlainLazy {
-    [self replayVariant:@"lifecycle-plain" label:@"lifecycle-plain-lazy" experiment:YES];
-}
-- (void)testLifecyclePlainEager {
-    [self replayVariant:@"lifecycle-plain" label:@"lifecycle-plain-eager" experiment:YES];
-}
-- (void)testLifecyclePlainLazyLong {
-    [self replayVariant:@"lifecycle-plain" label:@"lifecycle-plain-lazy-long" experiment:YES];
-}
-- (void)testLifecyclePlainLazyUpdates {
-    [self replayVariant:@"lifecycle-plain" label:@"lifecycle-plain-lazy-updates" experiment:YES];
-}
-- (void)testLifecyclePlainEagerUpdates {
-    [self replayVariant:@"lifecycle-plain" label:@"lifecycle-plain-eager-updates" experiment:YES];
-}
-- (void)testLifecycleSUIMTOverlay {
-    [self replayVariant:@"nonAdjacentExactReturn" label:@"lifecycle-suimt-overlay" experiment:YES];
+    [self replayVariant:@"planned" label:@"cold-notes-tap"];
 }
 - (void)testQueryFreeNotesFourStep {
-    [self replayVariant:@"planned" label:@"notes-four-step" experiment:NO];
+    [self replayVariant:@"planned" label:@"notes-four-step"];
 }
 
 - (void)testRecordedManualDragAndOverviewTap {
-    [self replayVariant:@"none" label:@"recorded-reproduction" experiment:NO];
+    [self replayVariant:@"none" label:@"recorded-reproduction"];
 }
 
 - (void)testRecordedAdjacentExpandedReturn {
-    [self replayVariant:@"adjacentReturn" label:@"recorded-adjacent-return" experiment:NO];
-}
-
-- (void)testRecordedNonAdjacentExpandedReturn {
-    [self replayVariant:@"nonAdjacentReturn" label:@"recorded-nonadjacent-return" experiment:NO];
+    [self replayVariant:@"adjacentReturn" label:@"recorded-adjacent-return"];
 }
 
 - (void)testNotesExpansionWithoutOverscroll {
-    [self replayVariant:@"nonAdjacentExactReturn" label:@"recorded-nonadjacent-exact-return" experiment:NO];
-}
-
-- (void)testNotesUninstrumented {
-    [self replayVariant:@"nonAdjacentExactReturn" label:@"notes-uninstrumented" experiment:NO];
-}
-
-- (void)testNotesUninstrumentedAfterIdle {
-    [self replayVariant:@"nonAdjacentExactReturn" label:@"notes-uninstrumented-idle" experiment:NO];
-}
-
-// Instrumentation ablation, not an assertion that content restoration passes.
-// Same gestures, launch waits and app in every trial; only observation differs.
-- (void)testNotesObserverAblation {
-    for (NSInteger repetition = 0; repetition < 2; repetition++) {
-        NSArray *labels = repetition == 0 ? @[@"notes-raw", @"notes-boundary", @"notes-native"]
-                                          : @[@"notes-native", @"notes-boundary", @"notes-raw"];
-        for (NSString *prefix in labels) {
-            [self replayVariant:@"nonAdjacentReturn"
-                          label:[NSString stringWithFormat:@"%@-%ld", prefix, (long)repetition]
-                     experiment:NO];
-        }
-    }
+    [self replayVariant:@"nonAdjacentExactReturn" label:@"recorded-nonadjacent-exact-return"];
 }
 
 - (void)testQueryFreeExpandedTaps {
-    [self replayVariant:@"planned" label:@"expanded-taps" experiment:NO];
+    [self replayVariant:@"planned" label:@"expanded-taps"];
 }
 - (void)testQueryFreePartialTaps {
-    [self replayVariant:@"planned" label:@"partial-taps" experiment:NO];
+    [self replayVariant:@"planned" label:@"partial-taps"];
 }
 - (void)testQueryFreeCollapsedTaps {
-    [self replayVariant:@"planned" label:@"collapsed-taps" experiment:NO];
+    [self replayVariant:@"planned" label:@"collapsed-taps"];
 }
 - (void)testQueryFreePartialSwipes {
-    [self replayVariant:@"planned" label:@"partial-swipes" experiment:NO];
+    [self replayVariant:@"planned" label:@"partial-swipes"];
 }
 - (void)testQueryFreeCollapsedSwipes {
-    [self replayVariant:@"planned" label:@"collapsed-swipes" experiment:NO];
+    [self replayVariant:@"planned" label:@"collapsed-swipes"];
 }
 - (void)testQueryFreeRepeatedHeaderChanges {
-    [self replayVariant:@"planned" label:@"repeated-header-changes" experiment:NO];
+    [self replayVariant:@"planned" label:@"repeated-header-changes"];
 }
 
 // Shared with the post-run checker: the requested selections and preconditions
@@ -413,46 +282,6 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
 
 // Diagnostic experiments, not assertions that the library is correct. Each
 // trial starts a fresh app and keeps the gestures and timing budgets fixed.
-- (void)testQueryPresenceAblation {
-    for (NSInteger repetition = 0; repetition < 3; repetition++) {
-        NSArray *order = repetition % 2 == 0 ? @[@"none", @"oldQueries"] : @[@"oldQueries", @"none"];
-        for (NSString *variant in order) {
-            [self replayVariant:variant label:[NSString stringWithFormat:@"presence-%@-%ld", variant, (long)repetition] experiment:YES];
-        }
-    }
-}
-
-- (void)testQueryLocationAblation {
-    for (NSInteger repetition = 0; repetition < 3; repetition++) {
-        NSArray *order = repetition % 2 == 0
-            ? @[@"none", @"before", @"between", @"screenshotBetween"]
-            : @[@"screenshotBetween", @"between", @"before", @"none"];
-        for (NSString *variant in order) {
-            [self replayVariant:variant label:[NSString stringWithFormat:@"location-%@-%ld", variant, (long)repetition] experiment:YES];
-        }
-    }
-}
-
-- (void)testTapAndScreenCaptureAblation {
-    for (NSInteger repetition = 0; repetition < 2; repetition++) {
-        NSArray *order = repetition == 0 ? @[@"none", @"elementTap", @"screenScreenshotBetween"]
-                                        : @[@"screenScreenshotBetween", @"elementTap", @"none"];
-        for (NSString *variant in order) {
-            [self replayVariant:variant label:[NSString stringWithFormat:@"tap-screen-%@-%ld", variant, (long)repetition] experiment:YES];
-        }
-    }
-}
-
-- (void)queryHeader:(XCUIApplication *)app phase:(NSString *)phase events:(NSMutableArray *)events {
-    double start = NSProcessInfo.processInfo.systemUptime;
-    CGRect frame = app.buttons[@"Overview"].frame;
-    double end = NSProcessInfo.processInfo.systemUptime;
-    [events addObject:@{@"kind": @"frame", @"phase": phase, @"start": @(start), @"end": @(end),
-                       @"x": @(frame.origin.x), @"y": @(frame.origin.y),
-                       @"width": @(frame.size.width), @"height": @(frame.size.height)}];
-    XCTAssertFalse(CGRectIsEmpty(frame));
-}
-
 - (void)waitUntilUptime:(double)deadline {
     double remaining = deadline - NSProcessInfo.processInfo.systemUptime;
     if (remaining > 0) [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:remaining]];
@@ -462,11 +291,11 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
     XCTestExpectation *saved = [self expectationWithDescription:@"Passive trace saved"];
     CFNotificationCenterRef notifications = CFNotificationCenterGetDarwinNotifyCenter();
     CFNotificationCenterAddObserver(notifications, (__bridge void *)saved, SUIMTTraceSaved,
-        CFSTR("com.swiftkickmobile.Demo.manualTraceSaved"), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
-    CFNotificationCenterPostNotification(notifications, CFSTR("com.swiftkickmobile.Demo.saveManualTrace"), NULL, NULL, true);
+        CFSTR("com.swiftkickmobile.TestHost.manualTraceSaved"), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
+    CFNotificationCenterPostNotification(notifications, CFSTR("com.swiftkickmobile.TestHost.saveManualTrace"), NULL, NULL, true);
     [self waitForExpectations:@[saved] timeout:5];
     CFNotificationCenterRemoveObserver(notifications, (__bridge void *)saved,
-        CFSTR("com.swiftkickmobile.Demo.manualTraceSaved"), NULL);
+        CFSTR("com.swiftkickmobile.TestHost.manualTraceSaved"), NULL);
 }
 
 - (void)waitForHorizontalPagingAtPath:(NSString *)path events:(NSMutableArray *)events {
@@ -499,106 +328,12 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
                         @"end": @(NSProcessInfo.processInfo.systemUptime), @"samples": @(samples)}];
 }
 
-- (void)testResetPositionThenLaunchDiagnostic {
-    // Recreate the preceding case's final Notes state before diagnosing launch.
-    [self replayVariant:@"planned" label:@"reset-position-off" experiment:NO];
-    [self testInitialPageLaunchDiagnostic];
-}
-
-- (void)testInitialPageLaunchDiagnostic {
-    [self initialPageLaunchDiagnosticForFlick:NO bindingRepro:nil];
-}
-
-- (void)testFlickInitialPageLaunchDiagnostic {
-    [self initialPageLaunchDiagnosticForFlick:YES bindingRepro:nil];
-}
-
-- (void)testInitialEagerBindingLaunchDiagnostic {
-    [self initialPageLaunchDiagnosticForFlick:NO bindingRepro:@"initial-eager-explicit"];
-}
-
-- (void)testInitialLazyBindingLaunchDiagnostic {
-    [self initialPageLaunchDiagnosticForFlick:NO bindingRepro:@"initial-lazy-explicit"];
-}
-
-- (void)testInitialImplicitBindingLaunchDiagnostic {
-    [self initialPageLaunchDiagnosticForFlick:NO bindingRepro:@"initial-eager-implicit"];
-}
-
-- (void)initialPageLaunchDiagnosticForFlick:(BOOL)flick bindingRepro:(NSString *)bindingRepro {
-    self.continueAfterFailure = NO;
-    for (NSInteger trial = 1; trial <= 10; trial++) {
-        NSString *tracePath = [NSTemporaryDirectory() stringByAppendingPathComponent:
-            [NSString stringWithFormat:@"suimt-initial-%@.json", NSUUID.UUID.UUIDString]];
-        XCUIApplication *app = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.swiftkickmobile.Demo"];
-        app.launchEnvironment = @{@"SUIMT_CONTEXT_TRACE": @"1", @"SUIMT_MANUAL_CAPTURE": @"1",
-            @"SUIMT_LIFECYCLE_PROBE": @"1", @"SUIMT_BOUNDARY_TRACE": @"1", @"SUIMT_NATIVE_SCROLL_PROBE": @"1",
-            @"SUIMT_UI_REGRESSION": @"0", @"SUIMT_BROAD_REPLAY": @"1", @"SUIMT_INITIAL_TAB": @"activity",
-            @"SUIMT_SYNC_MODE": @"resetPosition", @"SUIMT_NATIVE_EDGE": @"1", @"SUIMT_ROW_COUNT": @"30",
-            @"SUIMT_TITLE_HEIGHT": @"150", @"SUIMT_MIN_TITLE_HEIGHT": @"0",
-            @"SUIMT_PASSIVE_TRACE_PATH": tracePath, @"SUIMT_CAPTURE_LABEL": @"initial-page-diagnostic"};
-        if (flick) {
-            NSMutableDictionary *environment = [app.launchEnvironment mutableCopy];
-            environment[@"SUIMT_FLICK_FIXTURE"] = @"1";
-            environment[@"SUIMT_PHASE_SWITCH"] = @"1";
-            environment[@"SUIMT_NATIVE_EDGE"] = @"0";
-            environment[@"SUIMT_SYNC_MODE"] = @"resetTitle";
-            app.launchEnvironment = environment;
-        }
-        if (bindingRepro) {
-            NSMutableDictionary *environment = [app.launchEnvironment mutableCopy];
-            environment[@"SUIMT_BINDING_REPRO"] = bindingRepro;
-            app.launchEnvironment = environment;
-        }
-        [app launch];
-        // Same launch mechanism as replay, but no gestures or AX queries.
-        // Export BEFORE screenshot so capture cannot repair the measured state.
-        [self savePassiveTrace];
-        NSData *data = [NSData dataWithContentsOfFile:tracePath];
-        XCTAssertNotNil(data);
-        XCTAttachment *trace = [XCTAttachment attachmentWithData:data uniformTypeIdentifier:@"public.json"];
-        trace.name = [NSString stringWithFormat:@"Initial page trace %02ld", (long)trial];
-        trace.lifetime = XCTAttachmentLifetimeKeepAlways;
-        [self addAttachment:trace];
-        XCTAttachment *screen = [XCTAttachment attachmentWithScreenshot:XCUIScreen.mainScreen.screenshot];
-        screen.name = [NSString stringWithFormat:@"Initial page screen %02ld", (long)trial];
-        screen.lifetime = XCTAttachmentLifetimeKeepAlways;
-        [self addAttachment:screen];
-        NSError *error = nil;
-        NSDictionary *report = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-        XCTAssertNil(error);
-        XCTAssertEqual([report[@"touches"] count], 0u);
-        NSDictionary *sample = [report[@"nativeScrollSnapshots"] lastObject];
-        double width = [sample[@"windowWidth"] doubleValue];
-        NSMutableArray *pagers = [NSMutableArray array];
-        for (NSDictionary *scroll in sample[@"scrolls"]) {
-            if (fabs([scroll[@"frameX"] doubleValue]) < 0.5 &&
-                fabs([scroll[@"boundsWidth"] doubleValue] - width) < 0.5 &&
-                fabs([scroll[@"contentWidth"] doubleValue] - 3 * width) < 0.5) [pagers addObject:scroll];
-        }
-        XCTAssertEqual(pagers.count, 1u, @"Need one physical pager before input");
-        NSDictionary *pager = pagers.firstObject;
-        XCTAssertEqualWithAccuracy([pager[@"offsetX"] doubleValue] + [pager[@"insetLeft"] doubleValue],
-                                  width, 0.5, @"Launch %ld did not display requested Activity page; inspect screenshot", (long)trial);
-        [app terminate];
-    }
-}
-
-- (void)testFlickContextReadout {
-    [self replayVariant:@"flickContextReadout" label:@"flick-switch-off" experiment:NO];
-}
-
-- (void)replayVariant:(NSString *)variant label:(NSString *)label experiment:(BOOL)experiment {
+- (void)replayVariant:(NSString *)variant label:(NSString *)label {
     self.continueAfterFailure = NO;
     NSMutableArray *queries = [NSMutableArray array];
-    NSMutableArray<XCUIScreenshot *> *queryScreenshots = [NSMutableArray array];
     NSMutableArray *dispatches = [NSMutableArray array];
     BOOL deadlineOverrun = NO;
     NSBundle *bundle = [NSBundle bundleForClass:self.class];
-    NSLog(@"REPLAY_BUNDLE dynamicClass=%@ dynamicPath=%@ declaredPath=%@ mainPath=%@",
-          NSStringFromClass(self.class), bundle.bundlePath,
-          [NSBundle bundleForClass:ManualTouchReplayUITests.class].bundlePath,
-          NSBundle.mainBundle.bundlePath);
     NSURL *url = [bundle URLForResource:@"manual-collapse-overview" withExtension:@"json"];
     if (!url) url = [bundle URLForResource:@"manual-collapse-overview" withExtension:@"json" subdirectory:@"Fixtures"];
     XCTAssertNotNil(url, @"Recorded input fixture must be bundled");
@@ -615,34 +350,10 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
     double expectedTop = roundTrip ? 274 : [fixture[@"expectedCollapsedTabTop"] doubleValue];
     double expectedTopTolerance = 2;
     NSDictionary *replayPlan = nil;
-    if ([variant isEqualToString:@"minimal"]) {
-        replayPlan = @{@"steps": @[
-            @{@"kind": @"tap", @"x": @201, @"y": @108},
-            @{@"kind": @"tap", @"x": @211, @"y": @73, @"screenshotBefore": @"A count before leaving"},
-            @{@"kind": @"up", @"scale": @1.5, @"startY": @650},
-            @{@"kind": @"tap", @"x": @191, @"y": @73}
-        ]};
-        samples = [self sequenceForPlan:replayPlan original:samples];
-    }
-    if ([variant isEqualToString:@"lifecycle-plain"]) {
-        replayPlan = @{@"steps": @[
-            @{@"kind": @"tap", @"tab": @"notes", @"x": @335, @"y": @142, @"pauseAfter": @2.5},
-            @{@"kind": @"up", @"scale": @1.5, @"startY": @650},
-            @{@"kind": @"tap", @"tab": @"overview", @"x": @75, @"y": @142, @"screenshotBefore": @"Notes before leaving"},
-            @{@"kind": @"tap", @"tab": @"notes", @"x": @335, @"y": @142}
-        ]};
-        if ([label hasSuffix:@"long"] || [label hasSuffix:@"updates"]) {
-            NSMutableArray *steps = [replayPlan[@"steps"] mutableCopy];
-            [steps insertObject:@{@"kind": @"up", @"scale": @1.0, @"startY": @650} atIndex:3];
-            replayPlan = @{@"steps": steps};
-        }
-        samples = [self sequenceForPlan:replayPlan original:samples];
-    }
-    if ([variant isEqualToString:@"planned"] || [variant hasPrefix:@"nativeFlick"] || [variant isEqualToString:@"pairedFlick"] || [variant isEqualToString:@"flickContextReadout"]) {
-        NSURL *planURL = [bundle URLForResource:@"query-free-cases" withExtension:@"json"];
-        if (!planURL) planURL = [bundle URLForResource:@"query-free-cases" withExtension:@"json" subdirectory:@"Fixtures"];
-        XCTAssertNotNil(planURL);
-        NSDictionary *plans = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfURL:planURL] options:0 error:&error];
+    if ([variant isEqualToString:@"planned"]) {
+        NSData *planData = [SUIMTRecordedTraceValidation scenarioDataAndReturnError:&error];
+        XCTAssertNil(error);
+        NSDictionary *plans = [NSJSONSerialization JSONObjectWithData:planData options:0 error:&error];
         XCTAssertNil(error);
         NSDictionary *plan = plans[label];
         XCTAssertNotNil(plan);
@@ -654,17 +365,12 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
         expectedTopTolerance = ([range[1] doubleValue] - [range[0] doubleValue]) / 2 + 2;
     }
 
-    // Calibrated in a SEPARATE app launch, never by querying this test's app.
-    // Keep vertical drag distances unchanged across OS versions.
-    // Scale horizontal positions for the 393pt iOS 17 device and translate tap
-    // heights for the older navigation bar. Do not read UIScreen.bounds here:
-    // the iOS 17 XCTest runner reports a 320pt compatibility viewport. The CLI
-    // validates the device type and the reader validates the actual app bounds.
+    // Fixed, independently calibrated viewport; never query cold tab content.
     NSInteger osMajor = NSProcessInfo.processInfo.operatingSystemVersion.majorVersion;
-    CGFloat fixtureWidth = osMajor == 17 ? 393 : 402;
-    CGFloat fixtureHeight = osMajor == 17 ? 852 : 874;
-    CGFloat collapsedTop = osMajor == 17 ? 105.66666666666667 : osMajor == 18 ? 108.33333333333333 : 124;
-    XCTAssertTrue(osMajor == 17 || osMajor == 18 || osMajor == 26 || osMajor == 27);
+    CGFloat fixtureWidth = 402;
+    CGFloat fixtureHeight = 874;
+    CGFloat collapsedTop = osMajor == 18 ? 108.33333333333333 : 124;
+    XCTAssertTrue(osMajor == 18 || osMajor == 26 || osMajor == 27);
     CGFloat tapDeltaY = collapsedTop - 124;
     expectedTop += tapDeltaY;
     NSMutableDictionary *firstPoints = [NSMutableDictionary dictionary];
@@ -731,29 +437,9 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
     }
     XCTAssertEqual(paths.count, 0u);
 
-    if ([variant isEqualToString:@"pairedFlick"]) {
-        // Diagnostic: schedule the first two pointer paths in one injection.
-        // Input traces must still prove release, deceleration, and selection.
-        XCTAssertGreaterThanOrEqual(segments.count, 2u);
-        NSDictionary *first = segments[0], *second = segments[1];
-        NSDictionary *tap = [samples filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"id == 1 AND phase == 'began'"]].firstObject;
-        XCTAssertNotNil(tap);
-        double origin = [first[@"start"] doubleValue];
-        id path = [[pathClass alloc] initForTouchAtPoint:CGPointMake([tap[@"x"] doubleValue], [tap[@"y"] doubleValue])
-                                                offset:[second[@"start"] doubleValue] - origin];
-        [path liftUpAtOffset:[second[@"end"] doubleValue] - origin];
-        [first[@"record"] addPointerEventPath:path];
-        NSMutableDictionary *combined = first.mutableCopy;
-        combined[@"end"] = second[@"end"];
-        segments[0] = combined;
-        NSMutableDictionary *consumed = second.mutableCopy;
-        consumed[@"alreadySent"] = @YES;
-        segments[1] = consumed;
-    }
 
-    XCUIApplication *app = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.swiftkickmobile.Demo"];
-    BOOL broad = [@[@"broad", @"extended"] containsObject:replayPlan[@"suite"] ?: @""];
-    XCTSkipIf(osMajor == 17 && broad, @"iOS 17 is scoped to the Core plan; extended UI coverage is intentionally excluded");
+    XCUIApplication *app = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.swiftkickmobile.TestHost"];
+    BOOL broad = replayPlan[@"fixture"] != nil;
     CGFloat titleHeight = replayPlan[@"fixture"][@"titleHeight"] ? [replayPlan[@"fixture"][@"titleHeight"] doubleValue] : 150;
     NSString *passiveTracePath = [NSTemporaryDirectory() stringByAppendingPathComponent:
         [NSString stringWithFormat:@"suimt-passive-%@.json", NSUUID.UUID.UUIDString]];
@@ -764,23 +450,9 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
         }
     }];
     NSMutableDictionary *launchEnvironment = [@{@"SUIMT_CONTEXT_TRACE": @"1", @"SUIMT_MANUAL_CAPTURE": @"1", @"SUIMT_LIFECYCLE_PROBE": @"1",
-                             @"SUIMT_UI_REGRESSION": @"0", @"SUIMT_CAPTURE_LABEL": label,
-                             @"SUIMT_BOUNDARY_TRACE": [label hasPrefix:@"notes-raw"] ? @"0" : @"1",
-                             @"SUIMT_NATIVE_SCROLL_PROBE": ([label hasPrefix:@"notes-raw"] || [label hasPrefix:@"notes-boundary"]) ? @"0" : @"1"} mutableCopy];
-    BOOL uninstrumented = [label hasPrefix:@"notes-uninstrumented"];
-    if ([variant isEqualToString:@"minimal"]) {
-        launchEnvironment[@"SUIMT_STANDALONE_REPRO"] = @"1";
-    }
-    if ([label hasPrefix:@"lifecycle-"]) {
-        launchEnvironment[@"SUIMT_LIFECYCLE_PROBE"] = @"1";
-        launchEnvironment[@"SUIMT_NATIVE_SCROLL_PROBE"] = @"1";
-        launchEnvironment[@"SUIMT_LIFECYCLE_LAYOUT"] = [label substringFromIndex:10];
-    }
-    if (uninstrumented) {
-        for (NSString *key in @[@"SUIMT_CONTEXT_TRACE", @"SUIMT_MANUAL_CAPTURE", @"SUIMT_BOUNDARY_TRACE", @"SUIMT_NATIVE_SCROLL_PROBE", @"SUIMT_LIFECYCLE_PROBE"]) {
-            launchEnvironment[key] = @"0";
-        }
-    }
+                             @"SUIMT_CAPTURE_LABEL": label,
+                             @"SUIMT_BOUNDARY_TRACE": @"1",
+                             @"SUIMT_NATIVE_SCROLL_PROBE": @"1"} mutableCopy];
     if (replayPlan) {
         NSData *planData = [NSJSONSerialization dataWithJSONObject:replayPlan options:NSJSONWritingSortedKeys error:&error];
         XCTAssertNil(error);
@@ -789,17 +461,11 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
     if (broad) {
         NSDictionary *config = replayPlan[@"fixture"];
         launchEnvironment[@"SUIMT_BROAD_REPLAY"] = @"1";
-        if ([variant hasPrefix:@"nativeFlick"]) {
-            launchEnvironment[@"SUIMT_NATIVE_FLICK_CONTROL"] = @"1";
-            launchEnvironment[@"SUIMT_NATIVE_FLICK_SCALED"] = [variant isEqualToString:@"nativeFlickControl"] ? @"0" : @"1";
-            launchEnvironment[@"SUIMT_NATIVE_FLICK_HEADER_SCROLL"] = [variant isEqualToString:@"nativeFlickHeaderScrollControl"] ? @"1" : @"0";
-        }
         if ([replayPlan[@"family"] hasPrefix:@"flick"]) {
             launchEnvironment[@"SUIMT_TOUCH_ROUTING"] = @"1";
         }
         launchEnvironment[@"SUIMT_FLICK_FIXTURE"] = [config[@"flickFixture"] boolValue] ? @"1" : @"0";
         launchEnvironment[@"SUIMT_PHASE_SWITCH"] = [config[@"phaseSwitch"] boolValue] ? @"1" : @"0";
-        launchEnvironment[@"SUIMT_FLICK_CONTEXT_READOUT"] = [variant isEqualToString:@"flickContextReadout"] ? @"1" : @"0";
         launchEnvironment[@"SUIMT_INITIAL_TAB"] = config[@"initialTab"];
         launchEnvironment[@"SUIMT_SYNC_MODE"] = config[@"mode"];
         launchEnvironment[@"SUIMT_NATIVE_EDGE"] = [config[@"native"] boolValue] ? @"1" : @"0";
@@ -827,19 +493,7 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
     }
     // Query time is INSIDE fixed wait budgets, not added on top. The no-query
     // control waits equally long. Actual touch timing is checked from app logs.
-    double startupDeadline = NSProcessInfo.processInfo.systemUptime + (experiment ? 2.0 : 0.0);
-    if ([label isEqualToString:@"notes-uninstrumented-idle"]) startupDeadline += 5;
-    if ([variant isEqualToString:@"oldQueries"]) {
-        double start = NSProcessInfo.processInfo.systemUptime;
-        BOOL exists = [app.buttons[@"Overview"] waitForExistenceWithTimeout:10];
-        [queries addObject:@{@"kind": @"exists", @"phase": @"before", @"start": @(start),
-                            @"end": @(NSProcessInfo.processInfo.systemUptime), @"exists": @(exists)}];
-        XCTAssertTrue(exists);
-    }
-    if ([variant isEqualToString:@"before"] || [variant isEqualToString:@"oldQueries"]) {
-        [self queryHeader:app phase:@"before" events:queries];
-    }
-    if (experiment && NSProcessInfo.processInfo.systemUptime > startupDeadline + 0.02) deadlineOverrun = YES;
+    double startupDeadline = NSProcessInfo.processInfo.systemUptime;
     [self waitUntilUptime:startupDeadline];
     XCTAssertTrue([XCUIDevice.sharedDevice respondsToSelector:@selector(eventSynthesizer)]);
     id synthesizer = XCUIDevice.sharedDevice.eventSynthesizer;
@@ -847,11 +501,6 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
     double previousEnd = 0;
     NSUInteger segmentIndex = 0;
     for (NSDictionary *segment in segments) {
-        if ([segment[@"alreadySent"] boolValue]) {
-            previousEnd = [segment[@"end"] doubleValue];
-            segmentIndex++;
-            continue;
-        }
         double pause = [segment[@"start"] doubleValue] - previousEnd;
         if (pause > 0) {
             // XCTest compressed the idle gap between separate pointer paths in
@@ -865,22 +514,11 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
                 capture.lifetime = XCTAttachmentLifetimeKeepAlways;
                 [self addAttachment:capture];
             }
-            if (([label hasPrefix:@"recorded-nonadjacent"] || uninstrumented) && segmentIndex == 3) {
+            if ([label hasPrefix:@"recorded-nonadjacent"] && segmentIndex == 3) {
                 XCTAttachment *departure = [XCTAttachment attachmentWithScreenshot:XCUIScreen.mainScreen.screenshot];
                 departure.name = @"Notes before leaving (screen-only capture)";
                 departure.lifetime = XCTAttachmentLifetimeKeepAlways;
                 [self addAttachment:departure];
-            }
-            if ([variant isEqualToString:@"between"] || [variant isEqualToString:@"oldQueries"]) {
-                [self queryHeader:app phase:@"between" events:queries];
-            }
-            if ([variant isEqualToString:@"screenshotBetween"] || [variant isEqualToString:@"oldQueries"]
-                || [variant isEqualToString:@"screenScreenshotBetween"]) {
-                double start = NSProcessInfo.processInfo.systemUptime;
-                BOOL screenOnly = [variant isEqualToString:@"screenScreenshotBetween"];
-                [queryScreenshots addObject:screenOnly ? XCUIScreen.mainScreen.screenshot : app.screenshot];
-                [queries addObject:@{@"kind": screenOnly ? @"screenScreenshot" : @"appScreenshot", @"phase": @"between", @"start": @(start),
-                                    @"end": @(NSProcessInfo.processInfo.systemUptime)}];
             }
             if (broad && segmentIndex > 0 && ![replayPlan[@"steps"][segmentIndex - 1][@"skipCheckpointAfter"] boolValue]) {
                 // Capture the preceding action AFTER settling, before another
@@ -903,21 +541,12 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
             if (NSProcessInfo.processInfo.systemUptime > deadline + 0.02) deadlineOverrun = YES;
             [self waitUntilUptime:deadline];
         }
-        if ([variant isEqualToString:@"elementTap"] && previousEnd > 0) {
-            double start = NSProcessInfo.processInfo.systemUptime;
-            [app.buttons[@"Overview"] tap];
-            double end = NSProcessInfo.processInfo.systemUptime;
-            [queries addObject:@{@"kind": @"elementTap", @"phase": @"tapResolution", @"start": @(start), @"end": @(end)}];
-            [dispatches addObject:@{@"sentAt": @(start), @"completedAt": @(end)}];
-            previousEnd = [segment[@"end"] doubleValue];
-            continue;
-        }
         XCTestExpectation *finished = [self expectationWithDescription:@"Recorded input segment delivered"];
         __block BOOL successful = NO;
         __block NSError *synthesisError = nil;
         id inputRecord = segment[@"record"];
         NSDictionary *step = replayPlan ? replayPlan[@"steps"][segmentIndex] : nil;
-        if (broad && [step[@"dynamicY"] boolValue] && ![variant hasPrefix:@"nativeFlick"]) {
+        if (broad && [step[@"dynamicY"] boolValue]) {
             // Only reads an already-observed context; no AX lookup, view
             // construction, forced layout, selection, or scroll command.
             [self savePassiveTrace];
@@ -990,9 +619,9 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
     }
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
 
-    if (!uninstrumented) {
+    if (YES) {
         [self savePassiveTrace];
-        if (!experiment) {
+        if (YES) {
             NSData *traceData = [NSData dataWithContentsOfFile:passiveTracePath];
             XCTAssertNotNil(traceData);
             XCTAttachment *trace = [XCTAttachment attachmentWithData:traceData uniformTypeIdentifier:@"public.json"];
@@ -1007,16 +636,11 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
     image.lifetime = XCTAttachmentLifetimeKeepAlways;
     [self addAttachment:image];
     // First accessibility query occurs AFTER the whole input sequence.
-    if ([variant isEqualToString:@"minimal"]) {
-        // Diagnostic assertion: confirms the bug is reproducible, NOT correct behavior.
-        XCTAssertTrue(app.buttons[@"Count: 0"].exists, @"The minimal iOS 27 reset was not reproduced");
-        return;
-    }
     BOOL nativeReference = [replayPlan[@"fixture"][@"nativeReference"] boolValue];
     // A native-only control has no SUIMT selector. Its own measured header
     // geometry and actual scroll offsets are checked by the offline reader.
     CGFloat top = nativeReference ? 0 : app.buttons[@"Overview"].frame.origin.y;
-    NSDictionary *result = @{@"label": label, @"variant": variant, @"experiment": @(experiment),
+    NSDictionary *result = @{@"label": label, @"variant": variant,
                              @"deadlineOverrun": @(deadlineOverrun), @"queries": queries, @"dispatches": dispatches,
                              @"overviewTop": @(top), @"expectedTop": @(expectedTop)};
     NSData *resultData = [NSJSONSerialization dataWithJSONObject:result options:NSJSONWritingSortedKeys error:nil];
@@ -1025,18 +649,12 @@ static void SUIMTTraceSaved(CFNotificationCenterRef center, void *observer, CFSt
     metadata.name = [@"query-ablation-" stringByAppendingString:label];
     metadata.lifetime = XCTAttachmentLifetimeKeepAlways;
     [self addAttachment:metadata];
-    for (XCUIScreenshot *screenshot in queryScreenshots) {
-        XCTAttachment *attachment = [XCTAttachment attachmentWithScreenshot:screenshot];
-        attachment.name = [@"between-gesture-" stringByAppendingString:label];
-        attachment.lifetime = XCTAttachmentLifetimeKeepAlways;
-        [self addAttachment:attachment];
-    }
     NSLog(@"MANUAL_REPLAY points=%lu duration=%.6f overviewTop=%.3f expected=%.3f",
           (unsigned long)samples.count, previousTime, top, expectedTop);
-    if (!experiment && !nativeReference) {
+    if (!nativeReference) {
         XCTAssertEqualWithAccuracy(top, expectedTop, expectedTopTolerance, @"Tab selection must preserve the shared header position");
     }
-    if (!experiment && !uninstrumented) {
+    if (YES) {
         NSData *traceData = [NSData dataWithContentsOfFile:passiveTracePath];
         XCTAssertNotNil(traceData, @"Missing completed trace: validation must not be skipped");
         NSString *failure = [SUIMTRecordedTraceValidation validateData:traceData label:label];

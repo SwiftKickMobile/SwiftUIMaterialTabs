@@ -21,22 +21,10 @@ struct DemoTabsView: View {
     // MARK: - Body
 
     var body: some View {
-        if #available(iOS 26.0, *) {
-            tabs
-                .materialTabsScrollEdgeEffect(selectedTab == .one)
-                .scrollEdgeEffectHidden(selectedTab != .one, for: .top)
-        } else {
-            tabs
-        }
-    }
-
-    private var tabs: some View {
         MaterialTabs(
             selectedTab: $selectedTab,
             headerTitle: { context in
-                if context.selectedTab != .one {
-                    DemoTabsHeaderTitle(context: context)
-                }
+                DemoTabsHeaderTitle(context: context)
             },
             headerTabBar: { context in
                 MaterialTabBar<DemoTab>(
@@ -53,11 +41,7 @@ struct DemoTabsView: View {
                 .background(context.selectedTab.tabBarBackground)
             },
             headerBackground: { context in
-                if context.selectedTab == .one {
-                    Color.clear
-                } else {
-                    DemoTabsHeaderBackground(context: context)
-                }
+                DemoTabsHeaderBackground(context: context)
             },
             content: {
                 ForEach(DemoTab.allCases) { tab in
@@ -76,7 +60,6 @@ struct DemoTabsView: View {
                 }
             }
         )
-        .toolbarBackground(selectedTab == .one ? .automatic : .hidden, for: .navigationBar)
         .onChange(of: selectedTab, initial: true) {
             mainTabBarBackground = selectedTab.contentBackground
             mainTabBarTint = selectedTab.contentForeground

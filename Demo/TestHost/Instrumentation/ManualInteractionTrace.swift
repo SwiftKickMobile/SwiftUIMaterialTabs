@@ -137,7 +137,7 @@ enum ManualInteractionTrace {
         // payload; the trace remains in this app's Documents directory.
         CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), nil, { _, _, _, _, _ in
             DispatchQueue.main.async { ManualInteractionTrace.save() }
-        }, "com.swiftkickmobile.Demo.saveManualTrace" as CFString, nil, .deliverImmediately)
+        }, "com.swiftkickmobile.TestHost.saveManualTrace" as CFString, nil, .deliverImmediately)
         NSLog("SUIMT_MANUAL_CAPTURE_READY pid=%d", ProcessInfo.processInfo.processIdentifier)
     }
 
@@ -235,7 +235,7 @@ enum ManualInteractionTrace {
             }
             NSLog("SUIMT_MANUAL_CAPTURE_SAVED touches=%d path=%@", touches.count, url.path)
             CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(),
-                CFNotificationName("com.swiftkickmobile.Demo.manualTraceSaved" as CFString), nil, nil, true)
+                CFNotificationName("com.swiftkickmobile.TestHost.manualTraceSaved" as CFString), nil, nil, true)
         } catch {
             NSLog("SUIMT_MANUAL_CAPTURE_ERROR %@", String(describing: error))
         }
