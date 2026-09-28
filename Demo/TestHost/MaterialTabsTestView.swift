@@ -102,7 +102,7 @@ struct MaterialTabsTestView: View {
                     } label: {
                         Image(systemName: "slider.horizontal.3")
                     }
-                    .accessibilityLabel("Prototype settings")
+                    .accessibilityLabel("Scroll-edge settings")
                 }
             }
             .onChange(of: layout) { resetID += 1 }
@@ -191,7 +191,7 @@ struct MaterialTabsTestView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(testTitle)
                     .font(.title2.bold())
-                Text("Compare the checkerboard at rest, while scrolling, and after returning to the top. Change layouts in the settings menu.")
+                Text("Compare the checkerboard at rest, while scrolling, and after returning to the top. Change styles in the settings menu.")
                     .foregroundStyle(.secondary)
                 Text("Scroll-edge style: \(edgeStyle.rawValue)")
                     .font(.caption.monospaced())

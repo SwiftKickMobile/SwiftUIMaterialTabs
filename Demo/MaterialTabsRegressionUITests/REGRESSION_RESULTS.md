@@ -40,6 +40,11 @@ The cleaned Extended plan contains 104 UI scenarios, 53 model tests, and
 
 ## Remaining verification
 
-- Document the two new cases on iOS 18, 26, and 27.
-- Run Extended on the cleaned TestHost build for all three supported versions.
-- Verify normal Demo launch separately. iOS 17 is no longer supported by #26.
+Extended at commit `6c97e12` completed on iOS 27.0: 102 clean UI passes,
+2 expected #27 failures, 53 model passes, and 105 validator/catalog passes.
+There were no unexpected failures, skips, or runtime warnings. All 690 saved
+checkpoints were visually inspected, including the restored Demo.
+
+- Complete Extended on iOS 18.6 and 26.5 with the same frozen build.
+- Verify clean installation of the separate Demo/TestHost products.
+- iOS 17 is no longer supported by #26.
