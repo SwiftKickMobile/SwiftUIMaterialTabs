@@ -19,7 +19,11 @@ struct TestHostApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                if #available(iOS 26.0, *), ProcessInfo.processInfo.environment["SUIMT_NATIVE_REFERENCE"] == "1" {
+                if ProcessInfo.processInfo.environment["SUIMT_JITTER_REGRESSION"] == "1" {
+                    JitterRegressionView()
+                } else if ProcessInfo.processInfo.environment["SUIMT_PADDING_REGRESSION"] == "1" {
+                    PaddedScrollRegressionView()
+                } else if #available(iOS 26.0, *), ProcessInfo.processInfo.environment["SUIMT_NATIVE_REFERENCE"] == "1" {
                     NativeScrollEdgeReferenceView()
                 } else if ProcessInfo.processInfo.environment["SUIMT_FLICK_FIXTURE"] == "1" {
                     FlickRegressionView()

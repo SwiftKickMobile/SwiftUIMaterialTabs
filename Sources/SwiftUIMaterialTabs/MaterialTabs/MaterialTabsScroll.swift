@@ -185,6 +185,11 @@ public struct MaterialTabsScroll<Content, Tab>: View where Content: View, Tab: H
             }
         }
         .coordinateSpace(name: coordinateSpaceName)
+        .onScrollGeometryChange(for: CGFloat.self) { geometry in
+            geometry.containerSize.height
+        } action: { _, height in
+            scrollModel.viewportHeightChanged(height)
+        }
         .map { scroll in
             if #available(iOS 26.0, *), nativeScrollEdgeEffect {
                 let effectHeight = headerModel.headerContext.minTotalHeight + nativeScrollEdgeOffset

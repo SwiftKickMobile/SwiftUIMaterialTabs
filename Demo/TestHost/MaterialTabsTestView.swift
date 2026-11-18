@@ -5,6 +5,41 @@ import SwiftUIMaterialTabs
 @_spi(Testing) import SwiftUIMaterialTabs
 #endif
 
+/// A scroll with consumer-provided bottom safe-area padding and an external position,
+/// paired with a short page as in the SalesPro appointment screen.
+struct PaddedScrollRegressionView: View {
+    private enum Tab: Hashable { case appointment, offers }
+    @State private var selected: Tab = .appointment
+    @State private var position = ScrollPosition()
+    @State private var anchor: UnitPoint?
+
+    var body: some View {
+        NavigationStack {
+            MaterialTabs(selectedTab: $selected, headerTitle: { _ in
+                Text("Customer header").frame(maxWidth: .infinity).frame(height: 180)
+            }, headerTabBar: { context in
+                MaterialTabBar(selectedTab: $selected, sizing: .equalWidth, context: context)
+            }, content: {
+                MaterialTabsScroll(tab: Tab.appointment, scrollPosition: $position, anchor: $anchor) { _ in
+                    LazyVStack {
+                        ForEach(0..<30) { row in
+                            Text("Appointment row \(row)").frame(maxWidth: .infinity).frame(height: 100).id(row)
+                        }
+                    }.scrollTargetLayout()
+                }
+                .safeAreaPadding(.bottom, 35)
+                .materialTabItem(tab: Tab.appointment, label: .primary("Appointment"))
+                MaterialTabsScroll(tab: Tab.offers) { _ in
+                    Text("No offers").frame(maxWidth: .infinity).frame(height: 100)
+                }
+                .materialTabItem(tab: Tab.offers, label: .primary("Offers"))
+            })
+            .navigationTitle("Customer")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+}
+
 /// Stable fixture for header continuity, page retention, and native scroll-edge tests.
 struct MaterialTabsTestView: View {
     private enum Tab: String, CaseIterable, Identifiable {

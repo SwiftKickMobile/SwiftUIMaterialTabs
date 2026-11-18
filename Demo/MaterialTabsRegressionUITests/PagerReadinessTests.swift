@@ -1,5 +1,28 @@
 import XCTest
 
+final class SafeAreaPaddingUITests: XCTestCase {
+    func testTabSwitchPreservesPositionWithBottomSafeAreaPadding() throws {
+        let app = XCUIApplication(bundleIdentifier: "com.swiftkickmobile.TestHost")
+        app.launchEnvironment["SUIMT_PADDING_REGRESSION"] = "1"
+        app.launch()
+        let appointment = app.buttons["Appointment"]
+        let offers = app.buttons["Offers"]
+        let firstRow = app.staticTexts["Appointment row 0"]
+        XCTAssertTrue(appointment.waitForExistence(timeout: 10))
+        XCTAssertTrue(firstRow.waitForExistence(timeout: 10))
+        let initialTop = appointment.frame.minY
+        let initialRowTop = firstRow.frame.minY
+        for cycle in 1...3 {
+            offers.tap()
+            appointment.tap()
+            XCTAssertEqual(appointment.frame.minY, initialTop, accuracy: 2,
+                           "Header moved after round trip \(cycle)")
+            XCTAssertEqual(firstRow.frame.minY, initialRowTop, accuracy: 2,
+                           "Appointment content moved after round trip \(cycle)")
+        }
+    }
+}
+
 final class PagerReadinessTests: XCTestCase {
     private func report(offset: Double = 402, flag: String? = nil, time: Double = 2, copies: Int = 1) -> TraceJSON {
         var pager: [String: TraceJSON] = ["frameX": .number(0), "boundsWidth": .number(402),

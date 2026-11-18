@@ -72,6 +72,10 @@ class ScrollModel<Tab> where Tab: Hashable {
         configureBottomMargin()
     }
 
+    func viewportHeightChanged(_ height: CGFloat) {
+        viewportHeight = height > 1 ? height : nil
+    }
+
     func headerHeightChanged() {
         syncContentOffsetWithHeader(appearance: false)
     }
@@ -100,6 +104,7 @@ class ScrollModel<Tab> where Tab: Hashable {
     private var cachedHeight: CGFloat?
     private weak var headerModel: HeaderModel<Tab>?
     private var contentSize: CGSize?
+    private var viewportHeight: CGFloat?
 
     private var selectedTab: Tab? {
         didSet {
@@ -146,7 +151,7 @@ class ScrollModel<Tab> where Tab: Hashable {
     /// The UnitPoint formula positions the reserved item within the visible frame such that
     /// the desired content offset is achieved:
     /// ```
-    /// UnitPoint.y = (maxOffset - contentOffset) / (safeHeight - reservedItemHeight)
+    /// UnitPoint.y = (maxOffset - contentOffset) / (viewportHeight - reservedItemHeight)
     /// ```
     ///
     /// Important: the `.scrollPosition()` modifier's `anchor` parameter must be updated
@@ -183,11 +188,20 @@ class ScrollModel<Tab> where Tab: Hashable {
             headerModel.contentOffsetChanged(contentOffset)
         }
         isSyncingWithHeader = true
-        let unitPointY = (headerModel.headerContext.maxOffset - contentOffset) / (headerModel.safeHeight - 1)
+        // A consumer can change a page's usable viewport independently of the
+        // container (for example with bottom safe-area padding).
+        let height = viewportHeight ?? headerModel.safeHeight
+        let unitPointY = (headerModel.headerContext.maxOffset - contentOffset) / max(1, height - 1)
         let syncAnchor = UnitPoint(x: UnitPoint.top.x, y: unitPointY)
         // The .scrollPosition() modifier's anchor must match the scrollTo anchor for positioning to work.
-        anchorBinding?.wrappedValue = syncAnchor
-        scrollPositionBinding.wrappedValue.scrollTo(id: reservedItemID, anchor: syncAnchor)
+        // Selection may be animated by an ancestor. This adjustment aligns the
+        // destination with the existing header and must not animate as a scroll.
+        var transaction = Transaction(animation: nil)
+        transaction.disablesAnimations = true
+        withTransaction(transaction) {
+            anchorBinding?.wrappedValue = syncAnchor
+            scrollPositionBinding.wrappedValue.scrollTo(id: reservedItemID, anchor: syncAnchor)
+        }
         #if DEBUG
         trace("anchorSet")
         #endif

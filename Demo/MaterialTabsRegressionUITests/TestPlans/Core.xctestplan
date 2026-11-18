@@ -46,6 +46,8 @@
       "parallelizable": false,
       "selectedTests": [
         "PagerReadinessTests",
+        "SafeAreaPaddingUITests",
+        "HeaderJitterUITests",
         "RecordedTraceCheckerTests",
         "RegressionCatalogTests",
         "ManualTouchReplayUITests/testRecordedManualDragAndOverviewTap",
