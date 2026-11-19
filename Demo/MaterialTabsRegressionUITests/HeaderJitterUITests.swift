@@ -10,11 +10,17 @@ final class HeaderJitterUITests: XCTestCase {
         XCTAssertTrue(offers.waitForExistence(timeout: 10))
         let expandedTop = appointment.frame.minY
         offers.tap()
-        let source = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.72))
-        let destination = source.withOffset(CGVector(dx: 0, dy: -25))
-        source.press(forDuration: 0.2, thenDragTo: destination)
+        XCTAssertTrue(app.staticTexts["No offers"].waitForExistence(timeout: 10))
+        for _ in 0..<4 {
+            let top = appointment.frame.minY
+            if top < expandedTop - 40 && top > expandedTop - 140 { break }
+            let needsCollapse = top >= expandedTop - 40
+            let source = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: needsCollapse ? 0.72 : 0.42))
+            let destination = source.withOffset(CGVector(dx: 0, dy: needsCollapse ? -75 : 50))
+            source.press(forDuration: 0.1, thenDragTo: destination, withVelocity: .slow, thenHoldForDuration: 0.2)
+        }
         let partialTop = appointment.frame.minY
-        guard partialTop < expandedTop - 15, partialTop > expandedTop - 165 else {
+        guard partialTop < expandedTop - 40, partialTop > expandedTop - 140 else {
             XCTFail("Expected a partially collapsed header; expanded=\(expandedTop), current=\(partialTop)")
             return
         }

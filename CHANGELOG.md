@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 3.0.1
+
+### Fixes
+
+* Prevent scroll position from gradually shifting when switching tabs with bottom safe-area padding.
+* Prevent a partially collapsed header from briefly jittering when switching tabs.
+
 ## 3.0.0
 
 ### Breaking Changes
